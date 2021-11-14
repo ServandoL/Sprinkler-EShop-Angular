@@ -1,1 +1,44 @@
-<div class="container">Sign up Component</div>
+ <!-- Page Content -->
+ <div class="container">
+  <div class="row">
+      <div class="col-md-6 mx-auto">
+          <fieldset>
+              <legend>Create New Customer Account</legend>
+              <form id="signUpForm">
+                  <h4>Personal Information</h4>
+                  <div class="form-group mx-sm-3">
+                      <label for="inputFname">First name <span style="color:red">*</span></label>
+                      <input type="text" class="form-control" name="inputFname" id="inputFname" placeholder="Enter first name"
+                          required>
+                  </div>
+                  <div class="form-group mx-sm-3 my-2">
+                      <label for="inputLname">Last name <span style="color:red">*</span></label>
+                      <input type="text" class="form-control" name="inputLname" id="inputLname" placeholder="Enter last name"
+                          required>
+                  </div>
+                  <h4 class="my-2">Sign-in Information</h4>
+                  <div class="form-group mx-sm-3 my-2">
+                      <label for="inputEmail">Email <span style="color:red">*</span></label>
+                      <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Enter email address"
+                          required>
+                  </div>
+                  <div class="form-group mx-sm-3 my-2">
+                      <label for="inputPassword">Password <span style="color:red">*</span></label>
+                      <input type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="Enter password" title="at least one number and one uppercase and lowercase letter, and at least 8 or more characters" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                          required>
+                  </div>
+
+                  <div class="form-group mx-sm-3 my-2">
+                      <label for="confirmPassword">Confirm Password <span style="color:red">*</span></label>
+                      <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                  </div>
+                  <div class="form-group mx-sm-3 my-2">
+                      <button type="button" id="signUpBtn" class="btn btn-primary">Create an account</button>
+                  </div>
+                  <span class="mx-sm-3"><small style="color: red;">* Required Fields</small></span>
+              </form>
+
+          </fieldset>
+      </div>
+  </div>
+  <!-- end page content -->

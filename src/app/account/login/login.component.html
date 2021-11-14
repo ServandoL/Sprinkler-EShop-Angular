@@ -1,1 +1,50 @@
-<div class="container">Login Component</div>
+<div class="container">
+  <div class="row">
+      <!-- start Customer login -->
+      <div class="col">
+          <fieldset>
+              <legend>Customer Login</legend>
+              <!-- TODO: Flash message if user accesses cart without being signed in -->
+              <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" autocomplete="off" novalidate>
+                  <div class="form-group col-md-6 mx-sm-3">
+                      <label for="inputEmail">Email address <span style="color: red;">*</span></label>
+                      <em style="color: red;" *ngIf="loginForm.controls.userName?.invalid && (loginForm.controls.userName?.touched || mouseoverLogin)">Required</em>
+                      <input (ngModel)="userName" type="email" class="form-control my-2" name="userName" id="userName" placeholder="Enter email"
+                          aria-describedby="emailHelp" required autofocus>
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                          else.</small>
+                  </div>
+                  <div class="form-group col-md-6 mx-sm-3 my-2">
+                      <label for="inputPassword">Password <span style="color: red;">*</span></label>
+                      <em *ngIf="loginForm.controls.password?.invalid && (loginForm.controls.password?.touched || mouseoverLogin)"> Required</em>
+                      <input (ngModel)="password" type="password" class="form-control my-2" name="inputPassword" id="inputPassword" placeholder="Password"
+                          required autofocus>
+                  </div>
+                  <div class="form-group mx-sm-3">
+                    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button></span>
+                      <a href="#" class="px-5">Forgot Password?</a>
+                  </div>
+                  <span class="mx-sm-3"><small style="color: red;">* Required Fields</small></span>
+              </form>
+          </fieldset>
+      </div>
+      <!-- end customer login -->
+
+      <!-- start customer needs sign up -->
+      <div class="col">
+          <fieldset>
+              <legend>New Customers</legend>
+              <form>
+                  <div class="form-group mx-sm-3">
+                      <label>Don't have an account?</label>
+                  </div>
+
+                  <div class="form-group mx-sm-3 my-2">
+                      <a routerLink="/account/sign-up"><button type="button" class="btn btn-primary">Create an account</button></a>
+                  </div>
+              </form>
+          </fieldset>
+      </div>
+      <!-- end customer needs sign up -->
+  </div>
+</div>
