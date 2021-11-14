@@ -10,6 +10,10 @@ export const routes: Routes = [
     path: 'account',
     loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
   },
+  {
+    path: 'products',
+    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
+  },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: '**', component: PathNotFoundComponent },
 

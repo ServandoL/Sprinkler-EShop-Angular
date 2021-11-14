@@ -14,9 +14,11 @@
             Products
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/products/controllers']">Controllers</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/products/rotors']">Rotors</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/products/sprinkler-bodies']">Sprinkler bodies</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/products/sprinkler-nozzles']">Sprinkler nozzles</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/products/valves']">Valves</a></li>
           </ul>
         </li>
       </ul>
@@ -27,9 +29,8 @@
             Account
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" routerLink="/account/login">Login</a></li>
+            <li><a class="dropdown-item" routerLink="/account/sign-up">Sign up</a></li>
           </ul>
         </li>
           <!-- <a *ngIf="!_authService.isAuthenticated()" [routerLink]="['user/login']">Login</a> -->
