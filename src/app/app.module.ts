@@ -10,6 +10,7 @@ import { SharedHeaderComponent } from './shared/shared-header/shared-header.comp
 import { LayoutModule } from '@angular/cdk/layout';
 import { ProductsComponent } from './products/products.component';
 import { PathNotFoundComponent } from './path-not-found/path-not-found.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { PathNotFoundComponent } from './path-not-found/path-not-found.component
     SharedHeaderComponent,
     ProductsComponent,
     PathNotFoundComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
