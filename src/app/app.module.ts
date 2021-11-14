@@ -8,30 +8,22 @@ import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedHeaderComponent } from './shared/shared-header/shared-header.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { ProductsComponent } from './products/products.component';
+import { PathNotFoundComponent } from './path-not-found/path-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SharedHeaderComponent,
-    ProductsComponent
+    ProductsComponent,
+    PathNotFoundComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
