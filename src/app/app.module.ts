@@ -4,16 +4,19 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedHeaderComponent } from './shared/shared-header/shared-header.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { ProductsComponent } from './products/products.component';
-import { PathNotFoundComponent } from './path-not-found/path-not-found.component';
-import { AdminComponent } from './admin/admin.component';
-import { SharedFooterComponent } from './shared/shared-footer/shared-footer.component';
-import { GraphQLModule } from './graphql.module';
+import { GraphQLModule } from './services/apollo/graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { StoreModule } from '@ngrx/store';
+import { AdminComponent } from './components/admin/admin.component';
+import { HomeComponent } from './components/home/home.component';
+import { PathNotFoundComponent } from './components/path-not-found/path-not-found.component';
+import { ProductsComponent } from './components/products/products.component';
+import { SharedFooterComponent } from './components/shared/shared-footer/shared-footer.component';
+import { SharedHeaderComponent } from './components/shared/shared-header/shared-header.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,13 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     LayoutModule,
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      name: 'Sprinkler EShop DevTools',
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
