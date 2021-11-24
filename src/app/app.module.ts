@@ -11,7 +11,6 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { ProductsComponent } from './products/products.component';
 import { PathNotFoundComponent } from './path-not-found/path-not-found.component';
 import { AdminComponent } from './admin/admin.component';
-import { AuthService } from './services/auth.service';
 import { SharedFooterComponent } from './shared/shared-footer/shared-footer.component';
 
 @NgModule({
@@ -30,7 +29,7 @@ import { SharedFooterComponent } from './shared/shared-footer/shared-footer.comp
     BrowserAnimationsModule,
     LayoutModule
   ],
-  providers: [AuthService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
