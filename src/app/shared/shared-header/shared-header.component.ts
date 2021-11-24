@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-shared-header',
@@ -12,7 +11,6 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SharedHeaderComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
-    public authService: AuthService
   ) {}
 
   isHandset$: Observable<boolean> = this.breakpointObserver

@@ -12,6 +12,8 @@ import { ProductsComponent } from './products/products.component';
 import { PathNotFoundComponent } from './path-not-found/path-not-found.component';
 import { AdminComponent } from './admin/admin.component';
 import { SharedFooterComponent } from './shared/shared-footer/shared-footer.component';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { SharedFooterComponent } from './shared/shared-footer/shared-footer.comp
     BrowserModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
-    LayoutModule
+    LayoutModule,
+    GraphQLModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
