@@ -9,7 +9,6 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { GraphQLModule } from './services/apollo/graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from 'src/environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { AdminComponent } from './components/admin/admin.component';
 import { HomeComponent } from './components/home/home.component';
@@ -17,6 +16,8 @@ import { PathNotFoundComponent } from './components/path-not-found/path-not-foun
 import { ProductsComponent } from './components/products/products.component';
 import { SharedFooterComponent } from './components/shared/shared-footer/shared-footer.component';
 import { SharedHeaderComponent } from './components/shared/shared-header/shared-header.component';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { SharedHeaderComponent } from './components/shared/shared-header/shared-
     GraphQLModule,
     HttpClientModule,
     StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       name: 'Sprinkler EShop DevTools',
       maxAge: 25,

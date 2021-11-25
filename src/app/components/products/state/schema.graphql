@@ -1,0 +1,62 @@
+mutation Mutation(
+  $productName: String
+  $price: Float
+  $category: String
+  $brand: String
+  $stock: Int
+  $id: ID
+) {
+  addProduct(
+    productName: $productName
+    price: $price
+    category: $category
+    brand: $brand
+    stock: $stock
+  ) {
+    message
+    success
+    product {
+      deleted_by
+      deleted_date
+      isDeleted
+      imageUrl
+      stock
+      brand
+      category
+      price
+      productName
+      _id
+    }
+  }
+  deleteProduct(_id: $id) {
+    success
+    message
+  }
+}
+
+query Query($id: ID) {
+  products {
+    _id
+    productName
+    price
+    category
+    brand
+    stock
+    isDeleted
+    imageUrl
+    deleted_by
+    deleted_date
+  }
+  productById(_id: $id) {
+    _id
+    productName
+    price
+    category
+    brand
+    stock
+    imageUrl
+    isDeleted
+    deleted_by
+    deleted_date
+  }
+}
