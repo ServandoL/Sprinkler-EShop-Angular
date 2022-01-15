@@ -1,5 +1,22 @@
 import gql from 'graphql-tag';
 
+export const getControllersQuery = gql`
+query Query($category: String) {
+  products(category: $category) {
+    _id
+    productName
+    deleted_date
+    deleted_by
+    isDeleted
+    imageUrl
+    stock
+    brand
+    category
+    price
+  }
+}
+`;
+
 export const getProductsQuery = gql`
   query Query {
     products {

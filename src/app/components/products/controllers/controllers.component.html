@@ -1,1 +1,73 @@
-<div class="container">Controllers Component</div>
+<div class="container">
+  <div class="row py-2">
+    <div class="col-md-2">
+      <h3>Actions</h3>
+      <div class="bottom-border my-2"></div>
+      <ul class="list-group">
+        <li class="list-group-item"><a href="#">What do</a></li>
+      </ul>
+    </div>
+    <div class="col-md-10">
+      <h3>Controllers</h3>
+      <div class="bottom-border my-2">
+        <div
+          *ngIf="errorMessage$ | async as errorMessage"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Error: {{ errorMessage$ }}
+        </div>
+      </div>
+      <div
+        class="col"
+        *ngIf="(products$ | async)?.length === 0"
+        class="alert alert-danger"
+        role="alert"
+      >
+        No products available.
+      </div>
+      <div
+        class="row row-cols-1 row-cols-lg-4 g-4"
+        *ngIf="products$ | async as products"
+      >
+        <div class="col" *ngFor="let product of products">
+          <div class="card w-100 h-100">
+            <img
+              class="card-img-top mx-auto"
+              src="/assets/{{ product.imageUrl }}"
+              alt="product image"
+            />
+            <div class="card-body">
+              <h3 class="card-title">{{ product.productName }}</h3>
+              <p class="card-text product-price">
+                ${{ product.price }}
+              </p>
+              <p
+                class="card-text product-price"
+                *ngIf="product.stock > 0"
+              >
+                Inventory: <span class="in-stock">{{ product.stock }}</span>
+              </p>
+              <p class="card-text out-of-stock" *ngIf="product.stock <= 0">
+                Out of stock
+              </p>
+            </div>
+            <div class="card-footer">
+              <app-qty-input (quantity)="updateQuantity($event)"></app-qty-input>
+              <div class="row mx-0">
+                <button
+                  name="add-to-cart"
+                  class="btn btn-primary"
+                  (click)="submit()"
+                  [disabled]="product.stock <= 0"
+                >
+                  Add to cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

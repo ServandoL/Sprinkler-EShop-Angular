@@ -5,7 +5,7 @@ import { ObjectId } from 'mongodb';
 const CurrentProductAction = '[Product] Set Current Product';
 const ClearProductAction = '[Product] Clear Current Product';
 const InitCurrentProductAction = '[Product] Initialize Current Product';
-const LoadProductsAction = '[Product] Load';
+const LoadProductsAction = '[Product] Load Products';
 const LoadProductsSuccessAction = '[Product] Load Success';
 const LoadProductsFailureAction = '[Product] Load Failure';
 const UpdateProductAction = '[Product] Update Product';

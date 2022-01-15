@@ -31,18 +31,19 @@ import { EffectsModule } from '@ngrx/effects';
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
     BrowserAnimationsModule,
-    LayoutModule,
-    GraphQLModule,
     HttpClientModule,
+    RouterModule.forRoot(routes),
+    LayoutModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       name: 'Sprinkler EShop DevTools',
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),
+    GraphQLModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

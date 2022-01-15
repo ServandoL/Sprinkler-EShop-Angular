@@ -1,0 +1,14 @@
+<div class="input-group mb-3">
+  <button type="button" class="btn btn-outline-secondary qty-btn" (click)="minusOne(qty-1)" [disabled]="qty <= 1">
+    -
+  </button>
+  <input
+    type="text"
+    #quantity
+    class="form-control"
+    value={{qty}}
+  />
+  <button type="button" class="btn btn-outline-secondary qty-btn" (click)="plusOne(qty+1)">
+    +
+  </button>
+</div>

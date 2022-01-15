@@ -1,4 +1,4 @@
-mutation Mutation(
+mutation createProduct(
   $productName: String
   $price: Float
   $category: String
@@ -28,35 +28,71 @@ mutation Mutation(
       _id
     }
   }
+}
+
+mutation deleteProduct($id: ID) {
   deleteProduct(_id: $id) {
-    success
     message
+    success
   }
 }
 
-query Query($id: ID) {
+query getProductByBrand($brand: String) {
+  products(brand: $brand) {
+    _id
+    productName
+    deleted_date
+    deleted_by
+    isDeleted
+    imageUrl
+    stock
+    brand
+    category
+    price
+  }
+}
+
+query getProductByCategory($category: String) {
+  products(category: $category) {
+    _id
+    productName
+    deleted_date
+    deleted_by
+    isDeleted
+    imageUrl
+    stock
+    brand
+    category
+    price
+  }
+}
+
+query getProductById($id: ID) {
+  products(_id: $id) {
+    _id
+    productName
+    deleted_date
+    deleted_by
+    isDeleted
+    imageUrl
+    stock
+    brand
+    category
+    price
+  }
+}
+
+query getAllProducts {
   products {
     _id
     productName
-    price
-    category
-    brand
-    stock
+    deleted_date
+    deleted_by
     isDeleted
     imageUrl
-    deleted_by
-    deleted_date
-  }
-  productById(_id: $id) {
-    _id
-    productName
-    price
-    category
-    brand
     stock
-    imageUrl
-    isDeleted
-    deleted_by
-    deleted_date
+    brand
+    category
+    price
   }
 }

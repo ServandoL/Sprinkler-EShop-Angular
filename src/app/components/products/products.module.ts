@@ -8,11 +8,19 @@ import { RotorsComponent } from './rotors/rotors.component';
 import { SprinklerBodyComponent } from './sprinkler-body/sprinkler-body.component';
 import { SprinklerNozzlesComponent } from './sprinkler-nozzles/sprinkler-nozzles.component';
 import { ValvesComponent } from './valves/valves.component';
+import { StoreModule } from '@ngrx/store';
+import { productReducer } from './state/product.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductEffects } from './state/product.effects';
+import { ProductService } from './state/product.service';
+import { QtyInputComponent } from './components/qty-input/qty-input.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(productsRoutes),
+    StoreModule.forFeature('products', productReducer),
+    EffectsModule.forFeature([ProductEffects]),
     FormsModule,
     ReactiveFormsModule
   ],
@@ -22,8 +30,9 @@ import { ValvesComponent } from './valves/valves.component';
     RotorsComponent,
     SprinklerBodyComponent,
     SprinklerNozzlesComponent,
-    ValvesComponent
+    ValvesComponent,
+    QtyInputComponent
   ],
-  providers: [],
+  providers: [ProductService],
 })
 export class ProductsModule { }
