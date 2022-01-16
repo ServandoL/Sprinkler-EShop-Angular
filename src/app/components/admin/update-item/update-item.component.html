@@ -1,1 +1,100 @@
-<div class="container">Update Item Component</div>
+<div class="container">
+  <div class="row py-2">
+    <div class="col-md-2">
+      <h3>Actions</h3>
+      <div class="bottom-border my-2"></div>
+      <ul class="list-group">
+        <li class="list-group-item"><a [routerLink]="['/admin/profile']">Go back</a></li>
+        <li class="list-group-item"><a [routerLink]="['/admin/create-item']">Insert a new item.</a></li>
+      </ul>
+    </div>
+    <div class="col-md-10">
+      <h3>Welcome administrator FIRST NAME, LAST NAME</h3>
+      <div class="bottom-border my-2"></div>
+
+      <!-- show inventory item to update -->
+      <div class="row">
+        <div class="col">
+          <div class="card w-100 h-100 mx-auto my-2">
+            <img class="card-img-top mx-auto" src="" alt="product image" />
+            <div class="card-body">
+              <h5 class="card-title">PRODUCT NAME</h5>
+              <p class="card-text">PRICE</p>
+              <!-- {% if inventory_item['stock'] > 0 %}
+                          <p class="card-text" style="color: green;">In stock: {{
+                              inventory_item['stock'] }}</p>
+                          {% else %}
+                          <p class="card-text" style="color: red;">Out of stock</p>
+                          {% endif %} -->
+            </div>
+          </div>
+        </div>
+
+        <!-- show form to update item -->
+        <div class="col">
+          <fieldset>
+            <legend>Update item.</legend>
+            <form method="post">
+              <div class="form-group col-md-5 my-2">
+                <label for="product-name">Enter Product Name</label>
+                <textarea
+                  class="form-control"
+                  rows="3"
+                  id="product-name"
+                  name="product-name"
+                >
+PRODUCT NAME</textarea
+                >
+              </div>
+              <div class="form-group col-md-5 my-2">
+                <label for="product-price">Enter Product Price</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="product-price"
+                  name="product-price"
+                  value=""
+                />
+              </div>
+              <div class="form-group col-md-5 my-2">
+                <label for="product-stock">Enter Product Stock</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="product-stock"
+                  name="product-stock"
+                  value=""
+                />
+              </div>
+              <div class="form-group col-md-5 my-2">
+                <label for="product-image">Product Image</label>
+                <input
+                  type="file"
+                  class="form-control-file"
+                  id="product-image"
+                  name="product-image"
+                />
+              </div>
+              <div class="form-group my-2">
+                <button type="submit" class="btn btn-primary" id="addItemBtn">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </fieldset>
+          <!-- {% if updated['message'] %}
+                  <ul class="list-group mx-auto" style="width: 50%;">
+                      <li class="list-group-item list-group-item-success">Item updated successfully.</p>
+                          {% for key, value in updated.items() %}
+                          {% if key != 'message' %}
+                      <li class="list-group-item">{{key}}: {{ value }}</li>
+                      {% endif %}
+                      {% endfor %}
+                  </ul>
+
+                  {% endif %} -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,9 @@ import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account.component';
 import { LogoutComponent } from './logout/logout.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
+import { DeleteAccountComponent } from './delete-account/delete-account.component';
 
 @NgModule({
   imports: [
@@ -20,7 +23,10 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     AccountComponent,
     LogoutComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    UpdateProfileComponent,
+    OrderHistoryComponent,
+    DeleteAccountComponent
   ],
   providers: [],
 })

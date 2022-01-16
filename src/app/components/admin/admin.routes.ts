@@ -7,5 +7,6 @@ export const adminRoutes: Routes = [
   { path: 'profile', component: AdminComponent },
   { path: 'create-item', component: CreateItemComponent },
   { path: 'update-item', component: UpdateItemComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'profile' },
 ]
 

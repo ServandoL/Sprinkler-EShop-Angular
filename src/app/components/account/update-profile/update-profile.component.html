@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="row py-2">
+    <div class="col-md-2">
+      <h3>Actions</h3>
+      <div class="bottom-border my-2"></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <a [routerLink]="['/account/order-history']">Order History</a>
+        </li>
+        <li class="list-group-item">
+          <a [routerLink]="['/account/update-profile']">Update Profile</a>
+        </li>
+        <li class="list-group-item">
+          <a [routerLink]="['/account/delete-account']" class="text-red"
+            >Delete Account</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-10">
+      <h3>Update Profile</h3>
+      <div class="bottom-border my-2"></div>
+      <!-- {% with message = get_flashed_messages() %}
+          {% if message %}
+          {% for item in message %}
+              {% if item == "Password updated." %}
+                  <div class="alert alert-success" role="alert">
+                      {{item}}
+                  </div>
+              {% else %}
+              <div class="alert alert-danger" role="alert">
+                  {{item}}
+              </div>
+              {% endif %}
+          {% endfor %}
+          {% endif %}
+          {% endwith %} -->
+      <fieldset>
+        <legend>Update Email</legend>
+        <form method="POST">
+          <div class="form-group col-md-6 my-2">
+            <label class="form-label">Current email: EMAIL</label>
+            <input
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              name="inputEmail"
+              placeholder="enter new email"
+              required
+            />
+            <button type="submit" class="btn btn-primary my-2">Update</button>
+          </div>
+        </form>
+      </fieldset>
+      <fieldset class="my-5">
+        <legend>Update Password</legend>
+        <form method="POST">
+          <div class="form-group col-md-6 my-2">
+            <label for="inputPassword" class="form-label"
+              >Current Password <span style="color: red">*</span></label
+            >
+            <input
+              type="password"
+              class="form-control"
+              name="inputPassword"
+              id="inputPassword"
+              placeholder="enter current password"
+              required
+              autofocus
+            />
+          </div>
+          <div class="form-group col-md-6 my-2">
+            <label class="form-label" for="newPassword"
+              >Password <span style="color: red">*</span></label
+            >
+            <input
+              type="password"
+              class="form-control"
+              name="newPassword"
+              id="newPassword"
+              placeholder="enter new password"
+              title="at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              required
+            />
+          </div>
+          <div class="form-group col-md-6 my-2">
+            <label class="form-label" for="confirmPassword"
+              >Confirm Password <span style="color: red">*</span></label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="confirm new password"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Update</button>
+          <span class="mx-sm-3"
+            ><small style="color: red">* Required Fields</small></span
+          >
+        </form>
+      </fieldset>
+    </div>
+  </div>
+</div>
