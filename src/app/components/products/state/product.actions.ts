@@ -6,6 +6,13 @@ const CurrentProductAction = '[Product] Set Current Product';
 const ClearProductAction = '[Product] Clear Current Product';
 const InitCurrentProductAction = '[Product] Initialize Current Product';
 const LoadProductsAction = '[Product] Load Products';
+const LoadControllersAction = '[Product] Load Controllers';
+const LoadRotorsAction = '[Product] Load Rotors';
+const LoadValvesAction = '[Product] Load Valves';
+const LoadSprinklerBodiesAction = '[Product] Load Sprinkler Bodies';
+const LoadSprinklerNozzlesAction = '[Product] Load Sprinkler Nozzles';
+
+
 const LoadProductsSuccessAction = '[Product] Load Success';
 const LoadProductsFailureAction = '[Product] Load Failure';
 const UpdateProductAction = '[Product] Update Product';
@@ -28,6 +35,16 @@ export const clearCurrentProduct = createAction(ClearProductAction);
 export const initializeCurrentProduct = createAction(InitCurrentProductAction);
 
 export const loadProducts = createAction(LoadProductsAction);
+
+export const loadControllers = createAction(LoadControllersAction);
+
+export const loadRotors = createAction(LoadRotorsAction);
+
+export const loadValves = createAction(LoadValvesAction);
+
+export const loadSprinklerBodies = createAction(LoadSprinklerBodiesAction);
+
+export const loadSprinklerNozzles = createAction(LoadSprinklerNozzlesAction);
 
 export const loadProductsSuccess = createAction(
   LoadProductsSuccessAction,

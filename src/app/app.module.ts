@@ -14,20 +14,17 @@ import { AdminComponent } from './components/admin/admin.component';
 import { HomeComponent } from './components/home/home.component';
 import { PathNotFoundComponent } from './components/path-not-found/path-not-found.component';
 import { ProductsComponent } from './components/products/products.component';
-import { SharedFooterComponent } from './components/shared/shared-footer/shared-footer.component';
-import { SharedHeaderComponent } from './components/shared/shared-header/shared-header.component';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
+import { SharedAppModule } from './components/shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SharedHeaderComponent,
     ProductsComponent,
     PathNotFoundComponent,
     AdminComponent,
-    SharedFooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +40,7 @@ import { EffectsModule } from '@ngrx/effects';
       logOnly: environment.production
     }),
     GraphQLModule,
-
+    SharedAppModule
   ],
   providers: [],
   bootstrap: [AppComponent]

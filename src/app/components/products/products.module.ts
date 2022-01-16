@@ -14,6 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './state/product.effects';
 import { ProductService } from './state/product.service';
 import { QtyInputComponent } from './components/qty-input/qty-input.component';
+import { SharedAppModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { QtyInputComponent } from './components/qty-input/qty-input.component';
     StoreModule.forFeature('products', productReducer),
     EffectsModule.forFeature([ProductEffects]),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedAppModule
   ],
   exports: [],
   declarations: [

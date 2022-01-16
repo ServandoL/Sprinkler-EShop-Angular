@@ -4,31 +4,36 @@ import { Apollo, ApolloBase } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import { IProduct } from '../../../models/product.model';
 import { Observable } from 'rxjs';
-import { GetProductByCategoryDocument, GetProductByCategoryQuery } from './generated/graphql';
+import {
+  GetProductByCategoryDocument,
+  GetProductByCategoryQuery,
+} from './generated/graphql';
 import { ApolloQueryResult } from '@apollo/client/core';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private apollo: ApolloBase
+  private apollo: ApolloBase;
   constructor(private httpClient: HttpClient, private apolloProvider: Apollo) {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
-  getControllers$(category: string): Observable<IProduct[]> {
+  getProductsByCategory$(category: string): Observable<IProduct[]> {
     return this.apollo
       .watchQuery({
         query: GetProductByCategoryDocument,
-        variables: { category: category }
-      }).valueChanges.pipe(
+        variables: { category: category },
+      })
+      .valueChanges.pipe(
         map((result: ApolloQueryResult<any>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({
-              error: result.errors.map(error => error.message).join(', ')
+              error: result.errors.map((error) => error.message).join(', '),
             });
           } else {
             return result?.data?.products;
           }
         })
-      )
+      );
   }
+
 }

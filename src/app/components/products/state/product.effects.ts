@@ -19,9 +19,65 @@ export class ProductEffects {
 
   loadControllers$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ProductActions.loadProducts),
+      ofType(ProductActions.loadControllers),
       mergeMap(() =>
-        this.productService.getControllers$("Controllers").pipe(
+        this.productService.getProductsByCategory$("Controllers").pipe(
+          map((products) => ProductActions.loadProductsSuccess({ products })),
+          catchError((error) =>
+            of(ProductActions.loadProductsFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
+  loadRotors$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.loadRotors),
+      mergeMap(() =>
+        this.productService.getProductsByCategory$("Rotors").pipe(
+          map((products) => ProductActions.loadProductsSuccess({ products })),
+          catchError((error) =>
+            of(ProductActions.loadProductsFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
+  loadNozzles$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.loadSprinklerNozzles),
+      mergeMap(() =>
+        this.productService.getProductsByCategory$("Nozzles").pipe(
+          map((products) => ProductActions.loadProductsSuccess({ products })),
+          catchError((error) =>
+            of(ProductActions.loadProductsFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
+  loadSprinklers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.loadSprinklerBodies),
+      mergeMap(() =>
+        this.productService.getProductsByCategory$("Sprinklers").pipe(
+          map((products) => ProductActions.loadProductsSuccess({ products })),
+          catchError((error) =>
+            of(ProductActions.loadProductsFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
+  loadValves$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.loadValves),
+      mergeMap(() =>
+        this.productService.getProductsByCategory$("Valves").pipe(
           map((products) => ProductActions.loadProductsSuccess({ products })),
           catchError((error) =>
             of(ProductActions.loadProductsFailure({ error }))

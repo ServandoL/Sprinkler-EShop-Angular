@@ -10,14 +10,10 @@ import { UpdateItemComponent } from './update-item/update-item.component';
     CommonModule,
     RouterModule.forChild(adminRoutes),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [],
-  declarations: [
-
-    CreateItemComponent,
-       UpdateItemComponent
-  ],
+  declarations: [CreateItemComponent, UpdateItemComponent],
   providers: [],
 })
-export class AdminModule { }
+export class AdminModule {}
