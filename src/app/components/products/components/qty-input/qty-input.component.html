@@ -8,7 +8,7 @@
     class="form-control"
     value={{qty}}
   />
-  <button type="button" class="btn btn-outline-secondary qty-btn" (click)="plusOne(qty+1)">
+  <button type="button" class="btn btn-outline-secondary qty-btn" (click)="plusOne(qty+1)" [disabled]="qty >= stock">
     +
   </button>
 </div>

@@ -10,6 +10,7 @@ export class QtyInputComponent {
 
   constructor() { }
 
+  @Input() stock!: number;
   @Output() quantity = new EventEmitter<number>();
   qty = 1;
 

@@ -38,7 +38,7 @@
       <div
         class="col"
         *ngIf="addedToCart"
-        class="alert alert-success"
+        class="alert alert-primary"
         role="alert"
       >
         Successfully added to your cart.
@@ -68,6 +68,7 @@
             <div class="card-footer">
               <app-qty-input
                 (quantity)="updateQuantity($event)"
+                [stock]="product.stock"
               ></app-qty-input>
               <div class="row mx-0">
                 <button

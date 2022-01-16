@@ -49,4 +49,15 @@ div.bottom-border {
     border: #31b389;
     color: #fff;
   }
+  &:focus {
+    color: #fff;
+    background-color: #31aa84;
+    border-color: #31b389;
+    box-shadow: 0 0 0 0.25rem rgb(49, 179, 137, 50%);
+  }
+  &:active {
+    color: #fff;
+    background-color: #31aa84;
+    border-color: #31b389;
+  }
 }
