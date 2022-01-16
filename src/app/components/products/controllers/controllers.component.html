@@ -13,14 +13,13 @@
     <div class="col-md-10">
       <h3>Controllers</h3>
 
-      <div class="bottom-border my-2">
-        <div
-          *ngIf="errorMessage$ | async as errorMessage"
-          class="alert alert-danger"
-          role="alert"
-        >
-          Error: {{ errorMessage$ }}
-        </div>
+      <div class="bottom-border my-2"></div>
+      <div
+        *ngIf="errorMessage$ | async as errorMessage"
+        class="alert alert-danger"
+        role="alert"
+      >
+        Error: {{ errorMessage$ }}
       </div>
       <div
         class="col"

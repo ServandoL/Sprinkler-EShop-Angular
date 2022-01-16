@@ -12,14 +12,13 @@
     </div>
     <div class="col-md-10">
       <h3>Valves</h3>
-      <div class="bottom-border my-2">
-        <div
-          *ngIf="errorMessage$ | async as errorMessage"
-          class="alert alert-danger"
-          role="alert"
-        >
-          Error: {{ errorMessage$ }}
-        </div>
+      <div class="bottom-border my-2"></div>
+      <div
+        *ngIf="errorMessage$ | async as errorMessage"
+        class="alert alert-danger"
+        role="alert"
+      >
+        Error: {{ errorMessage$ }}
       </div>
       <div
         class="col"
@@ -29,7 +28,12 @@
       >
         No products available.
       </div>
-      <div class="col" *ngIf="addedToCart" class="alert alert-success" role="alert">
+      <div
+        class="col"
+        *ngIf="addedToCart"
+        class="alert alert-success"
+        role="alert"
+      >
         Successfully added to your cart.
       </div>
       <div
@@ -45,13 +49,8 @@
             />
             <div class="card-body">
               <h3 class="card-title">{{ product.productName }}</h3>
-              <p class="card-text product-price">
-                ${{ product.price }}
-              </p>
-              <p
-                class="card-text product-price"
-                *ngIf="product.stock > 0"
-              >
+              <p class="card-text product-price">${{ product.price }}</p>
+              <p class="card-text product-price" *ngIf="product.stock > 0">
                 Inventory: <span class="in-stock">{{ product.stock }}</span>
               </p>
               <p class="card-text out-of-stock" *ngIf="product.stock <= 0">
@@ -59,7 +58,9 @@
               </p>
             </div>
             <div class="card-footer">
-              <app-qty-input (quantity)="updateQuantity($event)"></app-qty-input>
+              <app-qty-input
+                (quantity)="updateQuantity($event)"
+              ></app-qty-input>
               <div class="row mx-0">
                 <button
                   name="add-to-cart"
