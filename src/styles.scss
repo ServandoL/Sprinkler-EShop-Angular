@@ -33,3 +33,20 @@ div.bottom-border {
 .card-img-top {
   width: 60%;
 }
+
+.btn, .btn-primary {
+  border: 2px solid #31b389;
+  color: #31b389;
+  background: #fff;
+  &:hover {
+    border: 2px solid #31b389;
+    background: #31b389;
+    color: #fff;
+  }
+  &:disabled {
+    background: #31b389;
+    opacity: .6;
+    border: #31b389;
+    color: #fff;
+  }
+}

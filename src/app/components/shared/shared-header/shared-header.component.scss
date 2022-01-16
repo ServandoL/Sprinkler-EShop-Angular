@@ -1,0 +1,19 @@
+
+.flex-spacer {
+  flex-grow: 1;
+}
+
+.header-zindex {
+  z-index: 10000;
+}
+
+#navbarDropdownMenuLink, #navbarDropdownAccountLink {
+  color: #fff;
+}
+
+li>a {
+  &:hover {
+    background: #31b389;
+    color: white;
+  }
+}
