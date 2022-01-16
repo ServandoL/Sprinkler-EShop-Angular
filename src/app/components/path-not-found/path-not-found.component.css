@@ -7,7 +7,6 @@
   font-family: "Poppins", sans-serif;
 }
 #error-page {
-  position: absolute;
   top: 10%;
   left: 15%;
   right: 15%;
@@ -34,7 +33,6 @@
   top: 0;
   left: 0;
   right: 0;
-
   background-color: #20bf55;
   background-image: linear-gradient(315deg, #20bf55 0%, #01baef 74%);
   background-size: 400%;

@@ -15,5 +15,6 @@ export const userRoutes: Routes = [
   { path: 'order-history', component: OrderHistoryComponent },
   { path: 'update-profile', component: UpdateProfileComponent },
   { path: 'delete-account', component: DeleteAccountComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'profile' },
 ]
 
