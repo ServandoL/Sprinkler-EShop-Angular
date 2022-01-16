@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from '../../../models/AppState';
 import * as ProductActions from '../state/product.actions';
-import { getProducts } from '../state/product.reducers';
+import { getProductFeatureState, getProducts } from '../state/product.reducers';
 
 @Component({
   selector: 'app-rotors',
@@ -16,6 +16,7 @@ export class RotorsComponent implements OnInit {
   pageTitle = 'Rotors';
   addedToCart = false;
   products$ = this.store.select(getProducts);
+  productsLoading$ = this.store.select(getProductFeatureState)
   errorMessage$!: Observable<string>;
   quantity!: number;
 

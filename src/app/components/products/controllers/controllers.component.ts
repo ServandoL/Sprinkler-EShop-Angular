@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from '../../../models/AppState';
 import * as ProductActions from '../state/product.actions';
-import { getProducts } from '../state/product.reducers';
+import { getProductFeatureState, getProducts } from '../state/product.reducers';
 
 @Component({
   selector: 'app-controllers',
@@ -17,6 +17,7 @@ export class ControllersComponent implements OnInit {
   pageTitle = 'Controllers';
   addedToCart = false;
   products$ = this.store.select(getProducts);
+  productsLoading$ = this.store.select(getProductFeatureState)
   errorMessage$!: Observable<string>;
   quantity!: number;
 

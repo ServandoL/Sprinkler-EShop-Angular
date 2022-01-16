@@ -12,9 +12,10 @@ const initialState: ProductState = {
   products: [],
   currentProductId: null,
   error: '',
+  isLoading: false
 };
 
-const getProductFeatureState = createFeatureSelector<ProductState>('products');
+export const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
 export const getError = createSelector(
   getProductFeatureState,
@@ -55,6 +56,36 @@ export const getProducts = createSelector(
 
 export const productReducer = createReducer<ProductState>(
   initialState,
+  on(ProductActions.loadControllers, (state, action): ProductState => {
+    return {
+      ...state,
+      isLoading: true,
+    }
+  }),
+  on(ProductActions.loadRotors, (state, action): ProductState => {
+    return {
+      ...state,
+      isLoading: true,
+    }
+  }),
+  on(ProductActions.loadSprinklerBodies, (state, action): ProductState => {
+    return {
+      ...state,
+      isLoading: true,
+    }
+  }),
+  on(ProductActions.loadSprinklerNozzles, (state, action): ProductState => {
+    return {
+      ...state,
+      isLoading: true,
+    }
+  }),
+  on(ProductActions.loadValves, (state, action): ProductState => {
+    return {
+      ...state,
+      isLoading: true,
+    }
+  }),
   on(ProductActions.setCurrentProduct, (state, action): ProductState => {
     return {
       ...state,
@@ -78,6 +109,7 @@ export const productReducer = createReducer<ProductState>(
       ...state,
       products: action.products,
       error: '',
+      isLoading: false,
     }
   }),
   on(ProductActions.loadProductsFailure, (state, action): ProductState => {
@@ -85,6 +117,7 @@ export const productReducer = createReducer<ProductState>(
       ...state,
       products: [],
       error: action.error,
+      isLoading: false,
     };
   }),
   on(ProductActions.updateProductSuccess, (state, action): ProductState => {
