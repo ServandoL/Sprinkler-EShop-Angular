@@ -20,14 +20,14 @@ export class QtyFormComponent implements OnInit {
 
   qty = 1;
 
-  minusOne(value: number) {
+  minusOne() {
     this.qty -= 1;
-    this.quantity.emit(value);
+    this.quantity.emit(this.qty);
   }
 
-  plusOne(value: number) {
+  plusOne() {
     this.qty += 1;
-    this.quantity.emit(value);
+    this.quantity.emit(this.qty);
   }
 
   submitClicked() {
