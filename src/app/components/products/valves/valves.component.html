@@ -59,19 +59,11 @@
               </p>
             </div>
             <div class="card-footer">
-              <app-qty-input
+              <app-qty-form
                 (quantity)="updateQuantity($event)"
-              ></app-qty-input>
-              <div class="row mx-0">
-                <button
-                  name="add-to-cart"
-                  class="btn btn-primary"
-                  (click)="submit()"
-                  [disabled]="product.stock <= 0"
-                >
-                  Add to cart
-                </button>
-              </div>
+                (submitted)="submit()"
+                [stock]="product.stock"
+              ></app-qty-form>
             </div>
           </div>
         </div>

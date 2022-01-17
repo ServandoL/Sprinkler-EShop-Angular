@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QtyInputComponent } from './qty-input.component';
+import { QtyFormComponent } from './qty-form.component';
 
-describe('QtyInputComponent', () => {
-  let component: QtyInputComponent;
-  let fixture: ComponentFixture<QtyInputComponent>;
+describe('QtyFormComponent', () => {
+  let component: QtyFormComponent;
+  let fixture: ComponentFixture<QtyFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QtyInputComponent ]
+      declarations: [ QtyFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QtyInputComponent);
+    fixture = TestBed.createComponent(QtyFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -13,8 +13,8 @@ import { productReducer } from './state/product.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './state/product.effects';
 import { ProductService } from './state/product.service';
-import { QtyInputComponent } from './components/qty-input/qty-input.component';
 import { SharedAppModule } from '../shared/shared.module';
+import { QtyFormComponent } from './components/qty-form/qty-form.component';
 
 @NgModule({
   imports: [
@@ -33,7 +33,7 @@ import { SharedAppModule } from '../shared/shared.module';
     SprinklerBodyComponent,
     SprinklerNozzlesComponent,
     ValvesComponent,
-    QtyInputComponent
+    QtyFormComponent
   ],
   providers: [ProductService],
 })
