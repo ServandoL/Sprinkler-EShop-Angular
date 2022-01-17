@@ -15,6 +15,7 @@ import { ProductEffects } from './state/product.effects';
 import { ProductService } from './state/product.service';
 import { SharedAppModule } from '../shared/shared.module';
 import { QtyFormComponent } from './components/qty-form/qty-form.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { QtyFormComponent } from './components/qty-form/qty-form.component';
     SprinklerBodyComponent,
     SprinklerNozzlesComponent,
     ValvesComponent,
-    QtyFormComponent
+    QtyFormComponent,
+    ProductCardComponent
   ],
   providers: [ProductService],
 })

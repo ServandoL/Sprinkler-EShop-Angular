@@ -49,30 +49,11 @@
         *ngIf="products$ | async as products"
       >
         <div class="col" *ngFor="let product of products">
-          <div class="card w-100 h-100">
-            <img
-              class="card-img-top mx-auto"
-              src="/assets/{{ product.imageUrl }}"
-              alt="product image"
-            />
-            <div class="card-body">
-              <h3 class="card-title">{{ product.productName }}</h3>
-              <p class="card-text product-price">${{ product.price }}</p>
-              <p class="card-text product-price" *ngIf="product.stock > 0">
-                Inventory: <span class="in-stock">{{ product.stock }}</span>
-              </p>
-              <p class="card-text out-of-stock" *ngIf="product.stock <= 0">
-                Out of stock
-              </p>
-            </div>
-            <div class="card-footer">
-              <app-qty-form
-                (quantity)="updateQuantity($event)"
-                (submitted)="submit()"
-                [stock]="product.stock"
-              ></app-qty-form>
-            </div>
-          </div>
+          <app-product-card
+            [product]="product"
+            (quantityUpdated)="updateQuantity($event)"
+            (submitClicked)="submit()"
+          ></app-product-card>
         </div>
       </div>
     </div>
