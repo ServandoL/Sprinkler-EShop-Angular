@@ -1,0 +1,34 @@
+<div class="card w-100 h-100">
+  <img
+    class="card-img-top mx-auto"
+    src="/assets/{{ product.imageUrl }}"
+    alt="product-image"
+  />
+  <div class="card-body">
+    <h5 class="card-title">{{ product.productName }}</h5>
+    <p class="card-text">${{ product.price }}</p>
+    <p class="card-text in-stock" *ngIf="product.stock > 0">
+      In stock: {{ product.stock }}
+    </p>
+    <p class="card-text out-of-stock" *ngIf="product.stock <= 0">
+      Out of Stock
+    </p>
+    <div class="card-footer">
+      <div>
+        <button type="submit" class="btn btn-primary" (click)="updateClicked()">
+          Update
+        </button>
+      </div>
+      <div>
+        <button
+          type="submit"
+          name="delete"
+          class="btn btn-danger"
+          (click)="deleteClicked()"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

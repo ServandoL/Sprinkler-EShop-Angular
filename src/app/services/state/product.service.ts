@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { map } from 'rxjs/operators';
-import { IProduct } from '../../../models/product.model';
+import { IProduct } from '../../models/product.model';
 import { Observable } from 'rxjs';
+import { ApolloQueryResult } from '@apollo/client/core';
 import {
   GetProductByCategoryDocument,
-  GetProductByCategoryQuery,
-} from './generated/graphql';
-import { ApolloQueryResult } from '@apollo/client/core';
+  GetAllProductsDocument,
+} from './graphql';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private apollo: ApolloBase;
-  constructor(private httpClient: HttpClient, private apolloProvider: Apollo) {
+  constructor(private apolloProvider: Apollo) {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
@@ -36,4 +36,21 @@ export class ProductService {
       );
   }
 
+  getAllProducts$(): Observable<IProduct[]> {
+    return this.apollo
+      .watchQuery({
+        query: GetAllProductsDocument,
+      })
+      .valueChanges.pipe(
+        map((result: ApolloQueryResult<any>) => {
+          if (result?.errors) {
+            throw new HttpErrorResponse({
+              error: result.errors.map((error) => error.message).join(', '),
+            });
+          } else {
+            return result?.data?.products;
+          }
+        })
+      );
+  }
 }

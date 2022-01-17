@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IProduct } from '../../../models/product.model';
+import { IProduct } from '../../models/product.model';
 import { ObjectId } from 'mongodb';
 
 const CurrentProductAction = '[Product] Set Current Product';

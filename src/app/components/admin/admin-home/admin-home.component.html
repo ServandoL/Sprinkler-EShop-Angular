@@ -1,0 +1,33 @@
+<div *ngIf="(productsLoading$ | async)?.isLoading">
+  <app-shared-loader></app-shared-loader>
+</div>
+<div class="container">
+  <div class="row py-2">
+    <div class="col-md-2">
+      <h3>Actions</h3>
+      <div class="bottom-border my-2"></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <a [routerLink]="['/admin/create-item']">Insert a new item.</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-10">
+      <h3>Welcome administrator FIRST NAME, LAST NAME</h3>
+      <div class="bottom-border my-2"></div>
+
+      <div
+        class="row row-cols-1 row-cols-md-4 g-4"
+        *ngIf="products$ | async as products"
+      >
+        <div class="col" *ngFor="let product of products">
+          <app-admin-cards
+            [product]="product"
+            (clickedDelete)="onDelete()"
+            (clickedUpdate)="onUpdate()"
+          ></app-admin-cards>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

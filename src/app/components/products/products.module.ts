@@ -9,10 +9,10 @@ import { SprinklerBodyComponent } from './sprinkler-body/sprinkler-body.componen
 import { SprinklerNozzlesComponent } from './sprinkler-nozzles/sprinkler-nozzles.component';
 import { ValvesComponent } from './valves/valves.component';
 import { StoreModule } from '@ngrx/store';
-import { productReducer } from './state/product.reducers';
+import { productReducer } from '../../services/state/product.reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { ProductEffects } from './state/product.effects';
-import { ProductService } from './state/product.service';
+import { ProductEffects } from '../../services/state/product.effects';
+import { ProductService } from '../../services/state/product.service';
 import { SharedAppModule } from '../shared/shared.module';
 import { QtyFormComponent } from './components/qty-form/qty-form.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';

@@ -4,7 +4,7 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
-import { IProduct } from '../../../models/product.model';
+import { IProduct } from '../../models/product.model';
 import { ProductState } from './product.state';
 import * as ProductActions from './product.actions';
 
@@ -56,6 +56,12 @@ export const getProducts = createSelector(
 
 export const productReducer = createReducer<ProductState>(
   initialState,
+  on(ProductActions.loadProducts, (state, action): ProductState => {
+    return {
+      ...state,
+      isLoading: true,
+    }
+  }),
   on(ProductActions.loadControllers, (state, action): ProductState => {
     return {
       ...state,

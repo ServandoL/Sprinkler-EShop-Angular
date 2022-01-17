@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from '../../../models/AppState';
-import * as ProductActions from '../state/product.actions';
-import { getProductFeatureState, getProducts } from '../state/product.reducers';
+import * as ProductActions from '../../../services/state/product.actions';
+import { getProductFeatureState, getProducts } from '../../../services/state/product.reducers';
 
 @Component({
   selector: 'app-sprinkler-body',
