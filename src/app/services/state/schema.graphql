@@ -96,3 +96,15 @@ query getAllProducts {
     price
   }
 }
+
+query getBrands {
+  products {
+      brand
+    }
+}
+
+query getCategories {
+  products {
+    category
+  }
+}

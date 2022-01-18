@@ -14,16 +14,18 @@
       Out of Stock
     </p>
     <div class="card-footer">
-      <div>
-        <button type="submit" class="btn btn-primary" (click)="updateClicked()">
+      <div class="button-div">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="updateClicked()"
+        >
           Update
         </button>
-      </div>
-      <div>
         <button
           type="submit"
           name="delete"
-          class="btn btn-danger"
+          class="btn btn-outline-danger"
           (click)="deleteClicked()"
         >
           Delete
