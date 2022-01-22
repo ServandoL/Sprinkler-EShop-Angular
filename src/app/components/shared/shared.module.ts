@@ -6,10 +6,7 @@ import { SharedHeaderComponent } from './shared-header/shared-header.component';
 import { SharedLoaderComponent } from './shared-loader/shared-loader.component';
 
 @NgModule({
-  imports: [
-    HttpClientModule,
-    RouterModule,
-  ],
+  imports: [HttpClientModule, RouterModule],
   exports: [
     SharedHeaderComponent,
     SharedFooterComponent,

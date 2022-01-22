@@ -4,7 +4,11 @@
     <div class="col-lg-6 mx-auto">
       <fieldset>
         <legend>Create New Customer Account</legend>
-        <form id="signUpForm">
+        <form
+          [formGroup]="createUserForm"
+          (ngSubmit)="onSubmit()"
+          #formDir="ngForm"
+        >
           <h4>Personal Information</h4>
           <div class="form-group mx-sm-3">
             <label for="inputFname"
@@ -13,7 +17,7 @@
             <input
               type="text"
               class="form-control"
-              name="inputFname"
+              formControlName="firstName"
               id="inputFname"
               placeholder="Enter first name"
               required
@@ -26,7 +30,7 @@
             <input
               type="text"
               class="form-control"
-              name="inputLname"
+              formControlName="lastName"
               id="inputLname"
               placeholder="Enter last name"
               required
@@ -40,7 +44,7 @@
             <input
               type="email"
               class="form-control"
-              name="inputEmail"
+              formControlName="email"
               id="inputEmail"
               placeholder="Enter email address"
               required
@@ -53,11 +57,10 @@
             <input
               type="password"
               class="form-control"
-              name="inputPassword"
+              formControlName="password"
               id="inputPassword"
               placeholder="Enter password"
-              title="at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="at least one number and one uppercase and lowercase letter and one of the following #?!@$ %^&*-, and at least 8 or more characters"
               required
             />
           </div>
@@ -70,12 +73,26 @@
               type="password"
               class="form-control"
               id="confirmPassword"
+              formControlName="passwordCheck"
               name="confirmPassword"
               required
             />
+            <div
+              *ngIf="
+                createUserForm.errors?.['matchPassword'] &&
+                (createUserForm.controls['passwordCheck'].dirty ||
+                  createUserForm.controls['passwordCheck'].touched)
+              "
+            >
+              <p style="color: red !important">The passwords do no match.</p>
+            </div>
           </div>
           <div class="form-group mx-sm-3 my-2">
-            <button type="button" id="signUpBtn" class="btn btn-primary">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!createUserForm.valid"
+            >
               Create an account
             </button>
           </div>

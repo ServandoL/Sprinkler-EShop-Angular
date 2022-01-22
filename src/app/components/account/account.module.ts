@@ -10,13 +10,15 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
+import { SharedAppModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(userRoutes),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedAppModule
   ],
   exports: [],
   declarations: [
