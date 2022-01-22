@@ -18,7 +18,7 @@ export class AdminCardsComponent {
     this.clickedUpdate.emit();
   }
 
-  deleteClicked() {
-    this.clickedDelete.emit();
+  deleteClicked(element: IProduct) {
+    this.clickedDelete.emit(element);
   }
 }
