@@ -8,6 +8,7 @@ import {
 import { State } from '../../../models/AppState';
 import * as ProductActions from '../../../services/state/product.actions';
 import { IProduct } from '../../../models/product.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-home',
@@ -15,11 +16,12 @@ import { IProduct } from '../../../models/product.model';
   styleUrls: ['./admin-home.component.css'],
 })
 export class AdminHomeComponent implements OnInit {
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<State>, private router: Router) {}
 
   products$ = this.store.select(getProducts);
   productsLoading$ = this.store.select(getProductFeatureState);
   errroMessage!: Observable<string>;
+  productToUpdate!: IProduct;
   showDeleteModal = false;
   deleted = false;
   confirmDelete = false;
@@ -29,11 +31,8 @@ export class AdminHomeComponent implements OnInit {
     this.store.dispatch(ProductActions.loadProducts());
   }
 
-  onUpdate() {
-    this.updated = true;
-    setTimeout(() => {
-      this.updated = false;
-    }, 5000);
+  onUpdate(value: IProduct) {
+    this.productToUpdate = value;
   }
 
   onConfirmDelete() {

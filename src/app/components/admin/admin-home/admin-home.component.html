@@ -25,11 +25,7 @@
         <p>Are you sure you want to delete this item?</p>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal"
-        >
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cancel
         </button>
         <button
@@ -44,6 +40,7 @@
     </div>
   </div>
 </div>
+<app-update-item [product]="productToUpdate"></app-update-item>
 <div class="container">
   <div class="row py-2">
     <div class="col-md-2">
@@ -72,7 +69,7 @@
           <app-admin-cards
             [product]="product"
             (clickedDelete)="onDelete($event)"
-            (clickedUpdate)="onUpdate()"
+            (clickedUpdate)="onUpdate($event)"
           ></app-admin-cards>
         </div>
       </div>

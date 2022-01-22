@@ -14,8 +14,8 @@ export class AdminCardsComponent {
   @Output() clickedUpdate = new EventEmitter();
   @Output() clickedDelete = new EventEmitter();
 
-  updateClicked() {
-    this.clickedUpdate.emit();
+  updateClicked(element: IProduct) {
+    this.clickedUpdate.emit(element);
   }
 
   deleteClicked(element: IProduct) {
