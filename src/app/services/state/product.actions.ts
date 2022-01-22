@@ -11,8 +11,6 @@ const LoadRotorsAction = '[Product] Load Rotors';
 const LoadValvesAction = '[Product] Load Valves';
 const LoadSprinklerBodiesAction = '[Product] Load Sprinkler Bodies';
 const LoadSprinklerNozzlesAction = '[Product] Load Sprinkler Nozzles';
-
-
 const LoadProductsSuccessAction = '[Product] Load Success';
 const LoadProductsFailureAction = '[Product] Load Failure';
 const UpdateProductAction = '[Product] Update Product';

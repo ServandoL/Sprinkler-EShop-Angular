@@ -9,9 +9,7 @@ import { map, shareReplay } from 'rxjs/operators';
   styleUrls: ['./shared-header.component.scss'],
 })
 export class SharedHeaderComponent {
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-  ) {}
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -20,7 +18,5 @@ export class SharedHeaderComponent {
       shareReplay()
     );
 
-  logout() {
-  }
-
+  logout() {}
 }

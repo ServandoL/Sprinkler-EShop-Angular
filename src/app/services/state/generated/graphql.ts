@@ -298,6 +298,20 @@ export type GetAllProductsQuery = {
     | undefined;
 };
 
+export type GetFiltersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetFiltersQuery = {
+  __typename?: 'Query';
+  products?:
+    | Array<
+        | { __typename?: 'Product'; category: string; brand: string }
+        | null
+        | undefined
+      >
+    | null
+    | undefined;
+};
+
 export const CreateProductDocument = gql`
   mutation createProduct(
     $productName: String
@@ -482,6 +496,28 @@ export class GetAllProductsGQL extends Apollo.Query<
   GetAllProductsQueryVariables
 > {
   document = GetAllProductsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetFiltersDocument = gql`
+  query getFilters {
+    products {
+      category
+      brand
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetFiltersGQL extends Apollo.Query<
+  GetFiltersQuery,
+  GetFiltersQueryVariables
+> {
+  document = GetFiltersDocument;
 
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

@@ -97,14 +97,9 @@ query getAllProducts {
   }
 }
 
-query getBrands {
-  products {
-      brand
-    }
-}
-
-query getCategories {
+query getFilters {
   products {
     category
+    brand
   }
 }

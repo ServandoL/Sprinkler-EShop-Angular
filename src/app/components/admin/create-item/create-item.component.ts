@@ -1,17 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import {
+  getBrands,
+  getCategories,
+} from '../../../services/state/product-filters/filter.reducers';
+import { State } from '../../../models/AppState';
 import { IProduct } from '../../../models/product.model';
+import * as FilterActions from '../../../services/state/product-filters/filter.actions';
 
 @Component({
   selector: 'app-create-item',
   templateUrl: './create-item.component.html',
   styleUrls: ['./create-item.component.css'],
 })
-export class CreateItemComponent {
+export class CreateItemComponent implements OnInit {
+  constructor(private store: Store<State>) {}
 
-  constructor() {}
-
+  brands$ = this.store.select(getBrands);
+  categories$ = this.store.select(getCategories);
   newProduct!: IProduct;
+
+  ngOnInit(): void {
+    this.store.dispatch(FilterActions.loadProductFilter());
+  }
 
   createItemForm = new FormGroup({
     productName: new FormControl('', [Validators.required]),

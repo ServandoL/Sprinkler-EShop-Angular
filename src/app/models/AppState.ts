@@ -1,7 +1,8 @@
-import { IProduct } from "./product.model";
+import { IFilter, IProduct } from "./product.model";
 import { IUser } from "./user.model";
 
 export interface State {
   user: IUser,
-  product: IProduct
+  product: IProduct,
+  filter: IFilter
 }

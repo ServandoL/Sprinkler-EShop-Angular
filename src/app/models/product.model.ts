@@ -20,3 +20,8 @@ export interface ICategory {
 export interface IBrand {
   brand: string;
 }
+
+export interface IFilter {
+  categories: ICategory[],
+  brands: IBrand[]
+}

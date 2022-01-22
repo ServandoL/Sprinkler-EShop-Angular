@@ -2,20 +2,29 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProductService } from './product.service';
 import * as ProductActions from './product.actions';
+import * as FilterActions from './product-filters/filter.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Apollo, ApolloBase } from 'apollo-angular';
 
 @Injectable()
 export class ProductEffects {
-  private apollo: ApolloBase;
   constructor(
     private actions$: Actions,
-    private productService: ProductService,
-    private apolloProvider: Apollo
+    private productService: ProductService
   ) {
-    this.apollo = this.apolloProvider.use('SprinklerShop');
   }
+
+  loadFilters$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(FilterActions.loadProductFilter),
+      mergeMap(() =>
+        this.productService.getProductFilters$().pipe(
+          map((filter) => FilterActions.loadFilterSuccess({ filter })),
+          catchError((error) => of(FilterActions.loadFilterFailure({ error })))
+        )
+      )
+    );
+  });
 
   loadControllers$ = createEffect(() => {
     return this.actions$.pipe(

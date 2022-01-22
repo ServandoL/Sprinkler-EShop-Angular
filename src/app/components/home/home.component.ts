@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { State } from '../../models/AppState';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent {
 
-  constructor() { }
+  constructor(private store: Store<State>) { }
+
+  
 
 }

@@ -12,11 +12,13 @@ import { productReducer } from '../../services/state/product.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from '../../services/state/product.effects';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { filterReducer } from '../../services/state/product-filters/filter.reducers';
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(adminRoutes),
     StoreModule.forFeature('products', productReducer),
+    StoreModule.forFeature('filters', filterReducer),
     EffectsModule.forFeature([ProductEffects]),
     FormsModule,
     ReactiveFormsModule,

@@ -46,10 +46,10 @@
               class="form-control"
               id="product-category"
               formControlName="productCategory"
+
             >
-              <!-- {% for item in products %}
-                          <option value="{{item}}">{{item}}</option>
-                          {% endfor %} -->
+            <option [ngValue]="null" disabled>Select Category</option>
+            <option *ngFor="let category of categories$ | async" [ngValue]="category">{{ category }}</option>
             </select>
           </div>
           <div class="form-group mb-3 my-2">
@@ -59,9 +59,8 @@
               id="product-brand"
               formControlName="productBrand"
             >
-              <!-- {% for item in brands %}
-                          <option value="{{item}}">{{item}}</option>
-                          {% endfor %} -->
+            <option [ngValue]="null" disabled>Select Category</option>
+            <option *ngFor="let brand of brands$ | async" [ngValue]="brand">{{ brand }}</option>
             </select>
           </div>
           <div class="form-group mb-3 my-2">
