@@ -17,6 +17,8 @@ import { ProductsComponent } from './components/products/products.component';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedAppModule } from './components/shared/shared.module';
+import { userReducer } from './services/state/users/users.reducers';
+import { UserEffects } from './services/state/users/users.effects';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { SharedAppModule } from './components/shared/shared.module';
     RouterModule.forRoot(routes),
     LayoutModule,
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
+    StoreModule.forFeature('users', userReducer),
+    EffectsModule.forRoot([UserEffects]),
     StoreDevtoolsModule.instrument({
       name: 'Sprinkler EShop DevTools',
       maxAge: 25,
