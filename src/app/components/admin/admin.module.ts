@@ -25,7 +25,12 @@ import { filterReducer } from '../../services/state/product-filters/filter.reduc
     SharedAppModule,
   ],
   exports: [],
-  declarations: [CreateItemComponent, UpdateItemComponent, AdminCardsComponent, AdminHomeComponent],
+  declarations: [
+    CreateItemComponent,
+    UpdateItemComponent,
+    AdminCardsComponent,
+    AdminHomeComponent,
+  ],
   providers: [],
 })
 export class AdminModule {}

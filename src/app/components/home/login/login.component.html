@@ -1,22 +1,23 @@
+<div *ngIf="(user$ | async)?.isLoading">
+  <app-shared-loader></app-shared-loader>
+</div>
 <div class="container">
   <div class="row py-2">
     <!-- start Customer login -->
     <div class="col-lg-9">
       <fieldset>
         <legend>Customer Login</legend>
+        <div class="alert alert-danger col-md-6 mx-sm-3" *ngIf="(errorMessage$ | async)">
+          No account found with the provided email address or password.
+        </div>
         <!-- TODO: Flash message if user accesses cart without being signed in -->
-        <form
-          #loginForm="ngForm"
-          (ngSubmit)="login(loginForm.value)"
-          autocomplete="off"
-          novalidate
-        >
+        <form [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
           <div class="form-group col-md-6 mx-sm-3">
             <label for="inputEmail"
-              >Email address <span style="color: red">*</span></label
+              >Email address <span class="required">*</span></label
             >
             <em
-              style="color: red"
+              class="required"
               *ngIf="
                 loginForm.controls.userName?.invalid &&
                 (loginForm.controls.userName?.touched || mouseoverLogin)
@@ -24,10 +25,9 @@
               >Required</em
             >
             <input
-              (ngModel)="(userName)"
               type="email"
               class="form-control my-2"
-              name="userName"
+              formControlName="userName"
               id="userName"
               placeholder="Enter email"
               aria-describedby="emailHelp"
@@ -40,21 +40,21 @@
           </div>
           <div class="form-group col-md-6 mx-sm-3 my-2">
             <label for="inputPassword"
-              >Password <span style="color: red">*</span></label
+              >Password <span class="required">*</span></label
             >
             <em
+              class="required"
               *ngIf="
                 loginForm.controls.password?.invalid &&
                 (loginForm.controls.password?.touched || mouseoverLogin)
               "
-            >
-              Required</em
+              >Required</em
             >
             <input
               (ngModel)="(password)"
               type="password"
               class="form-control my-2"
-              name="inputPassword"
+              formControlName="password"
               id="inputPassword"
               placeholder="Password"
               required
@@ -76,7 +76,7 @@
             <a href="#" class="px-5">Forgot Password?</a>
           </div>
           <span class="mx-sm-3"
-            ><small style="color: red">* Required Fields</small></span
+            ><small class="required">* Required Fields</small></span
           >
         </form>
       </fieldset>

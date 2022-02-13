@@ -103,3 +103,13 @@ query getFilters {
     brand
   }
 }
+
+query getUser($email: String, $password: String) {
+  users(email: $email, password: $password) {
+    fname
+    lname
+    email
+    isAdmin
+  }
+}
+

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -13,10 +13,10 @@ import {
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent  {
   constructor() {}
 
-  ngOnInit(): void {}
+
 
   createUserForm = new FormGroup(
     {
