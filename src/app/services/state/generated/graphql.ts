@@ -100,6 +100,7 @@ export type QueryUsersArgs = {
   _id?: InputMaybe<Scalars['ID']>;
   email?: InputMaybe<Scalars['String']>;
   isAdmin?: InputMaybe<Scalars['Boolean']>;
+  password?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
@@ -190,10 +191,11 @@ export type GetFiltersQuery = { __typename?: 'Query', products?: Array<{ __typen
 
 export type GetUserQueryVariables = Exact<{
   email?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', _id: string, fname: string, lname: string, email: string, isAdmin: boolean, password: string } | null | undefined> | null | undefined };
+export type GetUserQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', fname: string, lname: string, email: string, isAdmin: boolean } | null | undefined> | null | undefined };
 
 export const CreateProductDocument = gql`
     mutation createProduct($productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $id: ID) {
@@ -227,7 +229,7 @@ export const CreateProductDocument = gql`
   })
   export class CreateProductGQL extends Apollo.Mutation<CreateProductMutation, CreateProductMutationVariables> {
     document = CreateProductDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -246,7 +248,7 @@ export const DeleteProductDocument = gql`
   })
   export class DeleteProductGQL extends Apollo.Mutation<DeleteProductMutation, DeleteProductMutationVariables> {
     document = DeleteProductDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -273,7 +275,7 @@ export const GetProductByBrandDocument = gql`
   })
   export class GetProductByBrandGQL extends Apollo.Query<GetProductByBrandQuery, GetProductByBrandQueryVariables> {
     document = GetProductByBrandDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -300,7 +302,7 @@ export const GetProductByCategoryDocument = gql`
   })
   export class GetProductByCategoryGQL extends Apollo.Query<GetProductByCategoryQuery, GetProductByCategoryQueryVariables> {
     document = GetProductByCategoryDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -327,7 +329,7 @@ export const GetProductByIdDocument = gql`
   })
   export class GetProductByIdGQL extends Apollo.Query<GetProductByIdQuery, GetProductByIdQueryVariables> {
     document = GetProductByIdDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -354,7 +356,7 @@ export const GetAllProductsDocument = gql`
   })
   export class GetAllProductsGQL extends Apollo.Query<GetAllProductsQuery, GetAllProductsQueryVariables> {
     document = GetAllProductsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -373,20 +375,18 @@ export const GetFiltersDocument = gql`
   })
   export class GetFiltersGQL extends Apollo.Query<GetFiltersQuery, GetFiltersQueryVariables> {
     document = GetFiltersDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
   }
 export const GetUserDocument = gql`
-    query getUser($email: String) {
-  users(email: $email) {
-    _id
+    query getUser($email: String, $password: String) {
+  users(email: $email, password: $password) {
     fname
     lname
     email
     isAdmin
-    password
   }
 }
     `;
@@ -396,7 +396,7 @@ export const GetUserDocument = gql`
   })
   export class GetUserGQL extends Apollo.Query<GetUserQuery, GetUserQueryVariables> {
     document = GetUserDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }

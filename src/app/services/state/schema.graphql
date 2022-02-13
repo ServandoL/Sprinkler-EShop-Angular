@@ -104,13 +104,12 @@ query getFilters {
   }
 }
 
-query getUser($email: String) {
-  users(email: $email) {
-    _id
+query getUser($email: String, $password: String) {
+  users(email: $email, password: $password) {
     fname
     lname
     email
     isAdmin
-    password
   }
 }
+

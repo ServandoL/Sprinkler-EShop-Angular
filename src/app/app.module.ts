@@ -18,7 +18,11 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedAppModule } from './components/shared/shared.module';
 import { userReducer } from './services/state/users/users.reducers';
+import { AuthService } from './utils/auth/auth-service.service';
+import { productReducer } from './services/state/product.reducers';
+import { filterReducer } from './services/state/product-filters/filter.reducers';
 import { UserEffects } from './services/state/users/users.effects';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +31,7 @@ import { UserEffects } from './services/state/users/users.effects';
     ProductsComponent,
     PathNotFoundComponent,
     AdminComponent,
+    UnauthorizedComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,18 +39,19 @@ import { UserEffects } from './services/state/users/users.effects';
     HttpClientModule,
     RouterModule.forRoot(routes),
     LayoutModule,
-    StoreModule.forRoot({}),
-    StoreModule.forFeature('users', userReducer),
+    StoreModule.forRoot({
+      users: userReducer
+    }),
     EffectsModule.forRoot([UserEffects]),
     StoreDevtoolsModule.instrument({
       name: 'Sprinkler EShop DevTools',
       maxAge: 25,
-      logOnly: environment.production
+      logOnly: environment.production,
     }),
     GraphQLModule,
-    SharedAppModule
+    SharedAppModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [AuthService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

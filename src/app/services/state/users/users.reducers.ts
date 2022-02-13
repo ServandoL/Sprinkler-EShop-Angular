@@ -1,55 +1,29 @@
 import {
-  createFeatureSelector,
   createReducer,
-  createSelector,
   on,
 } from '@ngrx/store';
 import { UserState } from './users.state';
 import * as UserActions from './users.actions';
-import { IUser } from '../../../models/user.model';
 
 const initialState: UserState = {
-  user: [],
-  currentUserId: null,
+  user: {
+    fname: '',
+    lname: '',
+    email: '',
+    isAdmin: false
+  },
+  loggedIn: false,
   error: '',
   isLoading: false,
 };
 
-export const getUserFeatureState = createFeatureSelector<UserState>('users');
-
-export const getError = createSelector(
-  getUserFeatureState,
-  (state) => state.error
-);
-
-export const getCurrentUserId = createSelector(
-  getUserFeatureState,
-  (state) => state.currentUserId
-);
-
-export const getUser = createSelector(
-  getUserFeatureState,
-  getCurrentUserId,
-  (state, getCurrentUserId) => {
-    if (getCurrentUserId === null) {
-      let user: IUser = {
-        _id: '',
-        fname: '',
-        lname: '',
-        email: '',
-        isAdmin: false,
-      };
-      return user;
-    } else {
-      return getCurrentUserId
-        ? state.user.find((user) => user._id === getCurrentUserId)
-        : null;
-    }
-  }
-);
-
 export const userReducer = createReducer<UserState>(
   initialState,
+  on(UserActions.getCurrentUser, (state) => {
+    return {
+      ...state
+    }
+  }),
   on(UserActions.initializeCurrentUser, (state) => {
     return {
       ...state,
@@ -59,7 +33,9 @@ export const userReducer = createReducer<UserState>(
   on(UserActions.setCurrentUser, (state, action): UserState => {
     return {
       ...state,
+      user: state.user,
       isLoading: true,
+      loggedIn: true
     };
   }),
   on(UserActions.loadUserSuccess, (state, action): UserState => {
@@ -79,8 +55,7 @@ export const userReducer = createReducer<UserState>(
   }),
   on(UserActions.clearCurrentUser, (state): UserState => {
     return {
-      ...state,
-      currentUserId: null
+      ...initialState
     };
   })
 );

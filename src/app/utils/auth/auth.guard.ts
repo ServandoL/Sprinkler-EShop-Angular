@@ -1,20 +1,39 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
+import { AuthService } from './auth-service.service';
+import {
+  getUserFeatureState,
+  selectUser,
+} from '../../services/state/users/users.selectors';
+import { UserState } from '../../services/state/users/users.state';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthGuard implements CanActivate, CanActivateChild {
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+export class AuthGuard implements CanActivate {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private store: Store
+  ) {
+    this.currentUser$.subscribe(user => this.currentUser = user)
   }
-  canActivateChild(
-    childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+
+  currentUser!: UserState;
+  isAuthenticated = false;
+
+  currentUser$ = this.store.select(getUserFeatureState);
+  authenticated$ = this.authService
+    .getToken$()
+    .subscribe((data) => (this.isAuthenticated = data));
+
+  canActivate(): boolean {
+    if (this.isAuthenticated) {
+      return true;
+    }
+    this.router.navigateByUrl('/login');
+    return false;
   }
-  
 }
