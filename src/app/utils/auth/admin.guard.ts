@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from './auth-service.service';
-import {
-  getUserFeatureState,
-} from '../../services/state/users/users.selectors';
+import { getUserFeatureState } from '../../services/state/users/users.selectors';
 import { UserState } from '../../services/state/users/users.state';
 
 @Injectable({
@@ -16,7 +19,7 @@ export class AdminGuard implements CanActivate {
     private router: Router,
     private store: Store
   ) {
-    this.currentUser$.subscribe(user => this.currentUser = user)
+    this.currentUser$.subscribe((user) => (this.currentUser = user));
   }
 
   currentUser!: UserState;
@@ -32,7 +35,7 @@ export class AdminGuard implements CanActivate {
       return true;
     }
     this.authService.logout();
-    this.router.navigateByUrl('/unauthorized');
+    this.router.navigate(['/unauthorized']);
     return false;
   }
 }

@@ -14,7 +14,7 @@ export class UserEffects {
     private router: Router
   ) {}
 
-  loadUser$ = createEffect(() => {
+  login$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(UserActions.setCurrentUser),
       mergeMap((action) =>

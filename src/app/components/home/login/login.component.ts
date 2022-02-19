@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   getError,
   getUserFeatureState,
   selectUser,
 } from '../../../services/state/users/users.selectors';
-import { IUser } from '../../../models/user.model';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import * as UserActions from '../../../services/state/users/users.actions';
 
@@ -16,12 +15,13 @@ import * as UserActions from '../../../services/state/users/users.actions';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   constructor(
-    private router: Router,
-    private userService: AuthService,
+    private authService: AuthService,
     private store: Store
   ) {}
+
+  returnUrl!: string;
 
   user$ = this.store.select(getUserFeatureState);
   errorMessage$ = this.store.select(getError);
@@ -40,6 +40,10 @@ export class LoginComponent {
 
   mouseoverLogin!: boolean;
 
+  ngOnInit(): void {
+    this.authService.logout();
+  }
+
   login(formValues: FormGroup) {
     this.store.dispatch(
       UserActions.setCurrentUser({
@@ -47,24 +51,5 @@ export class LoginComponent {
         password: formValues.controls['password'].value,
       })
     );
-    // this.userService
-    //   .getUser$(formValues.controls['userName'].value)
-    //   .subscribe((user: any) => {
-    //     if (user[0]?.password === formValues.controls['password'].value) {
-    //       if (user[0]?.isAdmin) {
-    //         this.errorMessage = false;
-
-    //         sessionStorage.setItem('SessionAdmin', user[0]._id.toString());
-    //         this.router.navigateByUrl('/admin/dashboard');
-    //       } else {
-    //         this.errorMessage = false;
-
-    //         sessionStorage.setItem('SessionUser', user[0]._id.toString());
-    //         this.router.navigateByUrl('/account/profile');
-    //       }
-    //     } else {
-    //       this.errorMessage = true;
-    //     }
-    //   });
   }
 }
