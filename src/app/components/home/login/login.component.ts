@@ -21,8 +21,6 @@ export class LoginComponent implements OnInit{
     private store: Store
   ) {}
 
-  returnUrl!: string;
-
   user$ = this.store.select(getUserFeatureState);
   errorMessage$ = this.store.select(getError);
 
