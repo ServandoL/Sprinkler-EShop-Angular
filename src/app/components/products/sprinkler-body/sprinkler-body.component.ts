@@ -1,28 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AuthService } from '../../../utils/auth/auth-service.service';
 import { State } from '../../../models/AppState';
 import * as ProductActions from '../../../services/state/product.actions';
-import { getProductFeatureState, getProducts } from '../../../services/state/product.reducers';
+import {
+  getProductFeatureState,
+  getProducts,
+} from '../../../services/state/product.reducers';
 
 @Component({
   selector: 'app-sprinkler-body',
   templateUrl: './sprinkler-body.component.html',
-  styleUrls: ['./sprinkler-body.component.css']
+  styleUrls: ['./sprinkler-body.component.css'],
 })
 export class SprinklerBodyComponent implements OnInit {
-
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<State>, public authService: AuthService) {}
 
   pageTitle = 'Nozzles';
+  validated!: boolean;
+  subscription!: Subscription;
   addedToCart = false;
   products$ = this.store.select(getProducts);
-  productsLoading$ = this.store.select(getProductFeatureState)
+  productsLoading$ = this.store.select(getProductFeatureState);
   errorMessage$!: Observable<string>;
   quantity!: number;
 
   ngOnInit(): void {
     this.store.dispatch(ProductActions.loadSprinklerBodies());
+    this.subscription = this.authService
+      .getToken$()
+      .subscribe((result) => (this.validated = result));
   }
 
   updateQuantity(value: number) {
@@ -30,11 +38,12 @@ export class SprinklerBodyComponent implements OnInit {
   }
 
   submit() {
-    this.addedToCart = true;
-    setTimeout(() => {
-      this.addedToCart = false
-    }, 5000);
-    console.log(this.quantity)
+    if (this.validated) {
+      this.addedToCart = true;
+      setTimeout(() => {
+        this.addedToCart = false;
+      }, 5000);
+      console.log(this.quantity);
+    }
   }
-
 }
