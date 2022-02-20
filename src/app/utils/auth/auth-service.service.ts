@@ -5,11 +5,13 @@ import { Store } from '@ngrx/store';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable, of, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {
-  clearCurrentUser,
-} from '../../services/state/users/users.actions';
+import { clearCurrentUser } from '../../services/state/users/users.actions';
 import { IUser } from '../../models/user.model';
-import { CreateUserDocument, GetUserDocument } from '../../services/state/generated/graphql';
+import {
+  CreateUserDocument,
+  GetUserDocument,
+} from '../../services/state/generated/graphql';
+import { userResponse } from '../../services/state/users/users.state';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +42,12 @@ export class AuthService {
       );
   }
 
-  createUser$(firstName: string, lastName: string, email: string, password: string) {
+  createUser$(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ): Observable<any> {
     return this.apollo.mutate({
       mutation: CreateUserDocument,
       variables: {
@@ -48,9 +55,9 @@ export class AuthService {
         lname: lastName,
         email: email,
         password: password,
-        isAdmin: false
-      }
-    })
+        isAdmin: false,
+      },
+    });
   }
 
   getToken$(): Observable<boolean> {

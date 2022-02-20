@@ -11,7 +11,7 @@
           Account created successfully. You may now log in.
         </div>
         <div class="alert alert-danger" *ngIf="(signUpMessage$ | async)?.success === false">
-          Error.
+          {{ (signUpMessage$ | async)?.message }} {{(signUpMessage$ | async)?.details}}
         </div>
         <form
           [formGroup]="createUserForm"

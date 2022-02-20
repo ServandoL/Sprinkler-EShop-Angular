@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import * as UserActions from './users.actions';
+import { userResponse } from './users.state';
 
 @Injectable()
 export class UserEffects {
@@ -48,9 +49,10 @@ export class UserEffects {
             action.password
           )
           .pipe(
-            map((result: any) =>
-              UserActions.createUserResponse(result?.data?.addUser)
-            ),
+            map((result: any) =>{
+              const response: userResponse = result?.data?.addUser;
+              return UserActions.createUserResponse({ response })
+            }),
             catchError((error) => of(UserActions.createUserFailure({ error })))
           )
       )
