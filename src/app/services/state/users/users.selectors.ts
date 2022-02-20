@@ -1,5 +1,5 @@
-import { createSelector, createFeatureSelector } from "@ngrx/store";
-import { UserState } from "./users.state";
+import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { UserState } from './users.state';
 
 export const getUserFeatureState = createFeatureSelector<UserState>('users');
 
@@ -11,17 +11,18 @@ export const getError = createSelector(
 export const selectUser = createSelector(
   getUserFeatureState,
   (state) => state.user
-)
+);
 
 export const clearUser = createSelector(
   getUserFeatureState,
   (state) => state.user
-)
-export const getUser = createSelector(
-  getUserFeatureState,
-  (state) => state
-)
+);
+export const getUser = createSelector(getUserFeatureState, (state) => state);
 export const createUser = createSelector(
   getUserFeatureState,
   (state) => state.userResponse
-)
+);
+export const deleteUser = createSelector(
+  getUserFeatureState,
+  (state) => state.deleteUserResponse
+);
