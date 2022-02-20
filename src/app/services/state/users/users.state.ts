@@ -6,6 +6,7 @@ export interface UserState {
   error: string;
   loggedIn: boolean;
   isLoading: boolean;
+  deleteUserResponse: deleteUserResponse | null;
 }
 
 export interface userResponse {
@@ -18,4 +19,9 @@ export interface userResponse {
     email: string;
     isAdmin: boolean;
   }
+}
+
+export interface deleteUserResponse {
+  message: string;
+  success: boolean;
 }

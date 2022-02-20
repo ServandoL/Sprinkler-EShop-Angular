@@ -4,14 +4,16 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { AuthService } from '../../../utils/auth/auth-service.service';
+import { UserService } from './user.service';
 import * as UserActions from './users.actions';
-import { userResponse } from './users.state';
+import { deleteUserResponse, userResponse } from './users.state';
 
 @Injectable()
 export class UserEffects {
   constructor(
     private actions$: Actions,
-    private userService: AuthService,
+    private authService: AuthService,
+    private userService: UserService,
     private router: Router
   ) {}
 
@@ -19,7 +21,7 @@ export class UserEffects {
     return this.actions$.pipe(
       ofType(UserActions.setCurrentUser),
       mergeMap((action) =>
-        this.userService.getUser$(action.email, action.password).pipe(
+        this.authService.getUser$(action.email, action.password).pipe(
           map((user) => {
             if (user.isAdmin) {
               sessionStorage.setItem('SessionAdmin', user.email);
@@ -49,12 +51,31 @@ export class UserEffects {
             action.password
           )
           .pipe(
-            map((result: any) =>{
+            map((result: any) => {
               const response: userResponse = result?.data?.addUser;
-              return UserActions.createUserResponse({ response })
+              return UserActions.createUserResponse({ response });
             }),
             catchError((error) => of(UserActions.createUserFailure({ error })))
           )
+      )
+    );
+  });
+
+  deleteUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.deleteUser),
+      mergeMap((action) =>
+        this.userService.deleteUser$(action.email).pipe(
+          map((result: any) => {
+            this.authService.logout();
+            this.router.navigateByUrl('/')
+            const response: deleteUserResponse = result?.data?.deleteUser;
+            return UserActions.deleteUserActionResponse({ response });
+          }),
+          catchError((error) =>
+            of(UserActions.deleteUserActionFailure({ error }))
+          )
+        )
       )
     );
   });

@@ -13,10 +13,24 @@ const initialState: UserState = {
   error: '',
   isLoading: false,
   userResponse: null,
+  deleteUserResponse: null,
 };
 
 export const userReducer = createReducer<UserState>(
   initialState,
+  on(UserActions.deleteUser, (state): UserState => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(UserActions.deleteUserActionResponse, (state, action): UserState => {
+    return {
+      ...state,
+      deleteUserResponse: action.response,
+      isLoading: false,
+    };
+  }),
   on(UserActions.getCurrentUser, (state): UserState => {
     return {
       ...state,
@@ -25,14 +39,14 @@ export const userReducer = createReducer<UserState>(
   on(UserActions.createUser, (state, action): UserState => {
     return {
       ...state,
-      isLoading: true
+      isLoading: true,
     };
   }),
   on(UserActions.createUserResponse, (state, action): UserState => {
     return {
       ...state,
       userResponse: action.response,
-      isLoading: false
+      isLoading: false,
     };
   }),
   on(UserActions.initializeCurrentUser, (state): UserState => {
