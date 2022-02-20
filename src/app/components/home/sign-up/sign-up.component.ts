@@ -7,16 +7,21 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import * as UserActions from '../../../services/state/users/users.actions';
+import { createUser, getUserFeatureState } from '../../../services/state/users/users.selectors';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })
-export class SignUpComponent  {
-  constructor() {}
+export class SignUpComponent {
+  constructor(private store: Store) {
+  }
 
-
+  signUpMessage$ = this.store.select(createUser);
+  loading$ = this.store.select(getUserFeatureState)
 
   createUserForm = new FormGroup(
     {
@@ -51,10 +56,15 @@ export class SignUpComponent  {
     return this.createUserForm.get('passwordCheck');
   }
 
-  onSubmit() {
-    alert('user created');
-    console.log(
-      `User: ${this.firstName?.value}, ${this.lastName?.value}\nemail: ${this.email?.value}\npassword: ${this.password?.value}`
+  onSubmit(formValues: FormGroup) {
+    this.store.dispatch(
+      UserActions.createUser({
+        firstName: formValues.controls['firstName'].value,
+        lastName: formValues.controls['lastName'].value,
+        email: formValues.controls['email'].value,
+        password: formValues.controls['password'].value,
+        isAdmin: false,
+      })
     );
   }
 }
@@ -63,5 +73,7 @@ export const passwordMatchValidator: ValidatorFn = (
 ): ValidationErrors | null => {
   const password = control.get('password');
   const passwordCheck = control.get('passwordCheck');
-  return password?.value !== passwordCheck?.value ? { matchPassword: true } : null;
+  return password?.value !== passwordCheck?.value
+    ? { matchPassword: true }
+    : null;
 };

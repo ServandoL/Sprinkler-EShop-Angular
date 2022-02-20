@@ -35,10 +35,25 @@ export class UserEffects {
       )
     );
   });
+
+  createUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.createUser),
+      mergeMap((action) =>
+        this.userService
+          .createUser$(
+            action.firstName,
+            action.lastName,
+            action.email,
+            action.password
+          )
+          .pipe(
+            map((result: any) =>
+              UserActions.createUserResponse(result?.data?.addUser)
+            ),
+            catchError((error) => of(UserActions.createUserFailure({ error })))
+          )
+      )
+    );
+  });
 }
-//   logout$ = createEffect(() => {
-//     return this.actions$.pipe(
-//       ofType(UserActions.clearCurrentUser)
-//     )
-//   })
-// }

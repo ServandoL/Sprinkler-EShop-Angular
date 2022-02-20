@@ -1,15 +1,25 @@
 <!-- Page Content -->
+<div *ngIf="(loading$ | async)?.isLoading">
+  <app-shared-loader></app-shared-loader>
+</div>
 <div class="container">
   <div class="row py-2">
     <div class="col-lg-6 mx-auto">
       <fieldset>
         <legend>Create New Customer Account</legend>
+        <div class="alert alert-success" *ngIf="(signUpMessage$ | async)?.success">
+          Account created successfully. You may now log in.
+        </div>
+        <div class="alert alert-danger" *ngIf="(signUpMessage$ | async)?.success === false">
+          Error.
+        </div>
         <form
           [formGroup]="createUserForm"
-          (ngSubmit)="onSubmit()"
+          (ngSubmit)="onSubmit(createUserForm)"
           #formDir="ngForm"
         >
           <h4>Personal Information</h4>
+
           <div class="form-group mx-sm-3">
             <label for="inputFname"
               >First name <span style="color: red">*</span></label

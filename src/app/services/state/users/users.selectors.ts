@@ -21,3 +21,7 @@ export const getUser = createSelector(
   getUserFeatureState,
   (state) => state
 )
+export const createUser = createSelector(
+  getUserFeatureState,
+  (state) => state.userResponse
+)

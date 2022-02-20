@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { IUser } from '../../../models/user.model';
+import { userResponse } from './users.state';
 
 const CurrentUserAction = '[User] Set Current User';
 const ClearCurrentUserAction = '[User] Clear Current User';
@@ -9,8 +10,7 @@ const LoadCurrentUserFailureAction = '[User] Load Current User Failure';
 const LoadUsers = '[User] Load Users';
 const GetCurrentUserAction = '[User] Get Current User';
 const CreateUserAction = '[User] Create User';
-const CreateUserActionSuccess = '[User] Create User Success';
-const CreateUserActionFailure = '[User] Create User Failure';
+const CreateUserActionResponse = '[User] Create User Response';
 
 export const setCurrentUser = createAction(
   CurrentUserAction,
@@ -24,18 +24,18 @@ export const createUser = createAction(
     password: string;
     firstName: string;
     lastName: string;
-    isAdming: boolean;
+    isAdmin: boolean;
   }>()
 );
 
-export const createUserSuccess = createAction(
-  CreateUserActionSuccess,
-  props<{ message: string, success: boolean }>()
+export const createUserResponse = createAction(
+  CreateUserActionResponse,
+  props<{ response: userResponse }>()
 )
 
-export const CreateUserFailure = createAction(
-  CreateUserActionFailure,
-  props<{ error: string }>()
+export const createUserFailure = createAction(
+  CreateUserActionResponse,
+  props<{ error: string}>()
 )
 
 export const clearCurrentUser = createAction(ClearCurrentUserAction);
