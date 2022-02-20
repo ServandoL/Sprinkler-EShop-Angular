@@ -38,6 +38,7 @@ export type MutationAddUserArgs = {
   fname?: InputMaybe<Scalars['String']>;
   isAdmin?: InputMaybe<Scalars['Boolean']>;
   lname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -47,7 +48,7 @@ export type MutationDeleteProductArgs = {
 
 
 export type MutationDeleteUserArgs = {
-  _id?: InputMaybe<Scalars['ID']>;
+  email?: InputMaybe<Scalars['String']>;
 };
 
 export type Product = {
@@ -122,6 +123,7 @@ export type AddProductResponse = {
 
 export type AddUserResponse = {
   __typename?: 'addUserResponse';
+  details?: Maybe<Scalars['String']>;
   message?: Maybe<Scalars['String']>;
   success?: Maybe<Scalars['Boolean']>;
   user?: Maybe<User>;
@@ -196,6 +198,24 @@ export type GetUserQueryVariables = Exact<{
 
 
 export type GetUserQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', fname: string, lname: string, email: string, isAdmin: boolean } | null | undefined> | null | undefined };
+
+export type CreateUserMutationVariables = Exact<{
+  fname?: InputMaybe<Scalars['String']>;
+  lname?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  isAdmin?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', addUser?: { __typename?: 'addUserResponse', message?: string | null | undefined, success?: boolean | null | undefined, details?: string | null | undefined, user?: { __typename?: 'User', fname: string, lname: string, email: string, password: string, isAdmin: boolean } | null | undefined } | null | undefined };
+
+export type DeleteUserMutationVariables = Exact<{
+  email?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: { __typename?: 'deleteUserResponse', message?: string | null | undefined, success?: boolean | null | undefined } | null | undefined };
 
 export const CreateProductDocument = gql`
     mutation createProduct($productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $id: ID) {
@@ -396,6 +416,58 @@ export const GetUserDocument = gql`
   })
   export class GetUserGQL extends Apollo.Query<GetUserQuery, GetUserQueryVariables> {
     document = GetUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateUserDocument = gql`
+    mutation createUser($fname: String, $lname: String, $email: String, $password: String, $isAdmin: Boolean) {
+  addUser(
+    fname: $fname
+    lname: $lname
+    email: $email
+    password: $password
+    isAdmin: $isAdmin
+  ) {
+    message
+    success
+    user {
+      fname
+      lname
+      email
+      password
+      isAdmin
+    }
+    details
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateUserGQL extends Apollo.Mutation<CreateUserMutation, CreateUserMutationVariables> {
+    document = CreateUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteUserDocument = gql`
+    mutation deleteUser($email: String) {
+  deleteUser(email: $email) {
+    message
+    success
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteUserGQL extends Apollo.Mutation<DeleteUserMutation, DeleteUserMutationVariables> {
+    document = DeleteUserDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

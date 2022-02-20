@@ -18,6 +18,7 @@
     </div>
     <div class="col-md-10">
       <h3>Sprinkler Body</h3>
+
       <div class="bottom-border my-2"></div>
       <div
         *ngIf="errorMessage$ | async as errorMessage"
@@ -42,6 +43,14 @@
       >
         Successfully added to your cart.
       </div>
+      <div
+        *ngIf="(!validated)"
+        class="alert alert-warning"
+        role="alert"
+      >
+        Please log in to add to your cart.
+      </div>
+
       <div
         class="row row-cols-1 row-cols-lg-4 g-4"
         *ngIf="products$ | async as products"

@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import * as UserActions from './users.actions';
+import { userResponse } from './users.state';
 
 @Injectable()
 export class UserEffects {
@@ -35,10 +36,26 @@ export class UserEffects {
       )
     );
   });
+
+  createUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.createUser),
+      mergeMap((action) =>
+        this.userService
+          .createUser$(
+            action.firstName,
+            action.lastName,
+            action.email,
+            action.password
+          )
+          .pipe(
+            map((result: any) =>{
+              const response: userResponse = result?.data?.addUser;
+              return UserActions.createUserResponse({ response })
+            }),
+            catchError((error) => of(UserActions.createUserFailure({ error })))
+          )
+      )
+    );
+  });
 }
-//   logout$ = createEffect(() => {
-//     return this.actions$.pipe(
-//       ofType(UserActions.clearCurrentUser)
-//     )
-//   })
-// }

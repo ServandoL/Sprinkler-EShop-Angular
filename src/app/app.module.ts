@@ -19,8 +19,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { SharedAppModule } from './components/shared/shared.module';
 import { userReducer } from './services/state/users/users.reducers';
 import { AuthService } from './utils/auth/auth-service.service';
-import { productReducer } from './services/state/product.reducers';
-import { filterReducer } from './services/state/product-filters/filter.reducers';
 import { UserEffects } from './services/state/users/users.effects';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
