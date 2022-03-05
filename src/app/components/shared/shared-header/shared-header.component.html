@@ -68,7 +68,7 @@
       </ul>
       <div class="flex-spacer"></div>
       <ul class="nav navbar-nav">
-        <li class="cart">
+        <li class="cart" *ngIf="(currentUser$ | async)?.loggedIn === true">
           <a routerLink="/account/cart">
             <button type="button" class="btn btn-secondary position-relative">
               <i class="bi bi-cart"></i>
