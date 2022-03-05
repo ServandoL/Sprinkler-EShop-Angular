@@ -1,15 +1,9 @@
-
-import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
-import { ApolloQueryResult } from '@apollo/client/core';
-import { Store } from '@ngrx/store';
+import { Injectable } from '@angular/core';
 import { Apollo, ApolloBase } from 'apollo-angular';
-import { Observable, of, pipe } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { clearCurrentUser } from '../../../services/state/users/users.actions';
-import { IUser } from '../../../models/user.model';
+import { Observable } from 'rxjs';
 import {
-  CreateUserDocument, DeleteUserDocument,
+  CreateUserDocument,
+  DeleteUserDocument,
 } from '../../../services/state/generated/graphql';
 
 @Injectable({
@@ -43,9 +37,8 @@ export class UserService {
     return this.apollo.mutate({
       mutation: DeleteUserDocument,
       variables: {
-        email: email
-      }
-    })
+        email: email,
+      },
+    });
   }
-
 }

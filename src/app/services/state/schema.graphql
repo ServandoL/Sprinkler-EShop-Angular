@@ -113,8 +113,20 @@ query getUser($email: String, $password: String) {
   }
 }
 
-mutation createUser($fname: String, $lname: String, $email: String, $password: String, $isAdmin: Boolean) {
-  addUser(fname: $fname, lname: $lname, email: $email, password: $password, isAdmin: $isAdmin) {
+mutation createUser(
+  $fname: String
+  $lname: String
+  $email: String
+  $password: String
+  $isAdmin: Boolean
+) {
+  addUser(
+    fname: $fname
+    lname: $lname
+    email: $email
+    password: $password
+    isAdmin: $isAdmin
+  ) {
     message
     success
     user {
@@ -132,5 +144,62 @@ mutation deleteUser($email: String) {
   deleteUser(email: $email) {
     message
     success
+  }
+}
+
+mutation addToCart(
+  $userId: String
+  $quantity: Float
+  $productName: String
+  $price: Float
+  $category: String
+  $brand: String
+  $stock: Int
+  $imageUrl: String
+) {
+  addToCart(
+    user_id: $userId
+    quantity: $quantity
+    productName: $productName
+    price: $price
+    category: $category
+    brand: $brand
+    stock: $stock
+    imageUrl: $imageUrl
+  ) {
+    message
+    success
+  }
+}
+
+mutation removeFromCart($userId: String, $productName: String) {
+  removeFromCart(user_id: $userId, productName: $productName) {
+    message
+    success
+  }
+}
+
+mutation updateCart($userId: String, $productName: String, $quantity: Int) {
+  updateCartQuantity(
+    user_id: $userId
+    productName: $productName
+    quantity: $quantity
+  ) {
+    message
+    success
+  }
+}
+
+query getCart($userId: String) {
+  cart(user_id: $userId) {
+    _id
+    user_id
+    productName
+    price
+    category
+    brand
+    stock
+    imageUrl
+    quantity
   }
 }

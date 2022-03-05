@@ -15,12 +15,28 @@ export type Scalars = {
   Float: number;
 };
 
+export type Cart = {
+  __typename?: 'Cart';
+  _id: Scalars['ID'];
+  brand: Scalars['String'];
+  category: Scalars['String'];
+  imageUrl?: Maybe<Scalars['String']>;
+  price: Scalars['Float'];
+  productName: Scalars['String'];
+  quantity: Scalars['Int'];
+  stock: Scalars['Int'];
+  user_id: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addProduct?: Maybe<AddProductResponse>;
+  addToCart?: Maybe<AddToCartResponse>;
   addUser?: Maybe<AddUserResponse>;
   deleteProduct?: Maybe<DeleteProductResponse>;
   deleteUser?: Maybe<DeleteUserResponse>;
+  removeFromCart?: Maybe<RemoveFromCartResponse>;
+  updateCartQuantity?: Maybe<UpdateCartQuantityResponse>;
 };
 
 
@@ -30,6 +46,18 @@ export type MutationAddProductArgs = {
   price?: InputMaybe<Scalars['Float']>;
   productName?: InputMaybe<Scalars['String']>;
   stock?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type MutationAddToCartArgs = {
+  brand?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Scalars['String']>;
+  imageUrl?: InputMaybe<Scalars['String']>;
+  price?: InputMaybe<Scalars['Float']>;
+  productName?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Float']>;
+  stock?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -51,6 +79,19 @@ export type MutationDeleteUserArgs = {
   email?: InputMaybe<Scalars['String']>;
 };
 
+
+export type MutationRemoveFromCartArgs = {
+  productName?: InputMaybe<Scalars['String']>;
+  user_id?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationUpdateCartQuantityArgs = {
+  productName?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['String']>;
+};
+
 export type Product = {
   __typename?: 'Product';
   _id: Scalars['ID'];
@@ -67,10 +108,16 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
+  cart?: Maybe<Array<Maybe<Cart>>>;
   productById?: Maybe<Product>;
   products?: Maybe<Array<Maybe<Product>>>;
   userById?: Maybe<User>;
   users?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type QueryCartArgs = {
+  user_id?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -121,6 +168,12 @@ export type AddProductResponse = {
   success?: Maybe<Scalars['Boolean']>;
 };
 
+export type AddToCartResponse = {
+  __typename?: 'addToCartResponse';
+  message?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
 export type AddUserResponse = {
   __typename?: 'addUserResponse';
   details?: Maybe<Scalars['String']>;
@@ -137,6 +190,18 @@ export type DeleteProductResponse = {
 
 export type DeleteUserResponse = {
   __typename?: 'deleteUserResponse';
+  message?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
+export type RemoveFromCartResponse = {
+  __typename?: 'removeFromCartResponse';
+  message?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
+export type UpdateCartQuantityResponse = {
+  __typename?: 'updateCartQuantityResponse';
   message?: Maybe<Scalars['String']>;
   success?: Maybe<Scalars['Boolean']>;
 };
@@ -216,6 +281,44 @@ export type DeleteUserMutationVariables = Exact<{
 
 
 export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: { __typename?: 'deleteUserResponse', message?: string | null | undefined, success?: boolean | null | undefined } | null | undefined };
+
+export type AddToCartMutationVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Float']>;
+  productName?: InputMaybe<Scalars['String']>;
+  price?: InputMaybe<Scalars['Float']>;
+  category?: InputMaybe<Scalars['String']>;
+  brand?: InputMaybe<Scalars['String']>;
+  stock?: InputMaybe<Scalars['Int']>;
+  imageUrl?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AddToCartMutation = { __typename?: 'Mutation', addToCart?: { __typename?: 'addToCartResponse', message?: string | null | undefined, success?: boolean | null | undefined } | null | undefined };
+
+export type RemoveFromCartMutationVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']>;
+  productName?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type RemoveFromCartMutation = { __typename?: 'Mutation', removeFromCart?: { __typename?: 'removeFromCartResponse', message?: string | null | undefined, success?: boolean | null | undefined } | null | undefined };
+
+export type UpdateCartMutationVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']>;
+  productName?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type UpdateCartMutation = { __typename?: 'Mutation', updateCartQuantity?: { __typename?: 'updateCartQuantityResponse', message?: string | null | undefined, success?: boolean | null | undefined } | null | undefined };
+
+export type GetCartQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetCartQuery = { __typename?: 'Query', cart?: Array<{ __typename?: 'Cart', _id: string, user_id: string, productName: string, price: number, category: string, brand: string, stock: number, imageUrl?: string | null | undefined, quantity: number } | null | undefined> | null | undefined };
 
 export const CreateProductDocument = gql`
     mutation createProduct($productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $id: ID) {
@@ -468,6 +571,102 @@ export const DeleteUserDocument = gql`
   })
   export class DeleteUserGQL extends Apollo.Mutation<DeleteUserMutation, DeleteUserMutationVariables> {
     document = DeleteUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddToCartDocument = gql`
+    mutation addToCart($userId: String, $quantity: Float, $productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $imageUrl: String) {
+  addToCart(
+    user_id: $userId
+    quantity: $quantity
+    productName: $productName
+    price: $price
+    category: $category
+    brand: $brand
+    stock: $stock
+    imageUrl: $imageUrl
+  ) {
+    message
+    success
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddToCartGQL extends Apollo.Mutation<AddToCartMutation, AddToCartMutationVariables> {
+    document = AddToCartDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RemoveFromCartDocument = gql`
+    mutation removeFromCart($userId: String, $productName: String) {
+  removeFromCart(user_id: $userId, productName: $productName) {
+    message
+    success
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RemoveFromCartGQL extends Apollo.Mutation<RemoveFromCartMutation, RemoveFromCartMutationVariables> {
+    document = RemoveFromCartDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateCartDocument = gql`
+    mutation updateCart($userId: String, $productName: String, $quantity: Int) {
+  updateCartQuantity(
+    user_id: $userId
+    productName: $productName
+    quantity: $quantity
+  ) {
+    message
+    success
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateCartGQL extends Apollo.Mutation<UpdateCartMutation, UpdateCartMutationVariables> {
+    document = UpdateCartDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetCartDocument = gql`
+    query getCart($userId: String) {
+  cart(user_id: $userId) {
+    _id
+    user_id
+    productName
+    price
+    category
+    brand
+    stock
+    imageUrl
+    quantity
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetCartGQL extends Apollo.Query<GetCartQuery, GetCartQueryVariables> {
+    document = GetCartDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
