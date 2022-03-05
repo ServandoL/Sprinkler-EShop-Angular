@@ -1,0 +1,142 @@
+<div class="container">
+  <div class="row py-2">
+    <div class="col-md-8">
+      <h3>Shopping cart</h3>
+      <div class="bottom-border my-4"></div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ITEM</th>
+              <th scope="col">PRICE</th>
+              <th scope="col">QTY</th>
+              <th scope="col">SUBTOTAL</th>
+              <th scope="col">ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">
+                <div>
+                  <span
+                    ><img
+                      src=""
+                      class="img-thumbnail"
+                      alt=""
+                      style="width: 100px"
+                  /></span>
+                </div>
+                <div><span>ProductName</span></div>
+              </th>
+              <td>Product Price</td>
+              <td>
+                <div class="input-group mb-3">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary qty-change-minus"
+                  >
+                    -
+                  </button>
+
+                  <input
+                    type="text"
+                    name="item-qty"
+                    class="form-control qty-number"
+                    value="Product Price"
+                  />
+
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary qty-change-plus"
+                  >
+                    +
+                  </button>
+                </div>
+              </td>
+              <td class="subtotal">SubTotal</td>
+              <td>
+                <div class="d-grip gap-2">
+                  <button type="submit" class="btn btn-outline-primary btn-sm">
+                    Update
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-outline-danger btn-sm my-2"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>Checkout</h3>
+      <div class="bottom-border my-4"></div>
+      <div class="card">
+        <div class="card-header">Cart Totals</div>
+        <div class="card-body">
+          <form id="checkout-form">
+            <div class="row mb-3">
+              <label for="subtotal" class="col-sm-8 col-form-label"
+                >Subtotal</label
+              >
+              <div class="col-sm-4">
+                <input
+                  type="text"
+                  name="subtotal"
+                  class="form-control amount"
+                  readonly
+                  value=""
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="tax" class="col-sm-8 col-form-label">Tax</label>
+              <div class="col-sm-4">
+                <input
+                  type="text"
+                  name="tax"
+                  class="form-control tax"
+                  readonly
+                  value=""
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="total" class="col-sm-8 col-form-label">Total</label>
+              <div class="col-sm-4">
+                <input
+                  type="text"
+                  name="total"
+                  class="form-control total"
+                  readonly
+                  value=""
+                />
+              </div>
+            </div>
+            <div class="col-12">
+              <button
+                id="checkout-button"
+                type="submit"
+                class="btn btn-primary"
+                disabled
+              >
+                Proceed to checkout
+              </button>
+              <button
+                id="checkout-button"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Proceed to checkout
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

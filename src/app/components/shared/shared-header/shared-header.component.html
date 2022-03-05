@@ -69,11 +69,16 @@
       <div class="flex-spacer"></div>
       <ul class="nav navbar-nav">
         <li class="cart">
-          <button type="button" class="btn btn-secondary position-relative">
-            <i class="bi bi-cart"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">10</span>
-            <span class="visually-hidden">Items in cart.</span>
-          </button>
+          <a routerLink="/account/cart">
+            <button type="button" class="btn btn-secondary position-relative">
+              <i class="bi bi-cart"></i>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >10</span
+              >
+              <span class="visually-hidden">Items in cart.</span>
+            </button>
+          </a>
         </li>
         <li class="nav-item dropdown">
           <a

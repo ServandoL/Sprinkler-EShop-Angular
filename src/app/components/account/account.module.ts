@@ -11,6 +11,7 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 import { SharedAppModule } from '../shared/shared.module';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { SharedAppModule } from '../shared/shared.module';
     SignUpComponent,
     UpdateProfileComponent,
     OrderHistoryComponent,
-    DeleteAccountComponent
+    DeleteAccountComponent,
+    CartComponent
   ],
   providers: [],
 })
