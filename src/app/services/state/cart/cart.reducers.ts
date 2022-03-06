@@ -76,6 +76,7 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.addToCart, (state, action): CartState => {
     return {
       ...state,
+      currentProduct: action.product,
       isLoading: true,
     };
   }),

@@ -1,18 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { State } from '../../../models/AppState';
 import * as ProductActions from '../../../services/state/product.actions';
-import * as CartActions from '../../../services/state/cart/cart.actions';
 import {
   getProductFeatureState,
   getProducts,
 } from '../../../services/state/product.reducers';
 import { IProduct } from '../../../models/product.model';
-import { ICartItem } from '../../../models/cart.model';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import { addToCart } from '../../../services/state/cart/cart.selectors';
+import { addToCartFunction } from '../../../utils/common/functions';
 
 @Component({
   selector: 'app-controllers',
@@ -48,22 +47,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
     this.quantity = value;
   }
 
-  submit(product: IProduct) {
-    console.log('onSubmit product: ', product);
-    const cartItem: ICartItem = {
-      user_id:
-        sessionStorage.getItem('SessionUser') ||
-        sessionStorage.getItem('SessionAdmin'),
-      productName: product.productName,
-      stock: product.stock,
-      quantity: this.quantity,
-      price: product.price,
-      brand: product.brand,
-      category: product.category,
-      imageUrl: product.imageUrl,
-    };
-    if (this.validated) {
-      this.store.dispatch(CartActions.addToCart({ product: cartItem }));
-    }
+  submit(product: IProduct, qty: number) {
+    addToCartFunction(product, qty, this.validated, this.store);
   }
 }

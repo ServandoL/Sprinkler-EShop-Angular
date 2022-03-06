@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { State } from '../../../models/AppState';
 import * as ProductActions from '../../../services/state/product.actions';
@@ -8,13 +8,17 @@ import {
   getProductFeatureState,
   getProducts,
 } from '../../../services/state/product.reducers';
+import { IProduct } from '../../../models/product.model';
+import { addToCartFunction } from '../../../utils/common/functions';
+import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
+import { addToCart } from '../../../services/state/cart/cart.selectors';
 
 @Component({
   selector: 'app-sprinkler-nozzles',
   templateUrl: './sprinkler-nozzles.component.html',
   styleUrls: ['./sprinkler-nozzles.component.css'],
 })
-export class SprinklerNozzlesComponent implements OnInit {
+export class SprinklerNozzlesComponent implements OnInit, OnDestroy {
   constructor(private store: Store<State>, public authService: AuthService) {}
 
   pageTitle = 'Nozzles';
@@ -23,7 +27,8 @@ export class SprinklerNozzlesComponent implements OnInit {
   addedToCart = false;
   products$ = this.store.select(getProducts);
   productsLoading$ = this.store.select(getProductFeatureState);
-  errorMessage$!: Observable<string>;
+  addToCartLoading$ = this.store.select(getCartFeatureState);
+  addToCartResponse$ = this.store.select(addToCart);
   quantity!: number;
 
   ngOnInit(): void {
@@ -33,17 +38,15 @@ export class SprinklerNozzlesComponent implements OnInit {
       .subscribe((result) => (this.validated = result));
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   updateQuantity(value: number) {
     this.quantity = value;
   }
 
-  submit() {
-    if (this.validated) {
-      this.addedToCart = true;
-      setTimeout(() => {
-        this.addedToCart = false;
-      }, 5000);
-      console.log(this.quantity);
-    }
+  submit(product: IProduct, qty: number) {
+    addToCartFunction(product, qty, this.validated, this.store);
   }
 }

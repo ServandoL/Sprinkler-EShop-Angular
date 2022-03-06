@@ -43,12 +43,10 @@ export class CartService {
   }
 
   addToCart$(product: ICartItem): Observable<any> {
-    console.log('the product: ', product);
-    console.log('the user:', product.user_id);
     return this.apollo.mutate({
       mutation: AddToCartDocument,
       variables: {
-        user_id: product.user_id,
+        userId: product.user_id,
         quantity: product.quantity,
         productName: product.productName,
         price: product.price,

@@ -17,7 +17,7 @@
   <div class="card-footer">
     <app-qty-form
       (quantity)="updateQuantity($event)"
-      (submitted)="submit()"
+      (submitted)="submit($event)"
       [stock]="product.stock"
     ></app-qty-form>
   </div>

@@ -1,4 +1,9 @@
-<div *ngIf="(productsLoading$ | async)?.isLoading">
+<div
+  *ngIf="
+    (productsLoading$ | async)?.isLoading ||
+    (addToCartLoading$ | async)?.isLoading
+  "
+>
   <app-shared-loader></app-shared-loader>
 </div>
 <div class="container">
@@ -21,11 +26,11 @@
 
       <div class="bottom-border my-2"></div>
       <div
-        *ngIf="errorMessage$ | async as errorMessage"
+        *ngIf="(addToCartResponse$ | async)?.success === false"
         class="alert alert-danger"
         role="alert"
       >
-        Error: {{ errorMessage$ }}
+        {{ (addToCartResponse$ | async)?.message }}
       </div>
       <div
         class="col"
@@ -37,17 +42,13 @@
       </div>
       <div
         class="col"
-        *ngIf="addedToCart"
+        *ngIf="(addToCartResponse$ | async)?.success"
         class="alert alert-primary"
         role="alert"
       >
-        Successfully added to your cart.
+        {{ (addToCartResponse$ | async)?.message }}
       </div>
-      <div
-        *ngIf="(!validated)"
-        class="alert alert-warning"
-        role="alert"
-      >
+      <div *ngIf="!validated" class="alert alert-warning" role="alert">
         Please log in to add to your cart.
       </div>
 
@@ -59,7 +60,7 @@
           <app-product-card
             [product]="product"
             (quantityUpdated)="updateQuantity($event)"
-            (submitClicked)="submit()"
+            (submitClicked)="submit(product, $event)"
           ></app-product-card>
         </div>
       </div>

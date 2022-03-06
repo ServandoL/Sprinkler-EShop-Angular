@@ -32,7 +32,6 @@ export class CartEffects {
       mergeMap((action) =>
         this.cartService.addToCart$(action.product).pipe(
           map((result: any) => {
-            console.log('the action:', action.product);
             const response: CartGqlResponse = result?.data?.addToCart;
             return CartActions.addToCartSuccess({ response });
           })

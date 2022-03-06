@@ -4,11 +4,10 @@ import { IProduct } from '../../../../models/product.model';
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
-  styleUrls: ['./product-card.component.css']
+  styleUrls: ['./product-card.component.css'],
 })
 export class ProductCardComponent {
-
-  constructor() { }
+  constructor() {}
 
   @Input() product!: IProduct;
   @Output() quantityUpdated = new EventEmitter();
@@ -18,8 +17,7 @@ export class ProductCardComponent {
     this.quantityUpdated.emit(value);
   }
 
-  submit() {
-    this.submitClicked.emit();
+  submit(qty: number) {
+    this.submitClicked.emit(qty);
   }
-
 }

@@ -5,14 +5,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-qty-form',
   templateUrl: './qty-form.component.html',
-  styleUrls: ['./qty-form.component.css']
+  styleUrls: ['./qty-form.component.css'],
 })
 export class QtyFormComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   @Input() stock!: number;
   @Output() quantity = new EventEmitter<number>();
@@ -31,7 +29,6 @@ export class QtyFormComponent implements OnInit {
   }
 
   submitClicked() {
-    this.submitted.emit();
+    this.submitted.emit(this.qty);
   }
-
 }

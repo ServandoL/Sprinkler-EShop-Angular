@@ -60,7 +60,7 @@
           <app-product-card
             [product]="product"
             (quantityUpdated)="updateQuantity($event)"
-            (submitClicked)="submit(product)"
+            (submitClicked)="submit(product, $event)"
           ></app-product-card>
         </div>
       </div>
