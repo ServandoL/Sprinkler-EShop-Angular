@@ -1,9 +1,17 @@
 import { ObjectId } from 'mongodb';
-import { IProduct } from './product.model';
 
-export interface ICart {
-  _id: ObjectId;
-  user_id: string;
+export interface ICartItem {
+  user_id: string | null;
+  productName: string;
+  price: number;
+  category: string;
+  brand: string;
+  stock: number;
+  imageUrl: string | undefined;
   quantity: number;
-  products: IProduct[];
+}
+
+export interface CartGqlResponse {
+  message: string;
+  success: false;
 }

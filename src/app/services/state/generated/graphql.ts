@@ -55,7 +55,7 @@ export type MutationAddToCartArgs = {
   imageUrl?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['Float']>;
   productName?: InputMaybe<Scalars['String']>;
-  quantity?: InputMaybe<Scalars['Float']>;
+  quantity?: InputMaybe<Scalars['Int']>;
   stock?: InputMaybe<Scalars['Int']>;
   user_id?: InputMaybe<Scalars['String']>;
 };
@@ -284,7 +284,7 @@ export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: { __typ
 
 export type AddToCartMutationVariables = Exact<{
   userId?: InputMaybe<Scalars['String']>;
-  quantity?: InputMaybe<Scalars['Float']>;
+  quantity?: InputMaybe<Scalars['Int']>;
   productName?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['Float']>;
   category?: InputMaybe<Scalars['String']>;
@@ -577,7 +577,7 @@ export const DeleteUserDocument = gql`
     }
   }
 export const AddToCartDocument = gql`
-    mutation addToCart($userId: String, $quantity: Float, $productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $imageUrl: String) {
+    mutation addToCart($userId: String, $quantity: Int, $productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $imageUrl: String) {
   addToCart(
     user_id: $userId
     quantity: $quantity

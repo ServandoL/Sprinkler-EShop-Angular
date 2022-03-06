@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ICart } from '../../../models/cart.model';
-import { ObjectId } from 'mongodb';
+import { CartGqlResponse, ICartItem } from '../../../models/cart.model';
 
 const LoadCartAction = '[Cart] Load Cart';
 const LoadCartSuccess = '[Cart] Load Cart Success';
@@ -15,8 +14,54 @@ const AddToCartAction = '[Cart] Add To Cart';
 const AddToCartSuccess = '[Cart] Add To Cart Success';
 const AddToCartFailure = '[Cart] Add To Cart Failure';
 
-export const loadCart = createAction(LoadCartAction);
+export const loadCart = createAction(
+  LoadCartAction,
+  props<{ user_id: string }>()
+);
 export const loadCartSuccess = createAction(
   LoadCartSuccess,
-  props<{ cart: ICart }>()
+  props<{ products: ICartItem[] }>()
+);
+export const loadCartFailure = createAction(
+  LoadCartFailure,
+  props<{ error: string }>()
+);
+
+export const deleteFromCart = createAction(
+  DeleteFromCartAction,
+  props<{ product: ICartItem }>()
+);
+export const deleteFromCartSuccess = createAction(
+  DeleteFromCartSuccess,
+  props<{ response: CartGqlResponse }>()
+);
+export const deleteFromCartFailure = createAction(
+  DeleteFromCartFailure,
+  props<{ error: string }>()
+);
+
+export const updateCart = createAction(
+  UpdateCartAction,
+  props<{ product: ICartItem }>()
+);
+export const updateCartSuccess = createAction(
+  UpdateCartSuccess,
+  props<{ response: CartGqlResponse }>()
+);
+export const updateCartFailure = createAction(
+  UpdateCartFailure,
+  props<{ error: string }>()
+);
+
+export const addToCart = createAction(
+  AddToCartAction,
+  props<{ product: ICartItem }>()
+);
+export const addToCartSuccess = createAction(
+  AddToCartSuccess,
+  props<{ response: CartGqlResponse }>()
+);
+export const addToCartFailure = createAction(
+  AddToCartFailure,
+  props<{ error: string }>()
 );

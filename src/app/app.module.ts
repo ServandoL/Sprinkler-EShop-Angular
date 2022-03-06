@@ -21,6 +21,8 @@ import { userReducer } from './services/state/users/users.reducers';
 import { AuthService } from './utils/auth/auth-service.service';
 import { UserEffects } from './services/state/users/users.effects';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { cartReducer } from './services/state/cart/cart.reducers';
+import { CartEffects } from './services/state/cart/cart.effects';
 
 @NgModule({
   declarations: [
@@ -38,9 +40,10 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
     RouterModule.forRoot(routes),
     LayoutModule,
     StoreModule.forRoot({
-      users: userReducer
+      users: userReducer,
+      cart: cartReducer,
     }),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([UserEffects, CartEffects]),
     StoreDevtoolsModule.instrument({
       name: 'Sprinkler EShop DevTools',
       maxAge: 25,

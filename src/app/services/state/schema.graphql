@@ -149,7 +149,7 @@ mutation deleteUser($email: String) {
 
 mutation addToCart(
   $userId: String
-  $quantity: Float
+  $quantity: Int
   $productName: String
   $price: Float
   $category: String

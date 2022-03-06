@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApolloQueryResult } from '@apollo/client';
+import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ICartItem } from '../../../models/cart.model';
 import {
   AddToCartDocument,
   GetCartDocument,
@@ -20,7 +21,7 @@ export class CartService {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
-  getCart$(user_id: string): Observable<any> {
+  getCart$(user_id: string): Observable<ICartItem[]> {
     return this.apollo
       .watchQuery({
         query: GetCartDocument,
@@ -41,32 +42,28 @@ export class CartService {
       );
   }
 
-  addToCart$(
-    user_id: string,
-    quantity: number,
-    productName: string,
-    price: number,
-    category: string,
-    brand: string,
-    stock: number,
-    imageUrl: string
-  ): Observable<any> {
+  addToCart$(product: ICartItem): Observable<any> {
+    console.log('the product: ', product);
+    console.log('the user:', product.user_id);
     return this.apollo.mutate({
       mutation: AddToCartDocument,
       variables: {
-        user_id: user_id,
-        quantity: quantity,
-        productName: productName,
-        price: price,
-        category: category,
-        brand: brand,
-        stock: stock,
-        imageUrl: imageUrl,
+        user_id: product.user_id,
+        quantity: product.quantity,
+        productName: product.productName,
+        price: product.price,
+        category: product.category,
+        brand: product.brand,
+        stock: product.stock,
+        imageUrl: product.imageUrl,
       },
     });
   }
 
-  removeFromCart$(user_id: string, productName: string): Observable<any> {
+  removeFromCart$(
+    user_id: string | null,
+    productName: string
+  ): Observable<any> {
     return this.apollo.mutate({
       mutation: RemoveFromCartDocument,
       variables: {
@@ -77,7 +74,7 @@ export class CartService {
   }
 
   updateCartQuantity(
-    user_id: string,
+    user_id: string | null,
     productName: string,
     quantity: number
   ): Observable<any> {
