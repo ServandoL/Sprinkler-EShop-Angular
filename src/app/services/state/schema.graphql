@@ -169,6 +169,16 @@ mutation addToCart(
   ) {
     message
     success
+    product {
+      user_id
+      productName
+      price
+      category
+      brand
+      stock
+      imageUrl
+      quantity
+    }
   }
 }
 

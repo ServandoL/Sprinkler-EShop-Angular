@@ -1,8 +1,11 @@
+<div *ngIf="(cartLoading$ | async)?.isLoading">
+  <app-shared-loader></app-shared-loader>
+</div>
 <div class="container">
   <div class="row py-2">
     <div class="col-md-8">
       <h3>Shopping cart</h3>
-      <div class="bottom-border my-4"></div>
+      <div class="bottom-border my-2"></div>
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -15,7 +18,38 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr *ngFor="let product of cart$ | async as ICartItem">
+              <th scope="row">
+                <span>
+                  <img
+                    src="assets/{{ product.imageUrl }}"
+                    class="img-thumbnail"
+                    alt="productImage"
+                    style="width: 100px"
+                  /> </span
+                ><span>{{ product?.productName }}</span>
+              </th>
+              <td>${{ product?.price }}</td>
+              <td>
+                <app-qty-form
+                  (quantity)="updateQuantity($event)"
+                  (submitted)="onUpdate($event, product)"
+                  [inputQuantity]="product.quantity"
+                  [stock]="product.stock"
+                  [title]="'Update'"
+                ></app-qty-form>
+              </td>
+              <td>${{ (product.quantity * product.price).toFixed(2) }}</td>
+              <td>
+                <button
+                  type="submit"
+                  class="btn btn-outline-danger btn-sm my-2"
+                >
+                  Remove
+                </button>
+              </td>
+            </tr>
+            <!-- <tr>
               <th scope="row">
                 <div>
                   <span
@@ -67,14 +101,14 @@
                   </button>
                 </div>
               </td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
     </div>
     <div class="col-md-4">
       <h3>Checkout</h3>
-      <div class="bottom-border my-4"></div>
+      <div class="bottom-border my-2"></div>
       <div class="card">
         <div class="card-header">Cart Totals</div>
         <div class="card-body">

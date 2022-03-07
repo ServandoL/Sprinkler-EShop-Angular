@@ -171,6 +171,7 @@ export type AddProductResponse = {
 export type AddToCartResponse = {
   __typename?: 'addToCartResponse';
   message?: Maybe<Scalars['String']>;
+  product?: Maybe<Cart>;
   success?: Maybe<Scalars['Boolean']>;
 };
 
@@ -294,7 +295,7 @@ export type AddToCartMutationVariables = Exact<{
 }>;
 
 
-export type AddToCartMutation = { __typename?: 'Mutation', addToCart?: { __typename?: 'addToCartResponse', message?: string | null | undefined, success?: boolean | null | undefined } | null | undefined };
+export type AddToCartMutation = { __typename?: 'Mutation', addToCart?: { __typename?: 'addToCartResponse', message?: string | null | undefined, success?: boolean | null | undefined, product?: { __typename?: 'Cart', user_id: string, productName: string, price: number, category: string, brand: string, stock: number, imageUrl?: string | null | undefined, quantity: number } | null | undefined } | null | undefined };
 
 export type RemoveFromCartMutationVariables = Exact<{
   userId?: InputMaybe<Scalars['String']>;
@@ -590,6 +591,16 @@ export const AddToCartDocument = gql`
   ) {
     message
     success
+    product {
+      user_id
+      productName
+      price
+      category
+      brand
+      stock
+      imageUrl
+      quantity
+    }
   }
 }
     `;

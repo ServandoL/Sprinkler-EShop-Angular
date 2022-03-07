@@ -13,22 +13,38 @@ export class QtyFormComponent implements OnInit {
   ngOnInit(): void {}
 
   @Input() stock!: number;
+  @Input() title!: string;
+  @Input() inputQuantity!: number;
   @Output() quantity = new EventEmitter<number>();
   @Output() submitted = new EventEmitter();
 
   qty = 1;
 
   minusOne() {
-    this.qty -= 1;
-    this.quantity.emit(this.qty);
+    if (this.inputQuantity) {
+      this.inputQuantity -= 1;
+      this.quantity.emit(this.inputQuantity);
+    } else {
+      this.qty -= 1;
+      this.quantity.emit(this.qty);
+    }
   }
 
   plusOne() {
-    this.qty += 1;
-    this.quantity.emit(this.qty);
+    if (this.inputQuantity) {
+      this.inputQuantity += 1;
+      this.quantity.emit(this.inputQuantity);
+    } else {
+      this.qty += 1;
+      this.quantity.emit(this.qty);
+    }
   }
 
   submitClicked() {
-    this.submitted.emit(this.qty);
+    if (this.inputQuantity) {
+      this.submitted.emit(this.inputQuantity);
+    } else {
+      this.submitted.emit(this.qty);
+    }
   }
 }

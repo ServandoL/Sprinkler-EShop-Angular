@@ -5,12 +5,18 @@ import * as CartActions from './cart.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { CartGqlResponse, ICartItem } from '../../../models/cart.model';
+import { State } from '../../../models/AppState';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartEffects {
-  constructor(private actions$: Actions, private cartService: CartService) {}
+  constructor(
+    private actions$: Actions,
+    private cartService: CartService,
+    private store: Store<State>
+  ) {}
 
   loadCart$ = createEffect(() => {
     return this.actions$.pipe(
@@ -33,7 +39,10 @@ export class CartEffects {
         this.cartService.addToCart$(action.product).pipe(
           map((result: any) => {
             const response: CartGqlResponse = result?.data?.addToCart;
-            return CartActions.addToCartSuccess({ response });
+            return CartActions.addToCartSuccess({
+              response: response,
+              product: action.product,
+            });
           })
         )
       )
@@ -48,7 +57,7 @@ export class CartEffects {
           .updateCartQuantity(
             action.product.user_id,
             action.product.productName,
-            action.product.quantity
+            action.quantity
           )
           .pipe(
             map((result: any) => {

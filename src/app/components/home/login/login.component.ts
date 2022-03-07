@@ -15,11 +15,8 @@ import * as UserActions from '../../../services/state/users/users.actions';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit{
-  constructor(
-    private authService: AuthService,
-    private store: Store
-  ) {}
+export class LoginComponent implements OnInit {
+  constructor(private authService: AuthService, private store: Store) {}
 
   user$ = this.store.select(getUserFeatureState);
   errorMessage$ = this.store.select(getError);

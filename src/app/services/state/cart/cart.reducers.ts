@@ -12,6 +12,7 @@ const initialState: CartState = {
   user_id: '',
   products: [],
   currentProduct: null,
+  cartQuantity: 0,
   response: null,
   error: '',
   isLoading: false,
@@ -57,7 +58,6 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.updateCartSuccess, (state, action): CartState => {
     return {
       ...state,
-      products: [],
       currentProduct: null,
       response: action.response,
       error: '',
@@ -81,9 +81,15 @@ export const cartReducer = createReducer<CartState>(
     };
   }),
   on(CartActions.addToCartSuccess, (state, action): CartState => {
+    let products = [...state.products];
+    if (action.product) {
+      products.push(action.product);
+    }
     return {
       ...state,
-      products: [],
+      user_id: action.product.user_id,
+      products: products,
+      cartQuantity: products.length,
       currentProduct: null,
       error: '',
       response: action.response,

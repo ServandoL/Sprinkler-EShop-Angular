@@ -11,12 +11,13 @@ const UpdateCartAction = '[Cart] Update Cart';
 const UpdateCartSuccess = '[Cart] Update Cart Success';
 const UpdateCartFailure = '[Cart] Update Cart Failure';
 const AddToCartAction = '[Cart] Add To Cart';
+const updateCartQuantityAction = '[Cart] Update Cart Quantity';
 const AddToCartSuccess = '[Cart] Add To Cart Success';
 const AddToCartFailure = '[Cart] Add To Cart Failure';
 
 export const loadCart = createAction(
   LoadCartAction,
-  props<{ user_id: string }>()
+  props<{ user_id: string | null }>()
 );
 export const loadCartSuccess = createAction(
   LoadCartSuccess,
@@ -42,7 +43,7 @@ export const deleteFromCartFailure = createAction(
 
 export const updateCart = createAction(
   UpdateCartAction,
-  props<{ product: ICartItem }>()
+  props<{ product: ICartItem; quantity: number }>()
 );
 export const updateCartSuccess = createAction(
   UpdateCartSuccess,
@@ -59,7 +60,7 @@ export const addToCart = createAction(
 );
 export const addToCartSuccess = createAction(
   AddToCartSuccess,
-  props<{ response: CartGqlResponse }>()
+  props<{ response: CartGqlResponse; product: ICartItem }>()
 );
 export const addToCartFailure = createAction(
   AddToCartFailure,

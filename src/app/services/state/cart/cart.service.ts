@@ -21,12 +21,12 @@ export class CartService {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
-  getCart$(user_id: string): Observable<ICartItem[]> {
+  getCart$(user_id: string | null): Observable<ICartItem[]> {
     return this.apollo
       .watchQuery({
         query: GetCartDocument,
         variables: {
-          user_id: user_id,
+          userId: user_id,
         },
       })
       .valueChanges.pipe(
@@ -65,7 +65,7 @@ export class CartService {
     return this.apollo.mutate({
       mutation: RemoveFromCartDocument,
       variables: {
-        user_id: user_id,
+        userId: user_id,
         productName: productName,
       },
     });
@@ -79,7 +79,7 @@ export class CartService {
     return this.apollo.mutate({
       mutation: UpdateCartDocument,
       variables: {
-        user_id: user_id,
+        userId: user_id,
         productName: productName,
         quantity: quantity,
       },
