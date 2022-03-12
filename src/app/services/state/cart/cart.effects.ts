@@ -23,9 +23,10 @@ export class CartEffects {
       ofType(CartActions.loadCart),
       mergeMap((action) =>
         this.cartService.getCart$(action.user_id).pipe(
-          map((products: ICartItem[]) =>
-            CartActions.loadCartSuccess({ products })
-          ),
+          map((products: ICartItem[]) => {
+            console.log(products, action);
+            return CartActions.loadCartSuccess({ products });
+          }),
           catchError((error) => of(CartActions.loadCartFailure({ error })))
         )
       )

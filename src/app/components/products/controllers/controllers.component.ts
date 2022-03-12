@@ -24,23 +24,37 @@ export class ControllersComponent implements OnInit, OnDestroy {
   pageTitle = 'Controllers';
   validated!: boolean;
   addedToCart = false;
-  subscription!: Subscription;
+  subscription: Subscription[] = [];
   products$ = this.store.select(getProducts);
   productsLoading$ = this.store.select(getProductFeatureState);
   addToCartLoading$ = this.store.select(getCartFeatureState);
   addToCartResponse$ = this.store.select(addToCart);
+  success!: boolean | undefined;
   quantity!: number;
 
   ngOnInit(): void {
     this.store.dispatch(ProductActions.loadControllers());
+
     this.quantity = 1;
-    this.subscription = this.authService
-      .getToken$()
-      .subscribe((result) => (this.validated = result));
+    this.subscription.push(
+      this.authService
+        .getToken$()
+        .subscribe((result) => (this.validated = result))
+    );
+    this.subscription.push(
+      this.addToCartLoading$.subscribe((state) => {
+        this.success = state?.response?.success;
+        if (this.success) {
+          setTimeout(() => {
+            this.success = false;
+          }, 5000);
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription.forEach((sub) => sub.unsubscribe());
   }
 
   updateQuantity(value: number) {

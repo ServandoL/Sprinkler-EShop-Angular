@@ -27,6 +27,11 @@ export const getError = createSelector(
 
 export const cartReducer = createReducer<CartState>(
   initialState,
+  on(CartActions.clearCart, (state, action): CartState => {
+    return {
+      ...initialState,
+    };
+  }),
   on(CartActions.loadCart, (state, action): CartState => {
     return {
       ...state,
@@ -37,6 +42,7 @@ export const cartReducer = createReducer<CartState>(
     return {
       ...state,
       products: action.products,
+      cartQuantity: action.products.length,
       error: '',
       isLoading: false,
     };

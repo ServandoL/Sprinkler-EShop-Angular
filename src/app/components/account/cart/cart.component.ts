@@ -19,6 +19,7 @@ export class CartComponent implements OnInit, OnDestroy {
   cartLoading$ = this.store.select(getCartFeatureState);
 
   ngOnInit(): void {
+    this.store.dispatch(CartActions.clearCart());
     this.store.dispatch(
       CartActions.loadCart({
         user_id:

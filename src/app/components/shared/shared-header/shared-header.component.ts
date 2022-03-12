@@ -11,7 +11,7 @@ import {
   getCurrentUser,
 } from '../../../services/state/users/users.actions';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
-import { loadCart } from '../../../services/state/cart/cart.actions';
+import { clearCart, loadCart } from '../../../services/state/cart/cart.actions';
 
 @Component({
   selector: 'app-shared-header',
@@ -60,6 +60,7 @@ export class SharedHeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
+    this.store.dispatch(clearCart());
     this.router.navigateByUrl('/home');
   }
 }
