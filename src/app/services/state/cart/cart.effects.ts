@@ -32,60 +32,62 @@ export class CartEffects {
     );
   });
 
-  addToCart$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(CartActions.addToCart),
-      mergeMap((action) =>
-        this.cartService.addToCart$(action.product).pipe(
-          map((result: any) => {
-            const response: CartGqlResponse = result?.data?.addToCart;
-            return CartActions.addToCartSuccess({
-              response: response,
-              product: action.product,
-            });
-          })
-        )
-      )
-    );
-  });
+  // addToCart$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(CartActions.addToCart),
+  //     mergeMap((action) =>
+  //       this.cartService.addToCart$(action.product).pipe(
+  //         map((result: any) => {
+  //           const response: CartGqlResponse = result?.data?.addToCart;
+  //           return CartActions.addToCartSuccess({
+  //             response: response,
+  //             product: action.product,
+  //           });
+  //         }),
+  //         catchError((error) => of(CartActions.addToCartFailure({ error })))
+  //       )
+  //     )
+  //   );
+  // });
 
-  updateCart$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(CartActions.updateCart),
-      mergeMap((action) =>
-        this.cartService
-          .updateCartQuantity(
-            action.product.user_id,
-            action.product.productName,
-            action.quantity
-          )
-          .pipe(
-            map((result: any) => {
-              const response: CartGqlResponse =
-                result?.data?.updateCartQuantity;
-              return CartActions.updateCartSuccess({ response });
-            })
-          )
-      )
-    );
-  });
+  // updateCart$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(CartActions.updateCart),
+  //     mergeMap((action) =>
+  //       this.cartService
+  //         .updateCartQuantity(
+  //           action.product.user_id,
+  //           action.product.productName,
+  //           action.quantity
+  //         )
+  //         .pipe(
+  //           map((result: any) => {
+  //             const response: CartGqlResponse =
+  //               result?.data?.updateCartQuantity;
+  //             return CartActions.updateCartSuccess({ response });
+  //           }),
+  //           catchError((error) => of(CartActions.updateCartFailure({ error })))
+  //         )
+  //     )
+  //   );
+  // });
 
-  deleteFromCart$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(CartActions.deleteFromCart),
-      mergeMap((action) =>
-        this.cartService
-          .removeFromCart$(action.product.user_id, action.product.productName)
-          .pipe(
-            map((result: any) => {
-              const response: CartGqlResponse = result?.data?.removeFromCart;
-              return CartActions.deleteFromCartSuccess({ response });
-            }),
-            catchError((error) =>
-              of(CartActions.deleteFromCartFailure({ error }))
-            )
-          )
-      )
-    );
-  });
+  // deleteFromCart$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(CartActions.deleteFromCart),
+  //     mergeMap((action) =>
+  //       this.cartService
+  //         .removeFromCart$(action.product.user_id, action.product.productName)
+  //         .pipe(
+  //           map((result: any) => {
+  //             const response: CartGqlResponse = result?.data?.removeFromCart;
+  //             return CartActions.deleteFromCartSuccess({ response });
+  //           }),
+  //           catchError((error) =>
+  //             of(CartActions.deleteFromCartFailure({ error }))
+  //           )
+  //         )
+  //     )
+  //   );
+  // });
 }

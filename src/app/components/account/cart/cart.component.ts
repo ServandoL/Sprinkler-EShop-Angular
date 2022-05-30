@@ -42,22 +42,22 @@ export class CartComponent implements OnInit, OnDestroy {
           sessionStorage.getItem('SessionAdmin'),
       })
     );
-    this.getCartQuery = this.apollo.watchQuery({
-      query: GetCartDocument,
-    });
+    // this.getCartQuery = this.apollo.watchQuery({
+    //   query: GetCartDocument,
+    // });
     this.subscriptions.push(
       this.cart$.subscribe((state) => {
         this.length = state.length;
       })
     );
-    this.subscriptions.push(
-      this.cartLoading$.subscribe((state) => {
-        this.success = state.response?.success;
-        if (this.success) {
-          this.refresh();
-        }
-      })
-    );
+    // this.subscriptions.push(
+    //   this.cartLoading$.subscribe((state) => {
+    //     this.success = state.response?.success;
+    //     // if (this.success) {
+    //     //   this.refresh();
+    //     // }
+    //   })
+    // );
     this.subscriptions.push(
       this.cart$.subscribe((state) => {
         this.subtotal = 0;
@@ -68,15 +68,16 @@ export class CartComponent implements OnInit, OnDestroy {
     );
   }
 
-  refresh() {
-    this.getCartQuery.refetch({
-      userId:
-        sessionStorage.getItem('SessionUser') ||
-        sessionStorage.getItem('SessionAdmin'),
-    });
-  }
+  // refresh() {
+  //   this.getCartQuery.refetch({
+  //     userId:
+  //       sessionStorage.getItem('SessionUser') ||
+  //       sessionStorage.getItem('SessionAdmin'),
+  //   });
+  // }
 
   updateQuantity(value: number, product: ICartItem) {
+    console.log(value, product);
     this.store.dispatch(
       CartActions.updateProductQuantity({ product: product, quantity: value })
     );

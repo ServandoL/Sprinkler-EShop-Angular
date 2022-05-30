@@ -5,7 +5,7 @@ export interface CartState {
   products: ICartItem[];
   currentProduct: ICartItem | null;
   error: string;
-  response: CartGqlResponse | null;
+  response: string;
   isLoading: boolean;
   cartQuantity: number;
 }

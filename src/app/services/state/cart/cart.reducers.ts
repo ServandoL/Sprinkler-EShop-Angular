@@ -13,7 +13,7 @@ const initialState: CartState = {
   products: [],
   currentProduct: null,
   cartQuantity: 0,
-  response: null,
+  response: '',
   error: '',
   isLoading: false,
 };
@@ -32,14 +32,17 @@ export const cartReducer = createReducer<CartState>(
       ...initialState,
     };
   }),
-  on(CartActions.updateProductQuantity, (state, action): CartState => {
-    let product: ICartItem = { ...action.product, quantity: action.quantity };
-    // TODO: update quantity when typed does not work
+  on(
+    CartActions.updateProductQuantity,
+    (state: CartState, action): CartState => {
+      let product: ICartItem = { ...action.product, quantity: action.quantity };
+      // TODO: update quantity when typed does not work
 
-    return {
-      ...state,
-    };
-  }),
+      return {
+        ...state,
+      };
+    }
+  ),
   on(CartActions.loadCart, (state, action): CartState => {
     return {
       ...state,
@@ -64,6 +67,11 @@ export const cartReducer = createReducer<CartState>(
     };
   }),
   on(CartActions.updateCart, (state, action): CartState => {
+    state.products.forEach((product) => {
+      if (product.productName === action.product.productName) {
+        product = { ...action.product };
+      }
+    });
     return {
       ...state,
       isLoading: true,
@@ -73,7 +81,7 @@ export const cartReducer = createReducer<CartState>(
     return {
       ...state,
       currentProduct: null,
-      response: action.response,
+      response: 'Updated your cart successfully.',
       error: '',
       isLoading: false,
     };
@@ -81,35 +89,44 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.updateCartFailure, (state, action): CartState => {
     return {
       ...state,
-      products: [],
       currentProduct: null,
       error: action.error,
       isLoading: false,
     };
   }),
   on(CartActions.addToCart, (state, action): CartState => {
-    return {
-      ...state,
-      currentProduct: action.product,
-      isLoading: true,
-    };
-  }),
-  on(CartActions.addToCartSuccess, (state, action): CartState => {
     let products = [...state.products];
+    let response = '';
     if (action.product) {
       products.push(action.product);
+      response = 'Successfully added to your cart.';
     }
     return {
       ...state,
       user_id: action.product.user_id,
       products: products,
       cartQuantity: products.length,
-      currentProduct: null,
-      error: '',
-      response: action.response,
+      currentProduct: action.product,
+      response: response,
       isLoading: false,
     };
   }),
+  // on(CartActions.addToCartSuccess, (state, action): CartState => {
+  //   let products = [...state.products];
+  //   if (action.product) {
+  //     products.push(action.product);
+  //   }
+  //   return {
+  //     ...state,
+  //     user_id: action.product.user_id,
+  //     products: products,
+  //     cartQuantity: products.length,
+  //     currentProduct: null,
+  //     error: '',
+  //     response: action.response,
+  //     isLoading: false,
+  //   };
+  // }),
   on(CartActions.addToCartFailure, (state, action): CartState => {
     return {
       ...state,
@@ -130,7 +147,7 @@ export const cartReducer = createReducer<CartState>(
       ...state,
       products: state.products,
       currentProduct: null,
-      response: action.response,
+      response: 'Updated your cart successfully.',
       error: '',
       isLoading: false,
     };

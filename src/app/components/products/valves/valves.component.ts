@@ -12,6 +12,9 @@ import { getCartFeatureState } from '../../../services/state/cart/cart.reducers'
 import { addToCart } from '../../../services/state/cart/cart.selectors';
 import { IProduct } from '../../../models/product.model';
 import { addToCartFunction } from '../../../utils/common/functions';
+import { ProductState } from '../../../services/state/product.state';
+import { CartState } from '../../../services/state/cart/cart.state';
+import { CartGqlResponse } from '../../../models/cart.model';
 
 @Component({
   selector: 'app-valves',
@@ -19,21 +22,23 @@ import { addToCartFunction } from '../../../utils/common/functions';
   styleUrls: ['./valves.component.css'],
 })
 export class ValvesComponent implements OnInit, OnDestroy {
-  constructor(
-    private store: Store<AppState>,
-    public authService: AuthService
-  ) {}
-
   pageTitle = 'Nozzles';
   validated!: boolean;
   addedToCart = false;
   subscription: Subscription[] = [];
-  products$ = this.store.select(getProducts);
-  productsLoading$ = this.store.select(getProductFeatureState);
-  addToCartLoading$ = this.store.select(getCartFeatureState);
-  addToCartResponse$ = this.store.select(addToCart);
   success!: boolean | undefined;
   quantity!: number;
+  products$!: Observable<IProduct[]>;
+  productsLoading$: Observable<ProductState>;
+  addToCartLoading$: Observable<CartState>;
+  addToCartResponse$: Observable<string | CartGqlResponse>;
+
+  constructor(private store: Store<AppState>, public authService: AuthService) {
+    this.products$ = this.store.select(getProducts);
+    this.productsLoading$ = this.store.select(getProductFeatureState);
+    this.addToCartLoading$ = this.store.select(getCartFeatureState);
+    this.addToCartResponse$ = this.store.select(addToCart);
+  }
 
   ngOnInit(): void {
     this.store.dispatch(ProductActions.loadValves());
@@ -43,16 +48,16 @@ export class ValvesComponent implements OnInit, OnDestroy {
         .subscribe((result) => (this.validated = result))
     );
 
-    this.subscription.push(
-      this.addToCartLoading$.subscribe((state) => {
-        this.success = state?.response?.success;
-        if (this.success) {
-          setTimeout(() => {
-            this.success = false;
-          }, 5000);
-        }
-      })
-    );
+    // this.subscription.push(
+    //   this.addToCartLoading$.subscribe((state) => {
+    //     this.success = state?.response?.success;
+    //     if (this.success) {
+    //       setTimeout(() => {
+    //         this.success = false;
+    //       }, 5000);
+    //     }
+    //   })
+    // );
   }
 
   ngOnDestroy(): void {

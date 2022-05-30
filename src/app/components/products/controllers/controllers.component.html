@@ -1,9 +1,4 @@
-<div
-  *ngIf="
-    (productsLoading$ | async)?.isLoading ||
-    (addToCartLoading$ | async)?.isLoading
-  "
->
+<div *ngIf="(productsLoading$ | async)?.isLoading">
   <app-shared-loader></app-shared-loader>
 </div>
 <div class="container">
@@ -26,11 +21,11 @@
 
       <div class="bottom-border my-2"></div>
       <div
-        *ngIf="(addToCartResponse$ | async)?.success === false"
+        *ngIf="addToCartResponse$ | async"
         class="alert alert-danger"
         role="alert"
       >
-        {{ (addToCartResponse$ | async)?.message }}
+        {{ addToCartResponse$ | async }}
       </div>
       <div
         class="col"
@@ -41,7 +36,7 @@
         No products available.
       </div>
       <div class="col" *ngIf="success" class="alert alert-primary" role="alert">
-        {{ (addToCartResponse$ | async)?.message }}
+        {{ addToCartResponse$ | async }}
       </div>
       <div *ngIf="!validated" class="alert alert-warning" role="alert">
         Please log in to add to your cart.
