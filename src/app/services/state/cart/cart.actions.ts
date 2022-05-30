@@ -12,11 +12,16 @@ const UpdateCartSuccess = '[Cart] Update Cart Success';
 const UpdateCartFailure = '[Cart] Update Cart Failure';
 const AddToCartAction = '[Cart] Add To Cart';
 const ClearCartAction = '[Cart] Clear Cart';
-const updateCartQuantityAction = '[Cart] Update Cart Quantity';
+const UpdateCartQuantityAction = '[Cart] Update Cart Quantity';
 const AddToCartSuccess = '[Cart] Add To Cart Success';
 const AddToCartFailure = '[Cart] Add To Cart Failure';
 
 export const clearCart = createAction(ClearCartAction);
+
+export const updateProductQuantity = createAction(
+  UpdateCartQuantityAction,
+  props<{ product: ICartItem; quantity: number }>()
+);
 
 export const loadCart = createAction(
   LoadCartAction,

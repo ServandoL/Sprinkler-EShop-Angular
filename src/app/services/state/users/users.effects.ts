@@ -4,7 +4,7 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { State } from '../../../models/AppState';
+import { AppState } from '../../../models/AppState';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { loadCart } from '../cart/cart.actions';
 import { UserService } from './user.service';
@@ -18,7 +18,7 @@ export class UserEffects {
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
-    private store: Store<State>
+    private store: Store<AppState>
   ) {}
 
   login$ = createEffect(() => {

@@ -5,7 +5,7 @@ import {
   getProductFeatureState,
   getProducts,
 } from '../../../services/state/product.reducers';
-import { State } from '../../../models/AppState';
+import { AppState } from '../../../models/AppState';
 import * as ProductActions from '../../../services/state/product.actions';
 import { IProduct } from '../../../models/product.model';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-home.component.css'],
 })
 export class AdminHomeComponent implements OnInit {
-  constructor(private store: Store<State>, private router: Router) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   products$ = this.store.select(getProducts);
   productsLoading$ = this.store.select(getProductFeatureState);
@@ -43,7 +43,6 @@ export class AdminHomeComponent implements OnInit {
   }
 
   onDelete(value: IProduct) {
-    console.log(value)
+    console.log(value);
   }
-
 }

@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { State } from '../../models/AppState';
+import { AppState } from '../../models/AppState';
 import { ICartItem } from '../../models/cart.model';
 import { IProduct } from '../../models/product.model';
 import * as CartActions from '../../services/state/cart/cart.actions';
@@ -8,7 +8,7 @@ export function addToCartFunction(
   product: IProduct,
   qty: number,
   validated: boolean,
-  store: Store<State>
+  store: Store<AppState>
 ) {
   const cartItem: ICartItem = {
     user_id:

@@ -5,7 +5,7 @@ import * as CartActions from './cart.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { CartGqlResponse, ICartItem } from '../../../models/cart.model';
-import { State } from '../../../models/AppState';
+import { AppState } from '../../../models/AppState';
 import { Store } from '@ngrx/store';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class CartEffects {
   constructor(
     private actions$: Actions,
     private cartService: CartService,
-    private store: Store<State>
+    private store: Store<AppState>
   ) {}
 
   loadCart$ = createEffect(() => {
@@ -24,7 +24,6 @@ export class CartEffects {
       mergeMap((action) =>
         this.cartService.getCart$(action.user_id).pipe(
           map((products: ICartItem[]) => {
-            console.log(products, action);
             return CartActions.loadCartSuccess({ products });
           }),
           catchError((error) => of(CartActions.loadCartFailure({ error })))

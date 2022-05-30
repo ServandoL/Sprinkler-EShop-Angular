@@ -32,6 +32,14 @@ export const cartReducer = createReducer<CartState>(
       ...initialState,
     };
   }),
+  on(CartActions.updateProductQuantity, (state, action): CartState => {
+    let product: ICartItem = { ...action.product, quantity: action.quantity };
+    // TODO: update quantity when typed does not work
+
+    return {
+      ...state,
+    };
+  }),
   on(CartActions.loadCart, (state, action): CartState => {
     return {
       ...state,
@@ -120,7 +128,7 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.deleteFromCartSuccess, (state, action): CartState => {
     return {
       ...state,
-      products: [],
+      products: state.products,
       currentProduct: null,
       response: action.response,
       error: '',
@@ -130,7 +138,7 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.deleteFromCartFailure, (state, action): CartState => {
     return {
       ...state,
-      products: [],
+      products: state.products,
       currentProduct: null,
       error: action.error,
       isLoading: false,

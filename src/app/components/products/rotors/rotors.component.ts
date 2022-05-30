@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../utils/auth/auth-service.service';
-import { State } from '../../../models/AppState';
+import { AppState } from '../../../models/AppState';
 import * as ProductActions from '../../../services/state/product.actions';
 import {
   getProductFeatureState,
@@ -19,27 +19,43 @@ import { addToCartFunction } from '../../../utils/common/functions';
   styleUrls: ['./rotors.component.css'],
 })
 export class RotorsComponent implements OnInit, OnDestroy {
-  constructor(private store: Store<State>, public authService: AuthService) {}
+  constructor(
+    private store: Store<AppState>,
+    public authService: AuthService
+  ) {}
   pageTitle = 'Rotors';
-  addedToCart = false;
   validated!: boolean;
-  subscription!: Subscription;
+  addedToCart = false;
+  subscription: Subscription[] = [];
   products$ = this.store.select(getProducts);
   productsLoading$ = this.store.select(getProductFeatureState);
   addToCartLoading$ = this.store.select(getCartFeatureState);
   addToCartResponse$ = this.store.select(addToCart);
+  success!: boolean | undefined;
   quantity!: number;
 
   ngOnInit(): void {
     this.store.dispatch(ProductActions.loadRotors());
     this.quantity = 1;
-    this.subscription = this.authService
-      .getToken$()
-      .subscribe((result) => (this.validated = result));
+    this.subscription.push(
+      this.authService
+        .getToken$()
+        .subscribe((result) => (this.validated = result))
+    );
+    this.subscription.push(
+      this.addToCartLoading$.subscribe((state) => {
+        this.success = state?.response?.success;
+        if (this.success) {
+          setTimeout(() => {
+            this.success = false;
+          }, 5000);
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription.forEach((sub) => sub.unsubscribe());
   }
 
   updateQuantity(value: number) {

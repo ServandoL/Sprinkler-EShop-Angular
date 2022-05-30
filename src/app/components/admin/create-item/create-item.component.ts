@@ -5,7 +5,7 @@ import {
   getBrands,
   getCategories,
 } from '../../../services/state/product-filters/filter.reducers';
-import { State } from '../../../models/AppState';
+import { AppState } from '../../../models/AppState';
 import { IProduct } from '../../../models/product.model';
 import * as FilterActions from '../../../services/state/product-filters/filter.actions';
 
@@ -15,7 +15,7 @@ import * as FilterActions from '../../../services/state/product-filters/filter.a
   styleUrls: ['./create-item.component.css'],
 })
 export class CreateItemComponent implements OnInit {
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<AppState>) {}
 
   brands$ = this.store.select(getBrands);
   categories$ = this.store.select(getCategories);
@@ -27,7 +27,12 @@ export class CreateItemComponent implements OnInit {
 
   createItemForm = new FormGroup({
     productName: new FormControl('', [Validators.required]),
-    productPrice: new FormControl('', [Validators.required , Validators.pattern(/(?:^[1-9]([0-9]+)?(?:\.[0-9]{1,2})?$)|(?:^(?:0)$)|(?:^[0-9]\.[0-9](?:[0-9])?$)/)]),
+    productPrice: new FormControl('', [
+      Validators.required,
+      Validators.pattern(
+        /(?:^[1-9]([0-9]+)?(?:\.[0-9]{1,2})?$)|(?:^(?:0)$)|(?:^[0-9]\.[0-9](?:[0-9])?$)/
+      ),
+    ]),
     productCategory: new FormControl('', [Validators.required]),
     productBrand: new FormControl('', [Validators.required]),
     productStock: new FormControl(0, [Validators.required, Validators.min(1)]),

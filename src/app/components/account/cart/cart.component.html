@@ -32,7 +32,7 @@
               <td>${{ product?.price }}</td>
               <td>
                 <app-qty-form
-                  (quantity)="updateQuantity($event)"
+                  (quantity)="updateQuantity($event, product)"
                   (submitted)="onUpdate($event, product)"
                   [inputQuantity]="product.quantity"
                   [stock]="product.stock"
@@ -44,64 +44,12 @@
                 <button
                   type="submit"
                   class="btn btn-outline-danger btn-sm my-2"
+                  (click)="onRemove(product)"
                 >
                   Remove
                 </button>
               </td>
             </tr>
-            <!-- <tr>
-              <th scope="row">
-                <div>
-                  <span
-                    ><img
-                      src=""
-                      class="img-thumbnail"
-                      alt=""
-                      style="width: 100px"
-                  /></span>
-                </div>
-                <div><span>ProductName</span></div>
-              </th>
-              <td>Product Price</td>
-              <td>
-                <div class="input-group mb-3">
-                  <button
-                    type="button"
-                    class="btn btn-outline-secondary qty-change-minus"
-                  >
-                    -
-                  </button>
-
-                  <input
-                    type="text"
-                    name="item-qty"
-                    class="form-control qty-number"
-                    value="Product Price"
-                  />
-
-                  <button
-                    type="button"
-                    class="btn btn-outline-secondary qty-change-plus"
-                  >
-                    +
-                  </button>
-                </div>
-              </td>
-              <td class="subtotal">SubTotal</td>
-              <td>
-                <div class="d-grip gap-2">
-                  <button type="submit" class="btn btn-outline-primary btn-sm">
-                    Update
-                  </button>
-                  <button
-                    type="submit"
-                    class="btn btn-outline-danger btn-sm my-2"
-                  >
-                    Remove
-                  </button>
-                </div>
-              </td>
-            </tr> -->
           </tbody>
         </table>
       </div>
@@ -123,7 +71,7 @@
                   name="subtotal"
                   class="form-control amount"
                   readonly
-                  value=""
+                  value="${{ subtotal.toFixed(2) }}"
                 />
               </div>
             </div>
@@ -135,7 +83,7 @@
                   name="tax"
                   class="form-control tax"
                   readonly
-                  value=""
+                  value="${{ (subtotal * tax).toFixed(2) }}"
                 />
               </div>
             </div>
@@ -147,12 +95,13 @@
                   name="total"
                   class="form-control total"
                   readonly
-                  value=""
+                  value="${{ (subtotal + subtotal * tax).toFixed(2) }}"
                 />
               </div>
             </div>
             <div class="col-12">
               <button
+                *ngIf="length === 0"
                 id="checkout-button"
                 type="submit"
                 class="btn btn-primary"
@@ -161,6 +110,7 @@
                 Proceed to checkout
               </button>
               <button
+                *ngIf="length > 0"
                 id="checkout-button"
                 type="submit"
                 class="btn btn-primary"

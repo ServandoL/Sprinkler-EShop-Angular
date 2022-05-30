@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { Apollo, ApolloBase } from 'apollo-angular';
+import { Apollo, ApolloBase, QueryRef } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ICartItem } from '../../../models/cart.model';
