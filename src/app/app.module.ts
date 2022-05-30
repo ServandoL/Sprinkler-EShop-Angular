@@ -23,6 +23,7 @@ import { UserEffects } from './services/state/users/users.effects';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { cartReducer } from './services/state/cart/cart.reducers';
 import { CartEffects } from './services/state/cart/cart.effects';
+import { metaReducers } from '../main';
 
 @NgModule({
   declarations: [
@@ -39,10 +40,13 @@ import { CartEffects } from './services/state/cart/cart.effects';
     HttpClientModule,
     RouterModule.forRoot(routes),
     LayoutModule,
-    StoreModule.forRoot({
-      users: userReducer,
-      cart: cartReducer,
-    }),
+    StoreModule.forRoot(
+      {
+        users: userReducer,
+        cart: cartReducer,
+      },
+      { metaReducers }
+    ),
     EffectsModule.forRoot([UserEffects, CartEffects]),
     StoreDevtoolsModule.instrument({
       name: 'Sprinkler EShop DevTools',

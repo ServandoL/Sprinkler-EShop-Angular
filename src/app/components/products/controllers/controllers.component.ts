@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../utils/auth/auth-service.service';
-import { State } from '../../../models/AppState';
+import { AppState } from '../../../models/AppState';
 import * as ProductActions from '../../../services/state/product.actions';
 import {
   getProductFeatureState,
@@ -19,7 +19,10 @@ import { addToCartFunction } from '../../../utils/common/functions';
   styleUrls: ['./controllers.component.css'],
 })
 export class ControllersComponent implements OnInit, OnDestroy {
-  constructor(private store: Store<State>, public authService: AuthService) {}
+  constructor(
+    private store: Store<AppState>,
+    public authService: AuthService
+  ) {}
 
   pageTitle = 'Controllers';
   validated!: boolean;

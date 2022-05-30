@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from '../../../models/AppState';
+import { AppState } from '../../../models/AppState';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import { getCart } from '../../../services/state/cart/cart.selectors';
 import { CartService } from '../../../services/state/cart/cart.service';
@@ -13,7 +13,10 @@ import { ICartItem } from '../../../models/cart.model';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit, OnDestroy {
-  constructor(private store: Store<State>, public cartService: CartService) {}
+  constructor(
+    private store: Store<AppState>,
+    public cartService: CartService
+  ) {}
 
   cart$ = this.store.select(getCart);
   cartLoading$ = this.store.select(getCartFeatureState);

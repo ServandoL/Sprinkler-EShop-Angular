@@ -28,7 +28,6 @@ export class CartService {
         variables: {
           userId: user_id,
         },
-        pollInterval: 500,
       })
       .valueChanges.pipe(
         map((result: ApolloQueryResult<any>) => {
