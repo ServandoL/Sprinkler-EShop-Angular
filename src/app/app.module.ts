@@ -24,6 +24,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { cartReducer } from './services/state/cart/cart.reducers';
 import { CartEffects } from './services/state/cart/cart.effects';
 import { hydrationMetaReducer } from './services/state/global/hydration.reducer';
+import { HydrationEffects } from './services/state/global/hydration.effect';
 
 export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
@@ -49,7 +50,7 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
       },
       { metaReducers }
     ),
-    EffectsModule.forRoot([UserEffects, CartEffects]),
+    EffectsModule.forRoot([UserEffects, CartEffects, HydrationEffects]),
     StoreDevtoolsModule.instrument({
       name: 'Sprinkler EShop DevTools',
       maxAge: 25,
