@@ -14,6 +14,7 @@ import { IProduct } from '../../../models/product.model';
 import { addToCartFunction } from '../../../utils/common/functions';
 import { CartState } from '../../../services/state/cart/cart.state';
 import { ProductState } from '../../../services/state/product.state';
+import * as CartActions from '../../../services/state/cart/cart.actions';
 
 @Component({
   selector: 'app-rotors',
@@ -31,6 +32,7 @@ export class RotorsComponent implements OnInit, OnDestroy {
   productsLoading$: Observable<ProductState>;
   addToCartLoading$: Observable<CartState>;
   addToCartResponse$: Observable<string>;
+  message!: string;
 
   constructor(private store: Store<AppState>, public authService: AuthService) {
     this.products$ = this.store.select(getProducts);
@@ -47,16 +49,18 @@ export class RotorsComponent implements OnInit, OnDestroy {
         .getToken$()
         .subscribe((result) => (this.validated = result))
     );
-    // this.subscription.push(
-    //   this.addToCartLoading$.subscribe((state) => {
-    //     this.success = state?.response?.success;
-    //     if (this.success) {
-    //       setTimeout(() => {
-    //         this.success = false;
-    //       }, 5000);
-    //     }
-    //   })
-    // );
+    this.subscription.push(
+      this.addToCartLoading$.subscribe((state) => {
+        this.success = state.response.length > 0;
+        this.message = state.response;
+        if (this.success && this.message.length) {
+          setTimeout(() => {
+            this.success = false;
+            this.store.dispatch(CartActions.resetMessage());
+          }, 5000);
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {

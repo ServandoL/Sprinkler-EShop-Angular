@@ -200,16 +200,26 @@ mutation updateCart($userId: String, $productName: String, $quantity: Int) {
   }
 }
 
+mutation saveCart($cart: SaveCartRequest) {
+  saveCart(cart: $cart) {
+    message
+    success
+  }
+}
+
 query getCart($userId: String) {
   cart(user_id: $userId) {
-    _id
+    cart {
+      user_id
+      productName
+      price
+      category
+      brand
+      stock
+      imageUrl
+      quantity
+    }
     user_id
-    productName
-    price
-    category
-    brand
-    stock
-    imageUrl
-    quantity
+    createdDate
   }
 }

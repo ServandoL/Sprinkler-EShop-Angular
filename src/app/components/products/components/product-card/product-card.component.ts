@@ -10,6 +10,7 @@ export class ProductCardComponent {
   constructor() {}
 
   @Input() product!: IProduct;
+  @Input() title!: string;
   @Output() quantityUpdated = new EventEmitter();
   @Output() submitClicked = new EventEmitter();
 

@@ -17,10 +17,21 @@ export type Scalars = {
 
 export type Cart = {
   __typename?: 'Cart';
-  _id: Scalars['ID'];
+  _id?: Maybe<Scalars['ID']>;
   brand: Scalars['String'];
   category: Scalars['String'];
   imageUrl?: Maybe<Scalars['String']>;
+  price: Scalars['Float'];
+  productName: Scalars['String'];
+  quantity: Scalars['Int'];
+  stock: Scalars['Int'];
+  user_id: Scalars['String'];
+};
+
+export type CartInput = {
+  brand: Scalars['String'];
+  category: Scalars['String'];
+  imageUrl?: InputMaybe<Scalars['String']>;
   price: Scalars['Float'];
   productName: Scalars['String'];
   quantity: Scalars['Int'];
@@ -36,6 +47,7 @@ export type Mutation = {
   deleteProduct?: Maybe<DeleteProductResponse>;
   deleteUser?: Maybe<DeleteUserResponse>;
   removeFromCart?: Maybe<RemoveFromCartResponse>;
+  saveCart?: Maybe<SaveCartResponse>;
   updateCartQuantity?: Maybe<UpdateCartQuantityResponse>;
 };
 
@@ -86,6 +98,11 @@ export type MutationRemoveFromCartArgs = {
 };
 
 
+export type MutationSaveCartArgs = {
+  cart?: InputMaybe<SaveCartRequest>;
+};
+
+
 export type MutationUpdateCartQuantityArgs = {
   productName?: InputMaybe<Scalars['String']>;
   quantity?: InputMaybe<Scalars['Int']>;
@@ -108,7 +125,7 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
-  cart?: Maybe<Array<Maybe<Cart>>>;
+  cart?: Maybe<GetCartResponse>;
   productById?: Maybe<Product>;
   products?: Maybe<Array<Maybe<Product>>>;
   userById?: Maybe<User>;
@@ -149,6 +166,11 @@ export type QueryUsersArgs = {
   email?: InputMaybe<Scalars['String']>;
   isAdmin?: InputMaybe<Scalars['Boolean']>;
   password?: InputMaybe<Scalars['String']>;
+};
+
+export type SaveCartRequest = {
+  cart?: InputMaybe<Array<InputMaybe<CartInput>>>;
+  user_id?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
@@ -195,8 +217,21 @@ export type DeleteUserResponse = {
   success?: Maybe<Scalars['Boolean']>;
 };
 
+export type GetCartResponse = {
+  __typename?: 'getCartResponse';
+  cart?: Maybe<Array<Maybe<Cart>>>;
+  createdDate?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
 export type RemoveFromCartResponse = {
   __typename?: 'removeFromCartResponse';
+  message?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
+export type SaveCartResponse = {
+  __typename?: 'saveCartResponse';
   message?: Maybe<Scalars['String']>;
   success?: Maybe<Scalars['Boolean']>;
 };
@@ -314,12 +349,19 @@ export type UpdateCartMutationVariables = Exact<{
 
 export type UpdateCartMutation = { __typename?: 'Mutation', updateCartQuantity?: { __typename?: 'updateCartQuantityResponse', message?: string | null | undefined, success?: boolean | null | undefined } | null | undefined };
 
+export type SaveCartMutationVariables = Exact<{
+  cart?: InputMaybe<SaveCartRequest>;
+}>;
+
+
+export type SaveCartMutation = { __typename?: 'Mutation', saveCart?: { __typename?: 'saveCartResponse', message?: string | null | undefined, success?: boolean | null | undefined } | null | undefined };
+
 export type GetCartQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetCartQuery = { __typename?: 'Query', cart?: Array<{ __typename?: 'Cart', _id: string, user_id: string, productName: string, price: number, category: string, brand: string, stock: number, imageUrl?: string | null | undefined, quantity: number } | null | undefined> | null | undefined };
+export type GetCartQuery = { __typename?: 'Query', cart?: { __typename?: 'getCartResponse', user_id?: string | null | undefined, createdDate?: string | null | undefined, cart?: Array<{ __typename?: 'Cart', user_id: string, productName: string, price: number, category: string, brand: string, stock: number, imageUrl?: string | null | undefined, quantity: number } | null | undefined> | null | undefined } | null | undefined };
 
 export const CreateProductDocument = gql`
     mutation createProduct($productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $id: ID) {
@@ -657,18 +699,40 @@ export const UpdateCartDocument = gql`
       super(apollo);
     }
   }
+export const SaveCartDocument = gql`
+    mutation saveCart($cart: SaveCartRequest) {
+  saveCart(cart: $cart) {
+    message
+    success
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SaveCartGQL extends Apollo.Mutation<SaveCartMutation, SaveCartMutationVariables> {
+    document = SaveCartDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetCartDocument = gql`
     query getCart($userId: String) {
   cart(user_id: $userId) {
-    _id
+    cart {
+      user_id
+      productName
+      price
+      category
+      brand
+      stock
+      imageUrl
+      quantity
+    }
     user_id
-    productName
-    price
-    category
-    brand
-    stock
-    imageUrl
-    quantity
+    createdDate
   }
 }
     `;

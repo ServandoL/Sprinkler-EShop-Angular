@@ -9,6 +9,7 @@ import { AuthService } from '../../../utils/auth/auth-service.service';
 import { loadCart } from '../cart/cart.actions';
 import { UserService } from './user.service';
 import * as UserActions from './users.actions';
+import * as CartActions from '../cart/cart.actions';
 import { deleteUserResponse, userResponse } from './users.state';
 
 @Injectable()

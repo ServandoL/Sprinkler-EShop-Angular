@@ -13,7 +13,7 @@ export class QtyFormComponent implements OnInit {
   ngOnInit(): void {}
 
   @Input() stock!: number;
-  @Input() title!: string;
+  @Input() title!: string | undefined;
   @Input() inputQuantity!: number;
   @Output() quantity = new EventEmitter<number>();
   @Output() submitted = new EventEmitter();

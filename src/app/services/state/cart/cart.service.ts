@@ -4,11 +4,12 @@ import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, ApolloBase, QueryRef } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ICartItem } from '../../../models/cart.model';
+import { GetCartResponse, ICartItem } from '../../../models/cart.model';
 import {
   AddToCartDocument,
   GetCartDocument,
   RemoveFromCartDocument,
+  SaveCartDocument,
   UpdateCartDocument,
 } from '../generated/graphql';
 
@@ -21,7 +22,7 @@ export class CartService {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
-  getCart$(user_id: string | null): Observable<ICartItem[]> {
+  getCart$(user_id: string | null): Observable<GetCartResponse> {
     return this.apollo
       .watchQuery({
         query: GetCartDocument,
@@ -36,7 +37,7 @@ export class CartService {
               error: result.errors.map((error) => error.message).join(', '),
             });
           } else {
-            return result?.data?.cart;
+            return result?.data?.cart as GetCartResponse;
           }
         })
       );
@@ -54,6 +55,18 @@ export class CartService {
         brand: product.brand,
         stock: product.stock,
         imageUrl: product.imageUrl,
+      },
+    });
+  }
+
+  saveCart$(cart: ICartItem[], email: string): Observable<any> {
+    return this.apollo.mutate({
+      mutation: SaveCartDocument,
+      variables: {
+        cart: {
+          cart: cart,
+          user_id: email,
+        },
       },
     });
   }

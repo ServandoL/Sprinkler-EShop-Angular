@@ -4,7 +4,11 @@ import { CartService } from './cart.service';
 import * as CartActions from './cart.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { CartGqlResponse, ICartItem } from '../../../models/cart.model';
+import {
+  CartGqlResponse,
+  GetCartResponse,
+  ICartItem,
+} from '../../../models/cart.model';
 import { AppState } from '../../../models/AppState';
 import { Store } from '@ngrx/store';
 
@@ -23,10 +27,31 @@ export class CartEffects {
       ofType(CartActions.loadCart),
       mergeMap((action) =>
         this.cartService.getCart$(action.user_id).pipe(
-          map((products: ICartItem[]) => {
-            return CartActions.loadCartSuccess({ products });
+          map((response: GetCartResponse) => {
+            console.log('effects', response);
+            return CartActions.loadCartSuccess({ response: response });
           }),
           catchError((error) => of(CartActions.loadCartFailure({ error })))
+        )
+      )
+    );
+  });
+
+  saveCart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(CartActions.saveCart),
+      mergeMap((action) =>
+        this.cartService.saveCart$(action.products, action.user_id).pipe(
+          map((result: any) => {
+            const response = result?.data?.saveCart;
+            return CartActions.saveCartSuccess({
+              response: response.message,
+              success: response.success,
+            });
+          }),
+          catchError((error: unknown) =>
+            of(CartActions.saveCartFailure({ error }))
+          )
         )
       )
     );
@@ -46,47 +71,6 @@ export class CartEffects {
   //         }),
   //         catchError((error) => of(CartActions.addToCartFailure({ error })))
   //       )
-  //     )
-  //   );
-  // });
-
-  // updateCart$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(CartActions.updateCart),
-  //     mergeMap((action) =>
-  //       this.cartService
-  //         .updateCartQuantity(
-  //           action.product.user_id,
-  //           action.product.productName,
-  //           action.quantity
-  //         )
-  //         .pipe(
-  //           map((result: any) => {
-  //             const response: CartGqlResponse =
-  //               result?.data?.updateCartQuantity;
-  //             return CartActions.updateCartSuccess({ response });
-  //           }),
-  //           catchError((error) => of(CartActions.updateCartFailure({ error })))
-  //         )
-  //     )
-  //   );
-  // });
-
-  // deleteFromCart$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(CartActions.deleteFromCart),
-  //     mergeMap((action) =>
-  //       this.cartService
-  //         .removeFromCart$(action.product.user_id, action.product.productName)
-  //         .pipe(
-  //           map((result: any) => {
-  //             const response: CartGqlResponse = result?.data?.removeFromCart;
-  //             return CartActions.deleteFromCartSuccess({ response });
-  //           }),
-  //           catchError((error) =>
-  //             of(CartActions.deleteFromCartFailure({ error }))
-  //           )
-  //         )
   //     )
   //   );
   // });

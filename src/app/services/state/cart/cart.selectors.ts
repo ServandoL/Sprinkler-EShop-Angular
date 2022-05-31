@@ -20,3 +20,8 @@ export const addToCart = createSelector(
   getCartFeatureState,
   (state) => state.response
 );
+
+export const saveCart = createSelector(
+  getCartFeatureState,
+  (state) => state.response
+);

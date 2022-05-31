@@ -20,13 +20,13 @@
       <h3>Controllers</h3>
 
       <div class="bottom-border my-2"></div>
-      <div
+      <!-- <div
         *ngIf="addToCartResponse$ | async"
         class="alert alert-danger"
         role="alert"
       >
         {{ addToCartResponse$ | async }}
-      </div>
+      </div> -->
       <div
         class="col"
         *ngIf="(products$ | async)?.length === 0"
@@ -35,8 +35,13 @@
       >
         No products available.
       </div>
-      <div class="col" *ngIf="success" class="alert alert-primary" role="alert">
-        {{ addToCartResponse$ | async }}
+      <div
+        class="col"
+        *ngIf="success && message"
+        class="alert alert-primary"
+        role="alert"
+      >
+        {{ message }}
       </div>
       <div *ngIf="!validated" class="alert alert-warning" role="alert">
         Please log in to add to your cart.
@@ -49,6 +54,7 @@
         <div class="col" *ngFor="let product of products">
           <app-product-card
             [product]="product"
+            [title]="'Add to cart'"
             (quantityUpdated)="updateQuantity($event)"
             (submitClicked)="submit(product, $event)"
           ></app-product-card>

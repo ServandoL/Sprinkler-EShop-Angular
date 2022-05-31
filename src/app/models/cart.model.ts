@@ -15,3 +15,9 @@ export interface CartGqlResponse {
   message: string;
   success: false;
 }
+
+export interface GetCartResponse {
+  cart: ICartItem[];
+  user_id: string;
+  createdDate: Date;
+}

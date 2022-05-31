@@ -26,12 +26,13 @@
 </div>
 <div class="row mx-0">
   <button
+    *ngIf="title"
     name="add-to-cart"
     class="btn btn-primary"
     [disabled]="stock <= 0"
     (click)="submitClicked()"
   >
-    {{ title ? title : "Add to cart" }}
+    {{ title }}
   </button>
 </div>
 
