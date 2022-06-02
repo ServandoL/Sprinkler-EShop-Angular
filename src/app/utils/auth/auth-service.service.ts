@@ -10,13 +10,18 @@ import { GetUserDocument } from '../../services/state/generated/graphql';
 import { AppState } from '../../models/AppState';
 import { clearCurrentUser } from '../../services/state/users/users.actions';
 import { clearCart } from '../../services/state/cart/cart.actions';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apollo: ApolloBase;
-  constructor(private apolloProvider: Apollo, private store: Store<AppState>) {
+  constructor(
+    private apolloProvider: Apollo,
+    private store: Store<AppState>,
+    private router: Router
+  ) {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
@@ -51,5 +56,8 @@ export class AuthService {
     this.store.dispatch(clearCurrentUser());
     this.store.dispatch(clearCart());
     sessionStorage.clear();
+    setInterval(() => {
+      this.router.navigateByUrl('/home');
+    }, 500);
   }
 }

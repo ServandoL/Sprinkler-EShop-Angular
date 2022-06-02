@@ -28,8 +28,7 @@ export class SharedHeaderComponent implements OnInit, OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private store: Store,
-    public authService: AuthService,
-    private router: Router
+    public authService: AuthService
   ) {
     this.currentUser$ = this.store.select(getUserFeatureState);
     this.cart$ = this.store.select(getCartFeatureState);
@@ -62,6 +61,5 @@ export class SharedHeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
-    this.router.navigateByUrl('/home');
   }
 }

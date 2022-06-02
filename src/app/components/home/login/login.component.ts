@@ -9,6 +9,7 @@ import {
 } from '../../../services/state/users/users.selectors';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import * as UserActions from '../../../services/state/users/users.actions';
+import { clearCart } from '../../../services/state/cart/cart.actions';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,8 @@ export class LoginComponent implements OnInit {
   mouseoverLogin!: boolean;
 
   ngOnInit(): void {
-    this.authService.logout();
+    this.store.dispatch(UserActions.clearCurrentUser());
+    this.store.dispatch(clearCart());
   }
 
   login(formValues: FormGroup) {
