@@ -1,14 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { Apollo, ApolloBase, QueryRef } from 'apollo-angular';
+import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GetCartResponse, ICartItem } from '../../../models/cart.model';
 import {
   AddToCartDocument,
+  ClearCartDocument,
   GetCartDocument,
-  RemoveFromCartDocument,
   SaveCartDocument,
   UpdateCartDocument,
 } from '../generated/graphql';
@@ -59,6 +59,15 @@ export class CartService {
     });
   }
 
+  clearCart$(user_id: string): Observable<any> {
+    return this.apollo.mutate({
+      mutation: ClearCartDocument,
+      variables: {
+        userId: user_id,
+      },
+    });
+  }
+
   saveCart$(cart: ICartItem[], email: string): Observable<any> {
     return this.apollo.mutate({
       mutation: SaveCartDocument,
@@ -67,19 +76,6 @@ export class CartService {
           cart: cart,
           user_id: email,
         },
-      },
-    });
-  }
-
-  removeFromCart$(
-    user_id: string | null,
-    productName: string
-  ): Observable<any> {
-    return this.apollo.mutate({
-      mutation: RemoveFromCartDocument,
-      variables: {
-        userId: user_id,
-        productName: productName,
       },
     });
   }

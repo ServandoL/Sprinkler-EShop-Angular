@@ -182,13 +182,6 @@ mutation addToCart(
   }
 }
 
-mutation removeFromCart($userId: String, $productName: String) {
-  removeFromCart(user_id: $userId, productName: $productName) {
-    message
-    success
-  }
-}
-
 mutation updateCart($userId: String, $productName: String, $quantity: Int) {
   updateCartQuantity(
     user_id: $userId
@@ -221,5 +214,12 @@ query getCart($userId: String) {
     }
     user_id
     createdDate
+  }
+}
+
+mutation clearCart($userId: String) {
+  clearCart(user_id: $userId) {
+    message
+    success
   }
 }

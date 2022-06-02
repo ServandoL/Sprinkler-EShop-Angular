@@ -43,6 +43,8 @@ export class ControllersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(ProductActions.loadControllers());
+    this.store.dispatch(CartActions.resetMessage());
+
     this.success = false;
 
     this.quantity = 1;
@@ -53,9 +55,9 @@ export class ControllersComponent implements OnInit, OnDestroy {
     );
     this.subscription.push(
       this.addToCartLoading$.subscribe((state) => {
-        this.success = state.response.length > 0;
+        this.success = state.error.length === 0;
         this.message = state.response;
-        if (this.success && this.message.length) {
+        if (this.success && this.message?.length) {
           setTimeout(() => {
             this.success = false;
             this.store.dispatch(CartActions.resetMessage());

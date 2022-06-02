@@ -16,6 +16,9 @@ const UpdateCartSuccess = '[Cart] Update Cart Success';
 const UpdateCartFailure = '[Cart] Update Cart Failure';
 const AddToCartAction = '[Cart] Add To Cart';
 const ClearCartAction = '[Cart] Clear Cart';
+const ClearCartApiAction = '[Cart] Clear Cart Api';
+const ClearCartActionSuccess = '[Cart] Clear Cart Success';
+const ClearCartActionFailure = '[Cart] Clear Cart Failure';
 const UpdateCartQuantityAction = '[Cart] Update Cart Quantity';
 const AddToCartSuccess = '[Cart] Add To Cart Success';
 const AddToCartFailure = '[Cart] Add To Cart Failure';
@@ -25,6 +28,21 @@ const SaveCartSuccess = '[Cart] Save Cart Success';
 const SaveCartFailure = '[Cart] Save Cart Failure';
 
 export const clearCart = createAction(ClearCartAction);
+
+export const clearCartApi = createAction(
+  ClearCartApiAction,
+  props<{ email: string }>()
+);
+
+export const clearCartSuccess = createAction(
+  ClearCartActionSuccess,
+  props<{ response: CartGqlResponse }>()
+);
+
+export const clearCartFailure = createAction(
+  ClearCartActionFailure,
+  props<{ error: string }>()
+);
 
 export const resetMessage = createAction(ResetMessageAction);
 

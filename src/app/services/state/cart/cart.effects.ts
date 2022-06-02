@@ -4,23 +4,14 @@ import { CartService } from './cart.service';
 import * as CartActions from './cart.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import {
-  CartGqlResponse,
-  GetCartResponse,
-  ICartItem,
-} from '../../../models/cart.model';
-import { AppState } from '../../../models/AppState';
-import { Store } from '@ngrx/store';
+import { GetCartResponse } from '../../../models/cart.model';
+import { CartGqlResponse } from '../../../models/cart.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartEffects {
-  constructor(
-    private actions$: Actions,
-    private cartService: CartService,
-    private store: Store<AppState>
-  ) {}
+  constructor(private actions$: Actions, private cartService: CartService) {}
 
   loadCart$ = createEffect(() => {
     return this.actions$.pipe(
@@ -28,10 +19,27 @@ export class CartEffects {
       mergeMap((action) =>
         this.cartService.getCart$(action.user_id).pipe(
           map((response: GetCartResponse) => {
-            console.log('effects', response);
             return CartActions.loadCartSuccess({ response: response });
           }),
           catchError((error) => of(CartActions.loadCartFailure({ error })))
+        )
+      )
+    );
+  });
+
+  clearCart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(CartActions.clearCartApi),
+      mergeMap((action) =>
+        this.cartService.clearCart$(action.email).pipe(
+          map((response: any) => {
+            return CartActions.clearCartSuccess({
+              response: response?.data?.clearCart,
+            });
+          }),
+          catchError((error: any) =>
+            of(CartActions.clearCartFailure({ error: error.message }))
+          )
         )
       )
     );

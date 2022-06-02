@@ -7,7 +7,7 @@ import {
 import { ICartItem } from '../../../models/cart.model';
 import { CartState } from './cart.state';
 import * as CartActions from './cart.actions';
-import { IProduct } from '../../../models/product.model';
+import { exists } from 'fs';
 
 const initialState: CartState = {
   user_id: '',
@@ -31,6 +31,29 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.clearCart, (state, action): CartState => {
     return {
       ...initialState,
+      user_id: state.user_id,
+    };
+  }),
+  on(CartActions.clearCartApi, (state, action): CartState => {
+    return {
+      ...state,
+      user_id: state.user_id,
+      isLoading: true,
+    };
+  }),
+  on(CartActions.clearCartSuccess, (state, action): CartState => {
+    return {
+      ...initialState,
+      user_id: state.user_id,
+      response: action.response.message,
+      isLoading: false,
+    };
+  }),
+  on(CartActions.clearCartFailure, (state, action): CartState => {
+    return {
+      ...state,
+      error: action.error as any,
+      isLoading: false,
     };
   }),
   on(
@@ -59,11 +82,15 @@ export const cartReducer = createReducer<CartState>(
     };
   }),
   on(CartActions.loadCartSuccess, (state, action): CartState => {
-    console.log(action);
+    let cart: ICartItem[] = [];
+    if (action.response) {
+      cart = action.response.cart;
+    }
     return {
       ...state,
-      products: action.response.cart,
-      cartQuantity: action.response.cart.length,
+      products: [...cart],
+      cartQuantity: cart.length || 0,
+      user_id: state.user_id,
       isLoading: false,
     };
   }),
@@ -86,24 +113,40 @@ export const cartReducer = createReducer<CartState>(
   }),
   on(CartActions.addToCart, (state, action): CartState => {
     let products = state.products.length > 0 ? [...state.products] : [];
-    let response = '';
     if (action.product) {
-      products.push(action.product);
-      response = 'Successfully added to your cart.';
+      const exists = products.filter(
+        (product) => product.productName === action.product.productName
+      );
+      if (!exists.length) {
+        products.push(action.product);
+      } else {
+        products = products.map((product) => {
+          if (product.productName === action.product.productName) {
+            const quantity = product.quantity + action.product.quantity;
+            return {
+              ...product,
+              quantity: quantity,
+            };
+          } else {
+            return { ...product };
+          }
+        });
+      }
     }
     return {
       ...state,
       user_id: action.product.user_id,
-      products: products,
+      products: [...products],
       cartQuantity: products.length,
       currentProduct: action.product,
-      response: response,
+      response: 'Successfully added to your cart.',
     };
   }),
   on(CartActions.resetMessage, (state, action): CartState => {
     return {
       ...state,
       response: '',
+      error: '',
     };
   }),
   on(CartActions.addToCartFailure, (state, action): CartState => {

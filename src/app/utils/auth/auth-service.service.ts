@@ -5,18 +5,18 @@ import { Store } from '@ngrx/store';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { clearCurrentUser } from '../../services/state/users/users.actions';
 import { IUser } from '../../models/user.model';
-import {
-  GetUserDocument,
-} from '../../services/state/generated/graphql';
+import { GetUserDocument } from '../../services/state/generated/graphql';
+import { AppState } from '../../models/AppState';
+import { clearCurrentUser } from '../../services/state/users/users.actions';
+import { clearCart } from '../../services/state/cart/cart.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apollo: ApolloBase;
-  constructor(private apolloProvider: Apollo, private store: Store) {
+  constructor(private apolloProvider: Apollo, private store: Store<AppState>) {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
@@ -49,6 +49,7 @@ export class AuthService {
 
   logout(): void {
     this.store.dispatch(clearCurrentUser());
+    this.store.dispatch(clearCart());
     sessionStorage.clear();
   }
 }

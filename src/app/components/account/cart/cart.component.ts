@@ -24,14 +24,21 @@ export class CartComponent implements OnInit, OnDestroy {
   cart$!: Observable<ICartItem[]>;
   cart: ICartItem[] = [];
   saveCartResponse$!: Observable<string>;
+  error!: string;
   message!: string;
+  user!: string | null;
   constructor(private store: Store<AppState>, public cartService: CartService) {
     this.cartLoading$ = this.store.select(getCartFeatureState);
     this.cart$ = this.store.select(getCart);
     this.saveCartResponse$ = this.store.select(saveCart);
+    this.user =
+      sessionStorage.getItem('SessionUser') ||
+      sessionStorage.getItem('SessionAdmin') ||
+      '';
   }
 
   ngOnInit(): void {
+    this.store.dispatch(CartActions.resetMessage());
     this.subscriptions.push(
       this.cart$.subscribe((state) => {
         this.length = state.length;
@@ -47,18 +54,21 @@ export class CartComponent implements OnInit, OnDestroy {
     );
     this.subscriptions.push(
       this.cart$.subscribe((cart) => {
-        this.cart = [...cart];
+        let products: ICartItem[] = cart.map((product) => {
+          const { __typename, ...fields } = product;
+          return fields;
+        });
+        if (products.length) {
+          this.cart = [...products];
+        }
       })
     );
     this.subscriptions.push(
       this.cartLoading$.subscribe((state) => {
-        this.success = state.response.length > 0;
+        this.success = state.error.length === 0;
         this.message = state.response;
-        if (this.success && this.message.length) {
-          setTimeout(() => {
-            this.success = false;
-            this.store.dispatch(CartActions.resetMessage());
-          }, 5000);
+        if (state.error) {
+          this.message = state.error;
         }
       })
     );
@@ -83,16 +93,20 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   saveCart() {
-    const user =
-      sessionStorage.getItem('SessionUser') ||
-      sessionStorage.getItem('SessionAdmin') ||
-      '';
-    this.store.dispatch(
-      CartActions.saveCart({
-        products: [...this.cart],
-        user_id: user,
-      })
-    );
+    if (this.user) {
+      this.store.dispatch(
+        CartActions.saveCart({
+          products: [...this.cart],
+          user_id: this.user,
+        })
+      );
+    }
+  }
+
+  deleteCart() {
+    if (this.user) {
+      this.store.dispatch(CartActions.clearCartApi({ email: this.user }));
+    }
   }
 
   ngOnDestroy(): void {

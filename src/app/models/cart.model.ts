@@ -9,6 +9,7 @@ export interface ICartItem {
   stock: number;
   imageUrl: string | undefined;
   quantity: number;
+  __typename?: string;
 }
 
 export interface CartGqlResponse {

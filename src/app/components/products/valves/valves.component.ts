@@ -43,6 +43,8 @@ export class ValvesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(ProductActions.loadValves());
+    this.store.dispatch(CartActions.resetMessage());
+
     this.subscription.push(
       this.authService
         .getToken$()
@@ -50,7 +52,7 @@ export class ValvesComponent implements OnInit, OnDestroy {
     );
     this.subscription.push(
       this.addToCartLoading$.subscribe((state) => {
-        this.success = state.response.length > 0;
+        this.success = state.error.length === 0;
         this.message = state.response;
         if (this.success && this.message.length) {
           setTimeout(() => {

@@ -11,7 +11,8 @@ import {
   getCurrentUser,
 } from '../../../services/state/users/users.actions';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
-import { clearCart, loadCart } from '../../../services/state/cart/cart.actions';
+import { UserState } from '../../../services/state/users/users.state';
+import { CartState } from '../../../services/state/cart/cart.state';
 
 @Component({
   selector: 'app-shared-header',
@@ -19,21 +20,22 @@ import { clearCart, loadCart } from '../../../services/state/cart/cart.actions';
   styleUrls: ['./shared-header.component.scss'],
 })
 export class SharedHeaderComponent implements OnInit, OnDestroy {
+  currentUser$!: Observable<UserState>;
+  cart$!: Observable<CartState>;
+  subscription: Subscription[] = [];
+  validated = false;
+  cartQuantity = 0;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private store: Store,
     public authService: AuthService,
     private router: Router
-  ) {}
-
-  subscription: Subscription[] = [];
-  validated = false;
-  cartQuantity = 0;
-  currentUser$ = this.store.select(getUserFeatureState);
-  cart$ = this.store.select(getCartFeatureState);
+  ) {
+    this.currentUser$ = this.store.select(getUserFeatureState);
+    this.cart$ = this.store.select(getCartFeatureState);
+  }
 
   ngOnInit(): void {
-    this.authService.getToken$().subscribe((el) => console.log(el));
     this.store.dispatch(getCurrentUser());
     this.subscription.push(
       this.authService
@@ -60,7 +62,6 @@ export class SharedHeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
-    this.store.dispatch(clearCart());
     this.router.navigateByUrl('/home');
   }
 }

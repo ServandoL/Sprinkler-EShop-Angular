@@ -6,7 +6,6 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { AppState } from '../../../models/AppState';
 import { AuthService } from '../../../utils/auth/auth-service.service';
-import { loadCart } from '../cart/cart.actions';
 import { UserService } from './user.service';
 import * as UserActions from './users.actions';
 import * as CartActions from '../cart/cart.actions';
@@ -31,22 +30,18 @@ export class UserEffects {
             if (user.isAdmin) {
               sessionStorage.setItem('SessionAdmin', user.email);
               this.router.navigateByUrl('/admin/dashboard');
-              const result = UserActions.loadUserSuccess({ user });
               this.store.dispatch(
-                loadCart({
-                  user_id: result.user.email,
-                })
+                CartActions.loadCart({ user_id: user.email })
               );
+              const result = UserActions.loadUserSuccess({ user });
               return result;
             } else {
               sessionStorage.setItem('SessionUser', user.email);
               this.router.navigateByUrl('account/profile');
-              const result = UserActions.loadUserSuccess({ user });
               this.store.dispatch(
-                loadCart({
-                  user_id: result.user.email,
-                })
+                CartActions.loadCart({ user_id: user.email })
               );
+              const result = UserActions.loadUserSuccess({ user });
               return result;
             }
           }),
