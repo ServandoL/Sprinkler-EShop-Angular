@@ -25,9 +25,9 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     EffectsModule.forFeature([ProductEffects]),
     FormsModule,
     ReactiveFormsModule,
-    SharedAppModule
+    SharedAppModule,
   ],
-  exports: [],
+  exports: [QtyFormComponent],
   declarations: [
     ControllersComponent,
     RotorsComponent,
@@ -35,8 +35,8 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     SprinklerNozzlesComponent,
     ValvesComponent,
     QtyFormComponent,
-    ProductCardComponent
+    ProductCardComponent,
   ],
   providers: [ProductService],
 })
-export class ProductsModule { }
+export class ProductsModule {}

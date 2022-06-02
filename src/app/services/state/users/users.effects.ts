@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
+import { AppState } from '../../../models/AppState';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { UserService } from './user.service';
 import * as UserActions from './users.actions';
+import * as CartActions from '../cart/cart.actions';
 import { deleteUserResponse, userResponse } from './users.state';
 
 @Injectable()
@@ -14,7 +17,8 @@ export class UserEffects {
     private actions$: Actions,
     private authService: AuthService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
   login$ = createEffect(() => {
@@ -26,11 +30,19 @@ export class UserEffects {
             if (user.isAdmin) {
               sessionStorage.setItem('SessionAdmin', user.email);
               this.router.navigateByUrl('/admin/dashboard');
-              return UserActions.loadUserSuccess({ user });
+              this.store.dispatch(
+                CartActions.loadCart({ user_id: user.email })
+              );
+              const result = UserActions.loadUserSuccess({ user });
+              return result;
             } else {
               sessionStorage.setItem('SessionUser', user.email);
               this.router.navigateByUrl('account/profile');
-              return UserActions.loadUserSuccess({ user });
+              this.store.dispatch(
+                CartActions.loadCart({ user_id: user.email })
+              );
+              const result = UserActions.loadUserSuccess({ user });
+              return result;
             }
           }),
           catchError((error) => of(UserActions.loadUserFailure({ error })))
@@ -68,7 +80,7 @@ export class UserEffects {
         this.userService.deleteUser$(action.email).pipe(
           map((result: any) => {
             this.authService.logout();
-            this.router.navigateByUrl('/')
+            this.router.navigateByUrl('/');
             const response: deleteUserResponse = result?.data?.deleteUser;
             return UserActions.deleteUserActionResponse({ response });
           }),

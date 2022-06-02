@@ -1,0 +1,157 @@
+<div *ngIf="(cartLoading$ | async)?.isLoading">
+  <app-shared-loader></app-shared-loader>
+</div>
+<div class="container">
+  <div class="row py-2">
+    <div class="col-md-8">
+      <h3>Shopping cart</h3>
+      <div class="bottom-border my-2"></div>
+      <div
+        class="col"
+        *ngIf="success && message"
+        class="alert alert-primary"
+        role="alert"
+      >
+        {{ message }}
+      </div>
+      <div class="col" *ngIf="!success" class="alert alert-danger" role="alert">
+        {{ message }}
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ITEM</th>
+              <th scope="col">PRICE</th>
+              <th scope="col">QTY</th>
+              <th scope="col">SUBTOTAL</th>
+              <th scope="col">ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of cart$ | async as ICartItem">
+              <th scope="row">
+                <span>
+                  <img
+                    src="assets/{{ product.imageUrl }}"
+                    class="img-thumbnail"
+                    alt="productImage"
+                    style="width: 100px"
+                  /> </span
+                ><span>{{ product?.productName }}</span>
+              </th>
+              <td>${{ product?.price }}</td>
+              <td>
+                <app-qty-form
+                  (quantity)="updateQuantity($event, product)"
+                  (submitted)="onUpdate($event, product)"
+                  [inputQuantity]="product.quantity"
+                  [stock]="product.stock"
+                  [title]=""
+                ></app-qty-form>
+              </td>
+              <td>${{ (product.quantity * product.price).toFixed(2) }}</td>
+              <td>
+                <button
+                  type="submit"
+                  class="btn btn-outline-danger btn-sm my-2"
+                  (click)="onRemove(product)"
+                >
+                  Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <button
+            *ngIf="length > 0"
+            id="checkout-button"
+            type="submit"
+            class="btn btn-primary m-1"
+            (click)="saveCart()"
+          >
+            Save your cart
+          </button>
+          <button
+            *ngIf="length > 0"
+            id="checkout-button"
+            type="submit"
+            class="btn btn-outline-danger m-1"
+            (click)="deleteCart()"
+          >
+            Delete your cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>Checkout</h3>
+      <div class="bottom-border my-2"></div>
+      <div class="card">
+        <div class="card-header">Cart Totals</div>
+        <div class="card-body">
+          <form id="checkout-form">
+            <div class="row mb-3">
+              <label for="subtotal" class="col-sm-8 col-form-label"
+                >Subtotal</label
+              >
+              <div class="col-sm-4">
+                <input
+                  type="text"
+                  name="subtotal"
+                  class="form-control amount"
+                  readonly
+                  value="${{ subtotal.toFixed(2) }}"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="tax" class="col-sm-8 col-form-label">Tax</label>
+              <div class="col-sm-4">
+                <input
+                  type="text"
+                  name="tax"
+                  class="form-control tax"
+                  readonly
+                  value="${{ (subtotal * tax).toFixed(2) }}"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="total" class="col-sm-8 col-form-label">Total</label>
+              <div class="col-sm-4">
+                <input
+                  type="text"
+                  name="total"
+                  class="form-control total"
+                  readonly
+                  value="${{ (subtotal + subtotal * tax).toFixed(2) }}"
+                />
+              </div>
+            </div>
+            <div class="col-12">
+              <button
+                *ngIf="length === 0"
+                id="checkout-button"
+                type="submit"
+                class="btn btn-primary"
+                disabled
+              >
+                Proceed to checkout
+              </button>
+              <button
+                *ngIf="length > 0"
+                id="checkout-button"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Proceed to checkout
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

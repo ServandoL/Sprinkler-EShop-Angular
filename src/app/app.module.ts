@@ -9,7 +9,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { GraphQLModule } from './services/apollo/graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreModule } from '@ngrx/store';
+import { MetaReducer, StoreModule } from '@ngrx/store';
 import { AdminComponent } from './components/admin/admin.component';
 import { HomeComponent } from './components/home/home.component';
 import { PathNotFoundComponent } from './components/path-not-found/path-not-found.component';
@@ -21,6 +21,12 @@ import { userReducer } from './services/state/users/users.reducers';
 import { AuthService } from './utils/auth/auth-service.service';
 import { UserEffects } from './services/state/users/users.effects';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { cartReducer } from './services/state/cart/cart.reducers';
+import { CartEffects } from './services/state/cart/cart.effects';
+import { hydrationMetaReducer } from './services/state/global/hydration.reducer';
+import { HydrationEffects } from './services/state/global/hydration.effect';
+
+export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
 @NgModule({
   declarations: [
@@ -37,10 +43,14 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
     HttpClientModule,
     RouterModule.forRoot(routes),
     LayoutModule,
-    StoreModule.forRoot({
-      users: userReducer
-    }),
-    EffectsModule.forRoot([UserEffects]),
+    StoreModule.forRoot(
+      {
+        users: userReducer,
+        cart: cartReducer,
+      },
+      { metaReducers }
+    ),
+    EffectsModule.forRoot([UserEffects, CartEffects, HydrationEffects]),
     StoreDevtoolsModule.instrument({
       name: 'Sprinkler EShop DevTools',
       maxAge: 25,

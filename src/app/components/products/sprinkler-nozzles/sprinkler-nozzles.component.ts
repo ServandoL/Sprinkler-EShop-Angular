@@ -1,49 +1,78 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../../../utils/auth/auth-service.service';
-import { State } from '../../../models/AppState';
+import { AppState } from '../../../models/AppState';
 import * as ProductActions from '../../../services/state/product.actions';
 import {
   getProductFeatureState,
   getProducts,
 } from '../../../services/state/product.reducers';
+import { IProduct } from '../../../models/product.model';
+import { addToCartFunction } from '../../../utils/common/functions';
+import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
+import { addToCart } from '../../../services/state/cart/cart.selectors';
+import { CartState } from '../../../services/state/cart/cart.state';
+import { ProductState } from '../../../services/state/product.state';
+import * as CartActions from '../../../services/state/cart/cart.actions';
 
 @Component({
   selector: 'app-sprinkler-nozzles',
   templateUrl: './sprinkler-nozzles.component.html',
   styleUrls: ['./sprinkler-nozzles.component.css'],
 })
-export class SprinklerNozzlesComponent implements OnInit {
-  constructor(private store: Store<State>, public authService: AuthService) {}
-
+export class SprinklerNozzlesComponent implements OnInit, OnDestroy {
   pageTitle = 'Nozzles';
   validated!: boolean;
-  subscription!: Subscription;
   addedToCart = false;
-  products$ = this.store.select(getProducts);
-  productsLoading$ = this.store.select(getProductFeatureState);
-  errorMessage$!: Observable<string>;
+  subscription: Subscription[] = [];
+  success!: boolean | undefined;
   quantity!: number;
+  products$!: Observable<IProduct[]>;
+  productsLoading$: Observable<ProductState>;
+  addToCartLoading$: Observable<CartState>;
+  addToCartResponse$: Observable<string>;
+  message!: string;
+
+  constructor(private store: Store<AppState>, public authService: AuthService) {
+    this.products$ = this.store.select(getProducts);
+    this.productsLoading$ = this.store.select(getProductFeatureState);
+    this.addToCartLoading$ = this.store.select(getCartFeatureState);
+    this.addToCartResponse$ = this.store.select(addToCart);
+  }
 
   ngOnInit(): void {
     this.store.dispatch(ProductActions.loadSprinklerNozzles());
-    this.subscription = this.authService
-      .getToken$()
-      .subscribe((result) => (this.validated = result));
+    this.store.dispatch(CartActions.resetMessage());
+
+    this.subscription.push(
+      this.authService
+        .getToken$()
+        .subscribe((result) => (this.validated = result))
+    );
+    this.subscription.push(
+      this.addToCartLoading$.subscribe((state) => {
+        this.success = state.error.length === 0;
+        this.message = state.response;
+        if (this.success && this.message.length) {
+          setTimeout(() => {
+            this.success = false;
+            this.store.dispatch(CartActions.resetMessage());
+          }, 5000);
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => sub.unsubscribe());
   }
 
   updateQuantity(value: number) {
     this.quantity = value;
   }
 
-  submit() {
-    if (this.validated) {
-      this.addedToCart = true;
-      setTimeout(() => {
-        this.addedToCart = false;
-      }, 5000);
-      console.log(this.quantity);
-    }
+  submit(product: IProduct, qty: number) {
+    addToCartFunction(product, qty, this.validated, this.store);
   }
 }

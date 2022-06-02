@@ -11,6 +11,8 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 import { SharedAppModule } from '../shared/shared.module';
+import { CartComponent } from './cart/cart.component';
+import { ProductsModule } from '../products/products.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,8 @@ import { SharedAppModule } from '../shared/shared.module';
     RouterModule.forChild(userRoutes),
     FormsModule,
     ReactiveFormsModule,
-    SharedAppModule
+    ProductsModule,
+    SharedAppModule,
   ],
   exports: [],
   declarations: [
@@ -28,8 +31,9 @@ import { SharedAppModule } from '../shared/shared.module';
     SignUpComponent,
     UpdateProfileComponent,
     OrderHistoryComponent,
-    DeleteAccountComponent
+    DeleteAccountComponent,
+    CartComponent,
   ],
   providers: [],
 })
-export class AccountModule { }
+export class AccountModule {}

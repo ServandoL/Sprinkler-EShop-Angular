@@ -1,4 +1,5 @@
-import { IUser } from "../../../models/user.model";
+import { ICartItem } from '../../../models/cart.model';
+import { IUser } from '../../../models/user.model';
 
 export interface UserState {
   user: IUser;
@@ -18,7 +19,7 @@ export interface userResponse {
     lname: string;
     email: string;
     isAdmin: boolean;
-  }
+  };
 }
 
 export interface deleteUserResponse {

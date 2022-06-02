@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from '../../models/AppState';
+import { AppState } from '../../models/AppState';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-
-  constructor(private store: Store<State>) { }
-
-  
-
+  constructor(private store: Store<AppState>) {}
 }
