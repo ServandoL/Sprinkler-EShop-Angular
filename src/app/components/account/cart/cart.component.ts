@@ -2,7 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../models/AppState';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
-import { getCart, saveCart } from '../../../services/state/cart/cart.selectors';
+import {
+  emptyOnLogin,
+  getCart,
+  saveCart,
+} from '../../../services/state/cart/cart.selectors';
 import { CartService } from '../../../services/state/cart/cart.service';
 import * as CartActions from '../../../services/state/cart/cart.actions';
 import { ICartItem } from '../../../models/cart.model';
@@ -24,6 +28,7 @@ export class CartComponent implements OnInit, OnDestroy {
   cart$!: Observable<ICartItem[]>;
   cart: ICartItem[] = [];
   saveCartResponse$!: Observable<string>;
+  emptyOnLogin$!: Observable<boolean>;
   error!: string;
   message!: string;
   user!: string | null;
@@ -31,6 +36,8 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartLoading$ = this.store.select(getCartFeatureState);
     this.cart$ = this.store.select(getCart);
     this.saveCartResponse$ = this.store.select(saveCart);
+    this.emptyOnLogin$ = this.store.select(emptyOnLogin);
+
     this.user =
       sessionStorage.getItem('SessionUser') ||
       sessionStorage.getItem('SessionAdmin') ||

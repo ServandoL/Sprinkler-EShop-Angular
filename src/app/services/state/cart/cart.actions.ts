@@ -26,7 +26,9 @@ const ResetMessageAction = '[Cart] Reset Message';
 const SaveCartAction = '[Cart] Save Cart';
 const SaveCartSuccess = '[Cart] Save Cart Success';
 const SaveCartFailure = '[Cart] Save Cart Failure';
+const ClearCartState = '[Cart] Clear Cart State';
 
+export const clearCartState = createAction(ClearCartState);
 export const clearCart = createAction(ClearCartAction);
 
 export const clearCartApi = createAction(

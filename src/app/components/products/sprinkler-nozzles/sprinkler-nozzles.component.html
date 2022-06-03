@@ -40,8 +40,13 @@
       >
         No products available.
       </div>
-      <div class="col" *ngIf="success" class="alert alert-primary" role="alert">
-        {{ addToCartResponse$ | async }}
+      <div
+        class="col"
+        *ngIf="success && message"
+        class="alert alert-primary"
+        role="alert"
+      >
+        {{ message }}
       </div>
       <div *ngIf="!validated" class="alert alert-warning" role="alert">
         Please log in to add to your cart.

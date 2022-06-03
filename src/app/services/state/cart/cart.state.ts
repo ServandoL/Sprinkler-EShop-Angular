@@ -8,4 +8,5 @@ export interface CartState {
   response: string;
   isLoading: boolean;
   cartQuantity: number;
+  emptyOnLogin: boolean;
 }

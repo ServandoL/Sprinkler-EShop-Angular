@@ -9,7 +9,7 @@ import { IUser } from '../../models/user.model';
 import { GetUserDocument } from '../../services/state/generated/graphql';
 import { AppState } from '../../models/AppState';
 import { clearCurrentUser } from '../../services/state/users/users.actions';
-import { clearCart } from '../../services/state/cart/cart.actions';
+import { clearCartState } from '../../services/state/cart/cart.actions';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -54,9 +54,9 @@ export class AuthService {
 
   logout(): void {
     this.store.dispatch(clearCurrentUser());
-    this.store.dispatch(clearCart());
+    this.store.dispatch(clearCartState());
     sessionStorage.clear();
-    setInterval(() => {
+    setTimeout(() => {
       this.router.navigateByUrl('/home');
     }, 500);
   }

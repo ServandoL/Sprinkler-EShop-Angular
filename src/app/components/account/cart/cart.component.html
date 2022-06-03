@@ -74,7 +74,7 @@
             Save your cart
           </button>
           <button
-            *ngIf="length > 0"
+            *ngIf="(emptyOnLogin$ | async) === false"
             id="checkout-button"
             type="submit"
             class="btn btn-outline-danger m-1"

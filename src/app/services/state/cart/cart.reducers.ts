@@ -17,6 +17,7 @@ const initialState: CartState = {
   response: '',
   error: '',
   isLoading: false,
+  emptyOnLogin: true,
 };
 
 export const getCartFeatureState = createFeatureSelector<CartState>('cart');
@@ -28,6 +29,11 @@ export const getError = createSelector(
 
 export const cartReducer = createReducer<CartState>(
   initialState,
+  on(CartActions.clearCartState, (state, action): CartState => {
+    return {
+      ...initialState,
+    };
+  }),
   on(CartActions.clearCart, (state, action): CartState => {
     return {
       ...initialState,
@@ -92,6 +98,7 @@ export const cartReducer = createReducer<CartState>(
       cartQuantity: cart.length || 0,
       user_id: state.user_id,
       isLoading: false,
+      emptyOnLogin: cart.length === 0,
     };
   }),
   on(CartActions.loadCartFailure, (state, action): CartState => {
