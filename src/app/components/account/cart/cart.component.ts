@@ -12,6 +12,7 @@ import * as CartActions from '../../../services/state/cart/cart.actions';
 import { ICartItem } from '../../../models/cart.model';
 import { Observable, Subscription } from 'rxjs';
 import { CartState } from '../../../services/state/cart/cart.state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -32,7 +33,11 @@ export class CartComponent implements OnInit, OnDestroy {
   error!: string;
   message!: string;
   user!: string | null;
-  constructor(private store: Store<AppState>, public cartService: CartService) {
+  constructor(
+    private store: Store<AppState>,
+    public cartService: CartService,
+    private router: Router
+  ) {
     this.cartLoading$ = this.store.select(getCartFeatureState);
     this.cart$ = this.store.select(getCart);
     this.saveCartResponse$ = this.store.select(saveCart);
@@ -108,6 +113,10 @@ export class CartComponent implements OnInit, OnDestroy {
         })
       );
     }
+  }
+
+  checkout() {
+    this.router.navigateByUrl('/account/cart/checkout');
   }
 
   deleteCart() {

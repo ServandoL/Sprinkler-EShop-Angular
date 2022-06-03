@@ -13,6 +13,7 @@ import { DeleteAccountComponent } from './delete-account/delete-account.componen
 import { SharedAppModule } from '../shared/shared.module';
 import { CartComponent } from './cart/cart.component';
 import { ProductsModule } from '../products/products.module';
+import { CheckoutComponent } from './cart/checkout/checkout.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { ProductsModule } from '../products/products.module';
     OrderHistoryComponent,
     DeleteAccountComponent,
     CartComponent,
+    CheckoutComponent,
   ],
   providers: [],
 })
