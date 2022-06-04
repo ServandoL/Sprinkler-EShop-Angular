@@ -12,13 +12,19 @@
       <div>
         <fieldset>
           <legend>Shipping</legend>
-          <form class="row g-3">
+          <form
+            [formGroup]="checkOutForm"
+            (ngSubmit)="onSubmit(checkOutForm)"
+            #formDir="ngForm"
+            class="row g-3"
+          >
             <div class="col-md-12">
               <label for="shipping-address" class="form-label">Address</label>
               <input
                 type="text"
                 class="form-control"
                 id="shipping-address"
+                formControlName="address"
                 placeholder="1234 Main st"
               />
             </div>
@@ -29,48 +35,55 @@
               <input
                 type="text"
                 class="form-control"
+                formControlName="address2"
                 id="shipping-address-2"
                 placeholder="apartment, studio, floor, etc"
               />
             </div>
             <div class="col-md-6">
               <label for="inputCity" class="form-label">City</label>
-              <input type="text" class="form-control" id="inputCity" />
+              <input
+                type="text"
+                class="form-control"
+                formControlName="city"
+                id="inputCity"
+              />
             </div>
             <div class="col-md-4">
               <label for="inputState" class="form-label">State</label>
-              <select id="inputState" class="form-select">
+              <select
+                id="inputState"
+                class="form-select"
+                formControlName="state"
+              >
                 <option selected>Choose...</option>
-                <!-- {% for state in states %}
-                <option id="{{ state }}" value="{{ state }}">
+                <option *ngFor="let state of states" value="{{ state }}">
                   {{ state }}
                 </option>
-                {% else %}
-                <option id="none">None</option>
-                {% endfor %} -->
               </select>
             </div>
             <div class="col-md-2">
               <label for="inputZip" class="form-label">Zip</label>
-              <input type="text" class="form-control" id="inputZip" />
+              <input
+                type="text"
+                class="form-control"
+                id="inputZip"
+                formControlName="zipCode"
+              />
             </div>
-          </form>
-        </fieldset>
-      </div>
-      <div class="row py-2">
-        <fieldset>
-          <legend>Credit card details</legend>
-          <form class="row g-3" id="payment-form">
+            <legend>Credit card details</legend>
             <div class="col-md-12">
               <input
                 type="text"
                 class="form-control"
                 placeholder="Card Number"
+                formControlName="cardNumber"
                 required
               />
             </div>
             <div class="col-md-6">
-              <select class="form-select">
+              <select class="form-select" formControlName="month">
+                <option selected>Month</option>
                 <option value="january">January</option>
                 <option value="february">February</option>
                 <option value="march">March</option>
@@ -91,6 +104,7 @@
                 class="form-control"
                 pattern="(19|20)[0-9][0-9]"
                 placeholder="year"
+                formControlName="year"
                 required
               />
             </div>
@@ -100,11 +114,12 @@
                 class="form-control"
                 pattern="^[0-9]{3,4}$"
                 placeholder="CVV"
+                formControlName="cvv"
                 required
               />
             </div>
             <div class="col-md-12">
-              <button type="submit" form="payment-form" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Submit Payment
               </button>
             </div>
@@ -127,6 +142,7 @@
                 type="text"
                 name="subtotal"
                 class="form-control amount"
+                value="${{ subtotal.toFixed(2) }}"
                 readonly
               />
             </div>
@@ -134,7 +150,13 @@
           <div class="row mb-3">
             <label for="tax" class="col-sm-8 col-form-label">Tax</label>
             <div class="col-sm-4">
-              <input type="text" name="tax" class="form-control tax" readonly />
+              <input
+                type="text"
+                name="tax"
+                class="form-control tax"
+                value="${{ (subtotal * tax).toFixed(2) }}"
+                readonly
+              />
             </div>
           </div>
           <div class="row mb-3">
@@ -144,6 +166,7 @@
                 type="text"
                 name="total"
                 class="form-control total"
+                value="${{ (subtotal + subtotal * tax).toFixed(2) }}"
                 readonly
               />
             </div>

@@ -29,14 +29,18 @@ export type Cart = {
 };
 
 export type CartInput = {
-  brand: Scalars['String'];
-  category: Scalars['String'];
+  brand?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Scalars['String']>;
   imageUrl?: InputMaybe<Scalars['String']>;
-  price: Scalars['Float'];
-  productName: Scalars['String'];
-  quantity: Scalars['Int'];
-  stock: Scalars['Int'];
-  user_id: Scalars['String'];
+  price?: InputMaybe<Scalars['Float']>;
+  productName?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Int']>;
+  stock?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['String']>;
+};
+
+export type CheckoutRequest = {
+  order?: InputMaybe<Order>;
 };
 
 export type Mutation = {
@@ -44,6 +48,7 @@ export type Mutation = {
   addProduct?: Maybe<AddProductResponse>;
   addToCart?: Maybe<AddToCartResponse>;
   addUser?: Maybe<AddUserResponse>;
+  checkout?: Maybe<CheckoutResponse>;
   clearCart?: Maybe<RemoveFromCartResponse>;
   deleteProduct?: Maybe<DeleteProductResponse>;
   deleteUser?: Maybe<DeleteUserResponse>;
@@ -82,6 +87,11 @@ export type MutationAddUserArgs = {
 };
 
 
+export type MutationCheckoutArgs = {
+  checkoutRequest?: InputMaybe<Order>;
+};
+
+
 export type MutationClearCartArgs = {
   user_id?: InputMaybe<Scalars['String']>;
 };
@@ -106,6 +116,23 @@ export type MutationUpdateCartQuantityArgs = {
   productName?: InputMaybe<Scalars['String']>;
   quantity?: InputMaybe<Scalars['Int']>;
   user_id?: InputMaybe<Scalars['String']>;
+};
+
+export type Order = {
+  email?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<Array<InputMaybe<CartInput>>>;
+  orderId?: InputMaybe<Scalars['String']>;
+  orderedDate?: InputMaybe<Scalars['String']>;
+  payment?: InputMaybe<Payment>;
+  shipping?: InputMaybe<Shipping>;
+  total?: InputMaybe<Scalars['Float']>;
+};
+
+export type Payment = {
+  cardNumber?: InputMaybe<Scalars['String']>;
+  cvv?: InputMaybe<Scalars['String']>;
+  month?: InputMaybe<Scalars['String']>;
+  year?: InputMaybe<Scalars['String']>;
 };
 
 export type Product = {
@@ -172,6 +199,14 @@ export type SaveCartRequest = {
   user_id?: InputMaybe<Scalars['String']>;
 };
 
+export type Shipping = {
+  address?: InputMaybe<Scalars['String']>;
+  address2?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  state?: InputMaybe<Scalars['String']>;
+  zipCode?: InputMaybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   _id: Scalars['ID'];
@@ -202,6 +237,12 @@ export type AddUserResponse = {
   message?: Maybe<Scalars['String']>;
   success?: Maybe<Scalars['Boolean']>;
   user?: Maybe<User>;
+};
+
+export type CheckoutResponse = {
+  __typename?: 'checkoutResponse';
+  message?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
 };
 
 export type DeleteProductResponse = {
@@ -360,6 +401,13 @@ export type ClearCartMutationVariables = Exact<{
 
 
 export type ClearCartMutation = { __typename?: 'Mutation', clearCart?: { __typename?: 'removeFromCartResponse', message?: string | null | undefined, success?: boolean | null | undefined } | null | undefined };
+
+export type CheckoutMutationVariables = Exact<{
+  checkoutRequest?: InputMaybe<Order>;
+}>;
+
+
+export type CheckoutMutation = { __typename?: 'Mutation', checkout?: { __typename?: 'checkoutResponse', success?: boolean | null | undefined, message?: string | null | undefined } | null | undefined };
 
 export const CreateProductDocument = gql`
     mutation createProduct($productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $id: ID) {
@@ -740,6 +788,25 @@ export const ClearCartDocument = gql`
   })
   export class ClearCartGQL extends Apollo.Mutation<ClearCartMutation, ClearCartMutationVariables> {
     document = ClearCartDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CheckoutDocument = gql`
+    mutation checkout($checkoutRequest: Order) {
+  checkout(checkoutRequest: $checkoutRequest) {
+    success
+    message
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CheckoutGQL extends Apollo.Mutation<CheckoutMutation, CheckoutMutationVariables> {
+    document = CheckoutDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

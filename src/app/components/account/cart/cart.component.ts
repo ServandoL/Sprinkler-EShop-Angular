@@ -13,6 +13,7 @@ import { ICartItem } from '../../../models/cart.model';
 import { Observable, Subscription } from 'rxjs';
 import { CartState } from '../../../services/state/cart/cart.state';
 import { Router } from '@angular/router';
+import { SALES_TAX } from '../../../utils/common/constants';
 
 @Component({
   selector: 'app-cart',
@@ -22,7 +23,7 @@ import { Router } from '@angular/router';
 export class CartComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   success!: boolean | undefined;
-  tax = 0.0825;
+  tax = SALES_TAX;
   subtotal!: number;
   length!: number;
   cartLoading$!: Observable<CartState>;

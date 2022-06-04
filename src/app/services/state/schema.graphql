@@ -223,3 +223,10 @@ mutation clearCart($userId: String) {
     success
   }
 }
+
+mutation checkout($checkoutRequest: Order) {
+  checkout(checkoutRequest: $checkoutRequest) {
+    success
+    message
+  }
+}

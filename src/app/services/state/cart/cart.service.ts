@@ -5,8 +5,10 @@ import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GetCartResponse, ICartItem } from '../../../models/cart.model';
+import { Order } from '../../../models/checkout.model';
 import {
   AddToCartDocument,
+  CheckoutDocument,
   ClearCartDocument,
   GetCartDocument,
   SaveCartDocument,
@@ -91,6 +93,15 @@ export class CartService {
         userId: user_id,
         productName: productName,
         quantity: quantity,
+      },
+    });
+  }
+
+  checkout$(order: Order): Observable<any> {
+    return this.apollo.mutate({
+      mutation: CheckoutDocument,
+      variables: {
+        checkoutRequest: { ...order },
       },
     });
   }
