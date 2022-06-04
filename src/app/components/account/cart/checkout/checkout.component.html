@@ -1,0 +1,191 @@
+<div *ngIf="(isLoading$ | async) === true">
+  <app-shared-loader></app-shared-loader>
+</div>
+<div class="container">
+  <div class="row py-2">
+    <div class="col-md-8">
+      <h3>Checkout</h3>
+      <div class="bottom-border my-4"></div>
+      <div
+        class="col"
+        *ngIf="(response$ | async)?.length"
+        class="alert alert-primary"
+        role="alert"
+      >
+        {{ response$ | async }}
+      </div>
+      <div
+        class="col"
+        *ngIf="(error$ | async)?.length"
+        class="alert alert-danger"
+        role="alert"
+      >
+        {{ error$ | async }}
+      </div>
+      <div>
+        <fieldset>
+          <legend>Shipping</legend>
+          <form
+            [formGroup]="checkOutForm"
+            (ngSubmit)="onSubmit(checkOutForm)"
+            #formDir="ngForm"
+            class="row g-3"
+          >
+            <div class="col-md-12">
+              <label for="shipping-address" class="form-label">Address</label>
+              <input
+                type="text"
+                class="form-control"
+                id="shipping-address"
+                formControlName="address"
+                placeholder="1234 Main st"
+              />
+            </div>
+            <div class="col-md-12">
+              <label for="shipping-address-2" class="form-label"
+                >Address 2</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="address2"
+                id="shipping-address-2"
+                placeholder="apartment, studio, floor, etc"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="inputCity" class="form-label">City</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="city"
+                id="inputCity"
+              />
+            </div>
+            <div class="col-md-4">
+              <label for="inputState" class="form-label">State</label>
+              <select
+                id="inputState"
+                class="form-select"
+                formControlName="state"
+              >
+                <option selected>Choose...</option>
+                <option *ngFor="let state of states" value="{{ state }}">
+                  {{ state }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="inputZip" class="form-label">Zip</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputZip"
+                formControlName="zipCode"
+              />
+            </div>
+            <legend>Credit card details</legend>
+            <div class="col-md-12">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Card Number"
+                formControlName="cardNumber"
+                required
+              />
+            </div>
+            <div class="col-md-6">
+              <select class="form-select" formControlName="month">
+                <option selected>Month</option>
+                <option value="january">January</option>
+                <option value="february">February</option>
+                <option value="march">March</option>
+                <option value="april">April</option>
+                <option value="may">May</option>
+                <option value="june">June</option>
+                <option value="july">July</option>
+                <option value="august">August</option>
+                <option value="september">September</option>
+                <option value="october">October</option>
+                <option value="november">November</option>
+                <option value="december">December</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                pattern="(19|20)[0-9][0-9]"
+                placeholder="year"
+                formControlName="year"
+                required
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                pattern="^[0-9]{3,4}$"
+                placeholder="CVV"
+                formControlName="cvv"
+                required
+              />
+            </div>
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-primary">
+                Submit Payment
+              </button>
+            </div>
+          </form>
+        </fieldset>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>Order Summary</h3>
+      <div class="bottom-border my-4"></div>
+      <div class="card">
+        <div class="card-header">Cart Totals</div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <label for="subtotal" class="col-sm-8 col-form-label"
+              >Subtotal</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                name="subtotal"
+                class="form-control amount"
+                value="${{ subtotal.toFixed(2) }}"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="tax" class="col-sm-8 col-form-label">Tax</label>
+            <div class="col-sm-4">
+              <input
+                type="text"
+                name="tax"
+                class="form-control tax"
+                value="${{ (subtotal * tax).toFixed(2) }}"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="total" class="col-sm-8 col-form-label">Total</label>
+            <div class="col-sm-4">
+              <input
+                type="text"
+                name="total"
+                class="form-control total"
+                value="${{ (subtotal + subtotal * tax).toFixed(2) }}"
+                readonly
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

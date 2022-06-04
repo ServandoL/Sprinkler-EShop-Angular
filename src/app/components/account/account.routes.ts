@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from '../../utils/auth/auth.guard';
 import { AccountComponent } from './account.component';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './cart/checkout/checkout.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
@@ -9,6 +10,7 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 export const userRoutes: Routes = [
   { path: 'profile', component: AccountComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'cart/checkout', component: CheckoutComponent },
   {
     path: 'order-history',
     component: OrderHistoryComponent,

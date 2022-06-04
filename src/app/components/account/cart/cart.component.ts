@@ -12,6 +12,8 @@ import * as CartActions from '../../../services/state/cart/cart.actions';
 import { ICartItem } from '../../../models/cart.model';
 import { Observable, Subscription } from 'rxjs';
 import { CartState } from '../../../services/state/cart/cart.state';
+import { Router } from '@angular/router';
+import { SALES_TAX } from '../../../utils/common/constants';
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +23,7 @@ import { CartState } from '../../../services/state/cart/cart.state';
 export class CartComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   success!: boolean | undefined;
-  tax = 0.0825;
+  tax = SALES_TAX;
   subtotal!: number;
   length!: number;
   cartLoading$!: Observable<CartState>;
@@ -32,7 +34,11 @@ export class CartComponent implements OnInit, OnDestroy {
   error!: string;
   message!: string;
   user!: string | null;
-  constructor(private store: Store<AppState>, public cartService: CartService) {
+  constructor(
+    private store: Store<AppState>,
+    public cartService: CartService,
+    private router: Router
+  ) {
     this.cartLoading$ = this.store.select(getCartFeatureState);
     this.cart$ = this.store.select(getCart);
     this.saveCartResponse$ = this.store.select(saveCart);
@@ -108,6 +114,10 @@ export class CartComponent implements OnInit, OnDestroy {
         })
       );
     }
+  }
+
+  checkout() {
+    this.router.navigateByUrl('/account/cart/checkout');
   }
 
   deleteCart() {
