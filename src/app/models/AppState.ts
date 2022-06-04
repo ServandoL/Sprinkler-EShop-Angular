@@ -1,5 +1,6 @@
 import { ICartItem } from './cart.model';
 import { Order } from './checkout.model';
+import { OrderHistory } from './orderHistory.model';
 import { IFilter, IProduct } from './product.model';
 import { IUser } from './user.model';
 
@@ -9,4 +10,5 @@ export interface AppState {
   filter: IFilter | undefined;
   cart: ICartItem | undefined;
   order: Order | undefined;
+  orderHistory: OrderHistory | undefined;
 }
