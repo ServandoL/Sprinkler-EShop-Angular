@@ -9,9 +9,19 @@ import { CartService } from '../../../../services/state/cart/cart.service';
 import { SALES_TAX, STATES } from '../../../../utils/common/constants';
 import * as CartActions from '../../../../services/state/cart/cart.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { checkOutAction } from '../../../../services/state/checkout/checkout.actions';
+import {
+  checkOutAction,
+  resetMessage,
+} from '../../../../services/state/checkout/checkout.actions';
 import { Order } from '../../../../models/checkout.model';
 import { v4 as uuidv4 } from 'uuid';
+import { CheckoutState } from '../../../../services/state/checkout/checkout.state';
+import {
+  getErrorSelector,
+  getLoadingSelector,
+  getResponseSelector,
+  getSuccessSelector,
+} from '../../../../services/state/checkout/checkout.reducers';
 
 @Component({
   selector: 'app-checkout',
@@ -30,6 +40,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   message!: string;
   user!: string | null;
   states = STATES;
+  isLoading$!: Observable<boolean>;
+  response$!: Observable<string>;
+  error$!: Observable<string>;
+  success$!: Observable<boolean | undefined>;
 
   constructor(
     private store: Store<AppState>,
@@ -37,6 +51,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.cart$ = this.store.select(getCart);
+    this.isLoading$ = this.store.select(getLoadingSelector);
+    this.response$ = this.store.select(getResponseSelector);
+    this.error$ = this.store.select(getErrorSelector);
+    this.success$ = this.store.select(getSuccessSelector);
     this.user =
       sessionStorage.getItem('SessionUser') ||
       sessionStorage.getItem('SessionAdmin') ||
@@ -84,7 +102,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(CartActions.resetMessage());
+    this.store.dispatch(resetMessage());
     this.subscriptions.push(
       this.cart$.subscribe((state) => {
         this.length = state.length;

@@ -6,4 +6,5 @@ export interface CheckoutState {
   error: string;
   response: string;
   isLoading: boolean;
+  success: boolean | undefined;
 }

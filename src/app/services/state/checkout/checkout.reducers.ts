@@ -8,6 +8,7 @@ import {
   checkOutAction,
   checkOutFailure,
   checkOutSuccess,
+  resetMessage,
 } from './checkout.actions';
 import { CheckoutState } from './checkout.state';
 
@@ -17,18 +18,40 @@ const initialState: CheckoutState = {
   error: '',
   response: '',
   isLoading: false,
+  success: undefined,
 };
 
 export const getCheckoutFeatureState =
   createFeatureSelector<CheckoutState>('checkout');
 
-export const getError = createSelector(
+export const getErrorSelector = createSelector(
   getCheckoutFeatureState,
   (state) => state.error
 );
 
+export const getResponseSelector = createSelector(
+  getCheckoutFeatureState,
+  (state) => state.response
+);
+
+export const getLoadingSelector = createSelector(
+  getCheckoutFeatureState,
+  (state) => state.isLoading
+);
+
+export const getSuccessSelector = createSelector(
+  getCheckoutFeatureState,
+  (state) => state.success
+);
+
 export const checkoutReducer = createReducer<CheckoutState>(
   initialState,
+  on(resetMessage, (state, action): CheckoutState => {
+    return {
+      ...state,
+      response: '',
+    };
+  }),
   on(checkOutAction, (state, action): CheckoutState => {
     return {
       ...state,
@@ -42,6 +65,7 @@ export const checkoutReducer = createReducer<CheckoutState>(
       ...state,
       isLoading: false,
       response: action.response,
+      success: true,
     };
   }),
   on(checkOutFailure, (state, action): CheckoutState => {
@@ -49,6 +73,7 @@ export const checkoutReducer = createReducer<CheckoutState>(
       ...state,
       isLoading: false,
       error: action.error,
+      success: false,
     };
   })
 );

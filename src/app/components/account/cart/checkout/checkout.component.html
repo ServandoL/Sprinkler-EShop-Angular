@@ -1,14 +1,27 @@
+<div *ngIf="(isLoading$ | async) === true">
+  <app-shared-loader></app-shared-loader>
+</div>
 <div class="container">
   <div class="row py-2">
     <div class="col-md-8">
       <h3>Checkout</h3>
       <div class="bottom-border my-4"></div>
-      <!-- {% with message = get_flashed_messages() %} {% if message %} {% for item
-      in message %}
-      <div>
-        <p style="color: red">{{ item }}</p>
+      <div
+        class="col"
+        *ngIf="(response$ | async)?.length"
+        class="alert alert-primary"
+        role="alert"
+      >
+        {{ response$ | async }}
       </div>
-      {% endfor %} {% endif %} {% endwith %} -->
+      <div
+        class="col"
+        *ngIf="(error$ | async)?.length"
+        class="alert alert-danger"
+        role="alert"
+      >
+        {{ error$ | async }}
+      </div>
       <div>
         <fieldset>
           <legend>Shipping</legend>
