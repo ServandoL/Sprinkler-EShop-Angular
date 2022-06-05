@@ -5,7 +5,7 @@ import {
   on,
 } from '@ngrx/store';
 import {
-  clearState,
+  clearOrderHistory,
   loadOrders,
   loadOrdersFailure,
   loadOrdersSuccess,
@@ -38,6 +38,10 @@ export const getHistoryResponse = createSelector(
   (state) => state.response
 );
 
+export const getOrders = createSelector(getOrdersFeatureState, (state) =>
+  state.orders ? [...state.orders] : []
+);
+
 export const orderHistoryReducer = createReducer<OrderHistoryState>(
   initialState,
   on(loadOrders, (state, action): OrderHistoryState => {
@@ -48,9 +52,16 @@ export const orderHistoryReducer = createReducer<OrderHistoryState>(
     };
   }),
   on(loadOrdersSuccess, (state, action): OrderHistoryState => {
+    const orders = action.orders.map((order) => {
+      return {
+        ...order,
+        orderedDate: new Date(order.orderedDate),
+      };
+    });
+
     return {
       ...state,
-      orders: [...action.orders],
+      orders: [...orders],
       isLoading: false,
       response: action.response,
     };
@@ -62,7 +73,7 @@ export const orderHistoryReducer = createReducer<OrderHistoryState>(
       error: action.error,
     };
   }),
-  on(clearState, (state, action): OrderHistoryState => {
+  on(clearOrderHistory, (state, action): OrderHistoryState => {
     return {
       ...initialState,
     };

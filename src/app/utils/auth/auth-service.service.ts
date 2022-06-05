@@ -11,6 +11,7 @@ import { AppState } from '../../models/AppState';
 import { clearCurrentUser } from '../../services/state/users/users.actions';
 import { clearCartState } from '../../services/state/cart/cart.actions';
 import { Router } from '@angular/router';
+import { clearOrderHistory } from '../../services/state/orderHistory/orderHistory.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -55,6 +56,7 @@ export class AuthService {
   logout(): void {
     this.store.dispatch(clearCurrentUser());
     this.store.dispatch(clearCartState());
+    this.store.dispatch(clearOrderHistory());
     sessionStorage.clear();
     setTimeout(() => {
       this.router.navigateByUrl('/home');

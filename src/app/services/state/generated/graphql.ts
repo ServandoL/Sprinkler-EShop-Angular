@@ -449,7 +449,7 @@ export type OrdersQueryVariables = Exact<{
 }>;
 
 
-export type OrdersQuery = { __typename?: 'Query', orders?: Array<{ __typename?: 'OrderType', _id?: string | null | undefined, email?: string | null | undefined, orderedDate?: string | null | undefined, total?: number | null | undefined, orderId?: string | null | undefined, order?: Array<{ __typename?: 'Cart', _id?: string | null | undefined, user_id?: string | null | undefined, productName?: string | null | undefined, price?: number | null | undefined, category?: string | null | undefined, brand?: string | null | undefined, stock?: number | null | undefined, imageUrl?: string | null | undefined, quantity?: number | null | undefined } | null | undefined> | null | undefined, shipping?: { __typename?: 'ShippingType', address?: string | null | undefined, address2?: string | null | undefined, city?: string | null | undefined, state?: string | null | undefined, zipCode?: string | null | undefined } | null | undefined, payment?: { __typename?: 'PaymentType', cardNumber?: string | null | undefined, month?: string | null | undefined, year?: string | null | undefined, cvv?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined };
+export type OrdersQuery = { __typename?: 'Query', orders?: Array<{ __typename?: 'OrderType', _id?: string | null | undefined, email?: string | null | undefined, orderedDate?: string | null | undefined, total?: number | null | undefined, orderId?: string | null | undefined, order?: Array<{ __typename?: 'Cart', user_id?: string | null | undefined, productName?: string | null | undefined, price?: number | null | undefined, category?: string | null | undefined, brand?: string | null | undefined, stock?: number | null | undefined, imageUrl?: string | null | undefined, quantity?: number | null | undefined } | null | undefined> | null | undefined, shipping?: { __typename?: 'ShippingType', address?: string | null | undefined, address2?: string | null | undefined, city?: string | null | undefined, state?: string | null | undefined, zipCode?: string | null | undefined } | null | undefined, payment?: { __typename?: 'PaymentType', cardNumber?: string | null | undefined, month?: string | null | undefined, year?: string | null | undefined, cvv?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined };
 
 export const CreateProductDocument = gql`
     mutation createProduct($productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $id: ID) {
@@ -859,7 +859,6 @@ export const OrdersDocument = gql`
   orders(email: $email) {
     _id
     order {
-      _id
       user_id
       productName
       price

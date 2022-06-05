@@ -4,9 +4,9 @@ import { Order } from '../../../models/checkout.model';
 const LoadOrders = '[Order History] Load Orders';
 const LoadOrdersSuccess = '[Order History] Load Orders Success';
 const LoadOrdersFailure = '[Order History] Load Orders Failure';
-const ClearState = '[Order History] Clear State';
+const ClearOrderHistory = '[Order History] Clear Order History';
 
-export const clearState = createAction(ClearState);
+export const clearOrderHistory = createAction(ClearOrderHistory);
 export const loadOrders = createAction(LoadOrders, props<{ email: string }>());
 
 export const loadOrdersSuccess = createAction(

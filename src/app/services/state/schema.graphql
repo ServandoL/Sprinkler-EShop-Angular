@@ -235,7 +235,6 @@ query orders($email: String) {
   orders(email: $email) {
     _id
     order {
-      _id
       user_id
       productName
       price
