@@ -18,14 +18,14 @@ export type Scalars = {
 export type Cart = {
   __typename?: 'Cart';
   _id?: Maybe<Scalars['ID']>;
-  brand: Scalars['String'];
-  category: Scalars['String'];
+  brand?: Maybe<Scalars['String']>;
+  category?: Maybe<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
-  price: Scalars['Float'];
-  productName: Scalars['String'];
-  quantity: Scalars['Int'];
-  stock: Scalars['Int'];
-  user_id: Scalars['String'];
+  price?: Maybe<Scalars['Float']>;
+  productName?: Maybe<Scalars['String']>;
+  quantity?: Maybe<Scalars['Int']>;
+  stock?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['String']>;
 };
 
 export type CartInput = {
@@ -128,11 +128,31 @@ export type Order = {
   total?: InputMaybe<Scalars['Float']>;
 };
 
+export type OrderType = {
+  __typename?: 'OrderType';
+  _id?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  order?: Maybe<Array<Maybe<Cart>>>;
+  orderId?: Maybe<Scalars['String']>;
+  orderedDate?: Maybe<Scalars['String']>;
+  payment?: Maybe<PaymentType>;
+  shipping?: Maybe<ShippingType>;
+  total?: Maybe<Scalars['Float']>;
+};
+
 export type Payment = {
   cardNumber?: InputMaybe<Scalars['String']>;
   cvv?: InputMaybe<Scalars['String']>;
   month?: InputMaybe<Scalars['String']>;
   year?: InputMaybe<Scalars['String']>;
+};
+
+export type PaymentType = {
+  __typename?: 'PaymentType';
+  cardNumber?: Maybe<Scalars['String']>;
+  cvv?: Maybe<Scalars['String']>;
+  month?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['String']>;
 };
 
 export type Product = {
@@ -152,6 +172,7 @@ export type Product = {
 export type Query = {
   __typename?: 'Query';
   cart?: Maybe<GetCartResponse>;
+  orders?: Maybe<Array<Maybe<OrderType>>>;
   productById?: Maybe<Product>;
   products?: Maybe<Array<Maybe<Product>>>;
   userById?: Maybe<User>;
@@ -161,6 +182,11 @@ export type Query = {
 
 export type QueryCartArgs = {
   user_id?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryOrdersArgs = {
+  email?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -205,6 +231,15 @@ export type Shipping = {
   city?: InputMaybe<Scalars['String']>;
   state?: InputMaybe<Scalars['String']>;
   zipCode?: InputMaybe<Scalars['String']>;
+};
+
+export type ShippingType = {
+  __typename?: 'ShippingType';
+  address?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  zipCode?: Maybe<Scalars['String']>;
 };
 
 export type User = {
@@ -370,7 +405,7 @@ export type AddToCartMutationVariables = Exact<{
 }>;
 
 
-export type AddToCartMutation = { __typename?: 'Mutation', addToCart?: { __typename?: 'addToCartResponse', message?: string | null | undefined, success?: boolean | null | undefined, product?: { __typename?: 'Cart', user_id: string, productName: string, price: number, category: string, brand: string, stock: number, imageUrl?: string | null | undefined, quantity: number } | null | undefined } | null | undefined };
+export type AddToCartMutation = { __typename?: 'Mutation', addToCart?: { __typename?: 'addToCartResponse', message?: string | null | undefined, success?: boolean | null | undefined, product?: { __typename?: 'Cart', user_id?: string | null | undefined, productName?: string | null | undefined, price?: number | null | undefined, category?: string | null | undefined, brand?: string | null | undefined, stock?: number | null | undefined, imageUrl?: string | null | undefined, quantity?: number | null | undefined } | null | undefined } | null | undefined };
 
 export type UpdateCartMutationVariables = Exact<{
   userId?: InputMaybe<Scalars['String']>;
@@ -393,7 +428,7 @@ export type GetCartQueryVariables = Exact<{
 }>;
 
 
-export type GetCartQuery = { __typename?: 'Query', cart?: { __typename?: 'getCartResponse', user_id?: string | null | undefined, createdDate?: string | null | undefined, cart?: Array<{ __typename?: 'Cart', user_id: string, productName: string, price: number, category: string, brand: string, stock: number, imageUrl?: string | null | undefined, quantity: number } | null | undefined> | null | undefined } | null | undefined };
+export type GetCartQuery = { __typename?: 'Query', cart?: { __typename?: 'getCartResponse', user_id?: string | null | undefined, createdDate?: string | null | undefined, cart?: Array<{ __typename?: 'Cart', user_id?: string | null | undefined, productName?: string | null | undefined, price?: number | null | undefined, category?: string | null | undefined, brand?: string | null | undefined, stock?: number | null | undefined, imageUrl?: string | null | undefined, quantity?: number | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type ClearCartMutationVariables = Exact<{
   userId?: InputMaybe<Scalars['String']>;
@@ -408,6 +443,13 @@ export type CheckoutMutationVariables = Exact<{
 
 
 export type CheckoutMutation = { __typename?: 'Mutation', checkout?: { __typename?: 'checkoutResponse', success?: boolean | null | undefined, message?: string | null | undefined } | null | undefined };
+
+export type OrdersQueryVariables = Exact<{
+  email?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type OrdersQuery = { __typename?: 'Query', orders?: Array<{ __typename?: 'OrderType', _id?: string | null | undefined, email?: string | null | undefined, orderedDate?: string | null | undefined, total?: number | null | undefined, orderId?: string | null | undefined, order?: Array<{ __typename?: 'Cart', user_id?: string | null | undefined, productName?: string | null | undefined, price?: number | null | undefined, category?: string | null | undefined, brand?: string | null | undefined, stock?: number | null | undefined, imageUrl?: string | null | undefined, quantity?: number | null | undefined } | null | undefined> | null | undefined, shipping?: { __typename?: 'ShippingType', address?: string | null | undefined, address2?: string | null | undefined, city?: string | null | undefined, state?: string | null | undefined, zipCode?: string | null | undefined } | null | undefined, payment?: { __typename?: 'PaymentType', cardNumber?: string | null | undefined, month?: string | null | undefined, year?: string | null | undefined, cvv?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined };
 
 export const CreateProductDocument = gql`
     mutation createProduct($productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $id: ID) {
@@ -807,6 +849,51 @@ export const CheckoutDocument = gql`
   })
   export class CheckoutGQL extends Apollo.Mutation<CheckoutMutation, CheckoutMutationVariables> {
     document = CheckoutDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const OrdersDocument = gql`
+    query orders($email: String) {
+  orders(email: $email) {
+    _id
+    order {
+      user_id
+      productName
+      price
+      category
+      brand
+      stock
+      imageUrl
+      quantity
+    }
+    shipping {
+      address
+      address2
+      city
+      state
+      zipCode
+    }
+    payment {
+      cardNumber
+      month
+      year
+      cvv
+    }
+    email
+    orderedDate
+    total
+    orderId
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class OrdersGQL extends Apollo.Query<OrdersQuery, OrdersQueryVariables> {
+    document = OrdersDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

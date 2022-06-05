@@ -230,3 +230,36 @@ mutation checkout($checkoutRequest: Order) {
     message
   }
 }
+
+query orders($email: String) {
+  orders(email: $email) {
+    _id
+    order {
+      user_id
+      productName
+      price
+      category
+      brand
+      stock
+      imageUrl
+      quantity
+    }
+    shipping {
+      address
+      address2
+      city
+      state
+      zipCode
+    }
+    payment {
+      cardNumber
+      month
+      year
+      cvv
+    }
+    email
+    orderedDate
+    total
+    orderId
+  }
+}

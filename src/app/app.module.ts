@@ -27,6 +27,8 @@ import { hydrationMetaReducer } from './services/state/global/hydration.reducer'
 import { HydrationEffects } from './services/state/global/hydration.effect';
 import { CheckoutEffects } from './services/state/checkout/checkout.effects';
 import { checkoutReducer } from './services/state/checkout/checkout.reducers';
+import { orderHistoryReducer } from './services/state/orderHistory/orderHistory.reducers';
+import { OrderHistoryEffects } from './services/state/orderHistory/orderHistory.effects';
 
 export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
@@ -50,6 +52,7 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
         users: userReducer,
         cart: cartReducer,
         checkout: checkoutReducer,
+        orderHistory: orderHistoryReducer,
       },
       { metaReducers }
     ),
@@ -58,6 +61,7 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
       CartEffects,
       HydrationEffects,
       CheckoutEffects,
+      OrderHistoryEffects,
     ]),
     StoreDevtoolsModule.instrument({
       name: 'Sprinkler EShop DevTools',

@@ -1,8 +1,11 @@
+<div *ngIf="(isLoading$ | async) === true">
+  <app-shared-loader></app-shared-loader>
+</div>
 <div class="container">
   <div class="row py-2">
     <div class="col-md-2">
       <h3>Actions</h3>
-      <div class="bottom-border my-2"></div>
+      <div class="bottom-border my-4"></div>
       <ul class="list-group">
         <li class="list-group-item">
           <a [routerLink]="['/account/order-history']">Order History</a>
@@ -20,53 +23,70 @@
     <div class="col-md-10">
       <h3>Order History</h3>
       <div class="bottom-border my-4"></div>
-      <!-- {% if not order_history %}
-          <div class="alert alert-danger" role="alert">
-              There are no orders associated with this account.
-          </div>
-          {% else %}
-          {% for key in order_history %} -->
-      <div class="table-responsive caption-top">
-        <caption>
-          Confirmation ID: KEY
-        </caption>
-        <table class="table">
-          <thead class="table-light">
-            <tr>
-              <th scope="col">PRODUCT</th>
-              <th scope="col">ORDER DATE</th>
-              <th scope="col">QUANTITY</th>
-              <th scope="col">PRICE</th>
-              <th scope="col">TOTAL</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- {% for product in order_history[key] %} -->
-            <tr>
-              <td>
-                <div>
-                  <!-- <span
-                    ><img
-                      src="/{{ product['imageUrl'] }}"
-                      class="img-thumbnail"
-                      alt="{{ product['productName'] }}"
-                      style="width: 100px"
-                  /></span> -->
-                </div>
-                <div>
-                  <span>PRODUCT NAME</span>
-                </div>
-              </td>
-
-              <td>DATE</td>
-              <td>QTY</td>
-              <td>PRICE</td>
-              <td>TOTAL PRICE</td>
-            </tr>
-            <!-- {% endfor %} -->
-          </tbody>
-        </table>
+      <div class="alert alert-warning" role="alert">
+        Please refresh the page if you recently placed an order.
       </div>
+      <div
+        class="alert alert-warning"
+        role="alert"
+        *ngIf="(orders$ | async)?.length === 0"
+      >
+        There are no orders associated with this account.
+      </div>
+      <!-- for each order -->
+      <table
+        class="table caption-top"
+        *ngFor="let order of orders$ | async as Order"
+      >
+        <caption>
+          Confirmation ID:
+          {{
+            order.orderId
+          }}
+        </caption>
+        <thead class="table-light">
+          <tr>
+            <th scope="col">PRODUCT</th>
+            <th scope="col">ORDER DATE</th>
+            <th scope="col">QUANTITY</th>
+            <th scope="col">PRICE</th>
+            <th scope="col">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- {% for product in order_history[key] %} -->
+          <tr *ngFor="let product of order.order">
+            <td>
+              <div>
+                <span
+                  ><img
+                    src="assets/{{ product.imageUrl }}"
+                    class="img-thumbnail"
+                    alt="{{ product.productName }}"
+                    style="width: 100px"
+                /></span>
+              </div>
+              <div>
+                <span>{{ product.productName }}</span>
+              </div>
+            </td>
+
+            <td>{{ order.orderedDate | date: "medium" }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.price | currency: "USD":"symbol" }}</td>
+            <td>
+              {{ product.price * product.quantity | currency: "USD":"symbol" }}
+            </td>
+          </tr>
+          <!-- {% endfor %} -->
+        </tbody>
+        <tfoot>
+          Total:
+          {{
+            order.total | currency: "USD":"symbol"
+          }}
+        </tfoot>
+      </table>
       <!-- {% endfor %} {% endif %} -->
     </div>
   </div>
