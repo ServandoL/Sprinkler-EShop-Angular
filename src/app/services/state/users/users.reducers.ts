@@ -4,6 +4,7 @@ import * as UserActions from './users.actions';
 
 const initialState: UserState = {
   user: {
+    _id: '',
     fname: '',
     lname: '',
     email: '',
@@ -65,7 +66,7 @@ export const userReducer = createReducer<UserState>(
   on(UserActions.loadUserSuccess, (state, action): UserState => {
     return {
       ...state,
-      user: action.user,
+      user: action.response.user,
       error: '',
       isLoading: false,
     };

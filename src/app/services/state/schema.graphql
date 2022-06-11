@@ -37,79 +37,18 @@ mutation deleteProduct($id: ID) {
   }
 }
 
-query getProductByBrand($brand: String) {
-  products(brand: $brand) {
-    _id
-    productName
-    deleted_date
-    deleted_by
-    isDeleted
-    imageUrl
-    stock
-    brand
-    category
-    price
-  }
-}
-
-query getProductByCategory($category: String) {
-  products(category: $category) {
-    _id
-    productName
-    deleted_date
-    deleted_by
-    isDeleted
-    imageUrl
-    stock
-    brand
-    category
-    price
-  }
-}
-
-query getProductById($id: ID) {
-  products(_id: $id) {
-    _id
-    productName
-    deleted_date
-    deleted_by
-    isDeleted
-    imageUrl
-    stock
-    brand
-    category
-    price
-  }
-}
-
-query getAllProducts {
-  products {
-    _id
-    productName
-    deleted_date
-    deleted_by
-    isDeleted
-    imageUrl
-    stock
-    brand
-    category
-    price
-  }
-}
-
-query getFilters {
-  products {
-    category
-    brand
-  }
-}
-
 query getUser($email: String, $password: String) {
   users(email: $email, password: $password) {
-    fname
-    lname
-    email
-    isAdmin
+    message
+    success
+    user {
+      _id
+      fname
+      lname
+      email
+      password
+      isAdmin
+    }
   }
 }
 
@@ -261,5 +200,57 @@ query orders($email: String) {
     orderedDate
     total
     orderId
+  }
+}
+
+query getProducts($productRequest: ProductInput) {
+  products(productRequest: $productRequest) {
+    data {
+      _id
+      productName
+      price
+      category
+      brand
+      stock
+      imageUrl
+      isDeleted
+      deleted_by
+      deleted_date
+    }
+    pagination {
+      pageSize
+      pageNumber
+      firstPage
+      lastPage
+      currentPage
+      totalElements
+      totalPages
+    }
+  }
+}
+
+query getAllProducts($productRequest: ProductInput) {
+  allProducts(productRequest: $productRequest) {
+    data {
+      _id
+      productName
+      price
+      category
+      brand
+      stock
+      imageUrl
+      isDeleted
+      deleted_by
+      deleted_date
+    }
+    pagination {
+      pageSize
+      pageNumber
+      firstPage
+      lastPage
+      currentPage
+      totalElements
+      totalPages
+    }
   }
 }

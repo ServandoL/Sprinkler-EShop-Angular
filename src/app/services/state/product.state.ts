@@ -1,9 +1,10 @@
-import { ObjectId } from "mongodb";
-import { IProduct } from "../../models/product.model";
+import { ObjectId } from 'mongodb';
+import { Pagination } from '../../models/pagination.model';
+import { IProduct, ProductResponse } from '../../models/product.model';
 
 export interface ProductState {
   products: IProduct[];
-  currentProductId: string | ObjectId | null;
+  page: Pagination;
   error: string;
   isLoading: boolean;
 }

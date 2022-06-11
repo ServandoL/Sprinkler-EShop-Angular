@@ -16,6 +16,7 @@ import { ProductService } from '../../services/state/product.service';
 import { SharedAppModule } from '../shared/shared.module';
 import { QtyFormComponent } from './components/qty-form/qty-form.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
+import { PaginationComponent } from '../shared/pagination/pagination.component';
 
 @NgModule({
   imports: [

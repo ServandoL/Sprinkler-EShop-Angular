@@ -39,8 +39,7 @@ export class AuthService {
               error: result.errors.map((error) => error.message).join(', '),
             });
           } else {
-            let { _id, password, ...data } = result?.data?.users[0];
-            return data;
+            return result.data.users;
           }
         })
       );

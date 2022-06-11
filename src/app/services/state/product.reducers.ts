@@ -4,55 +4,45 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
-import { IProduct } from '../../models/product.model';
 import { ProductState } from './product.state';
 import * as ProductActions from './product.actions';
 
 const initialState: ProductState = {
   products: [],
-  currentProductId: null,
   error: '',
-  isLoading: false
+  isLoading: false,
+  page: {
+    pageSize: 0,
+    pageNumber: 0,
+    firstPage: false,
+    lastPage: false,
+    currentPage: 0,
+    totalElements: 0,
+    totalPages: 0,
+  },
 };
 
-export const getProductFeatureState = createFeatureSelector<ProductState>('products');
+export const getProductFeatureState =
+  createFeatureSelector<ProductState>('products');
+
+export const getLoading = createSelector(
+  getProductFeatureState,
+  (state) => state.isLoading
+);
 
 export const getError = createSelector(
   getProductFeatureState,
   (state) => state.error
 );
 
-export const getCurrentProductId = createSelector(
-  getProductFeatureState,
-  (state) => state.currentProductId
-);
-
-export const getCurrentProduct = createSelector(
-  getProductFeatureState,
-  getCurrentProductId,
-  (state, getCurrentProductId) => {
-    if (getCurrentProductId === null) {
-      let product: IProduct = {
-        _id: null,
-        productName: '',
-        price: 0,
-        category: '',
-        brand: '',
-        stock: 0,
-      };
-      return product;
-    } else {
-      return getCurrentProductId
-        ? state.products.find((product) => product._id === getCurrentProductId)
-        : null;
-    }
-  }
-);
-
 export const getProducts = createSelector(
   getProductFeatureState,
   (state) => state.products
-)
+);
+export const getProductPagination = createSelector(
+  getProductFeatureState,
+  (state) => state.page
+);
 
 export const productReducer = createReducer<ProductState>(
   initialState,
@@ -60,63 +50,16 @@ export const productReducer = createReducer<ProductState>(
     return {
       ...state,
       isLoading: true,
-    }
-  }),
-  on(ProductActions.loadControllers, (state, action): ProductState => {
-    return {
-      ...state,
-      isLoading: true,
-    }
-  }),
-  on(ProductActions.loadRotors, (state, action): ProductState => {
-    return {
-      ...state,
-      isLoading: true,
-    }
-  }),
-  on(ProductActions.loadSprinklerBodies, (state, action): ProductState => {
-    return {
-      ...state,
-      isLoading: true,
-    }
-  }),
-  on(ProductActions.loadSprinklerNozzles, (state, action): ProductState => {
-    return {
-      ...state,
-      isLoading: true,
-    }
-  }),
-  on(ProductActions.loadValves, (state, action): ProductState => {
-    return {
-      ...state,
-      isLoading: true,
-    }
-  }),
-  on(ProductActions.setCurrentProduct, (state, action): ProductState => {
-    return {
-      ...state,
-      currentProductId: action.currentProductId
-    }
-  }),
-  on(ProductActions.clearCurrentProduct, (state, action): ProductState => {
-    return {
-      ...state,
-      currentProductId: null
-    }
-  }),
-  on(ProductActions.initializeCurrentProduct, (state) => {
-    return {
-      ...state,
-      currentProductId: null
-    }
+    };
   }),
   on(ProductActions.loadProductsSuccess, (state, action): ProductState => {
     return {
       ...state,
-      products: action.products,
+      products: [...action.response.data],
+      page: { ...action.response.pagination },
       error: '',
       isLoading: false,
-    }
+    };
   }),
   on(ProductActions.loadProductsFailure, (state, action): ProductState => {
     return {
@@ -133,7 +76,6 @@ export const productReducer = createReducer<ProductState>(
     return {
       ...state,
       products: updatedProducts,
-      currentProductId: action.product._id,
       error: '',
     };
   }),
@@ -144,33 +86,33 @@ export const productReducer = createReducer<ProductState>(
     };
   }),
   on(ProductActions.addNewProductSuccess, (state, action): ProductState => {
-    const newProduct = [...state.products, action.product]
+    const newProduct = [...state.products, action.product];
     return {
       ...state,
       products: newProduct,
-      currentProductId: action.product._id,
-      error: ''
-    }
+      error: '',
+    };
   }),
   on(ProductActions.addNewProductFailure, (state, action): ProductState => {
     return {
       ...state,
-      error: action.error
-    }
+      error: action.error,
+    };
   }),
   on(ProductActions.deleteProductSuccess, (state, action): ProductState => {
-    const products = state.products.filter(item => item._id !== action.productId)
+    const products = state.products.filter(
+      (item) => item._id !== action.productId
+    );
     return {
       ...state,
       products: products,
-      currentProductId: null,
-      error: ''
-    }
+      error: '',
+    };
   }),
   on(ProductActions.deleteProductFailure, (state, action): ProductState => {
     return {
       ...state,
-      error: action.error
-    }
+      error: action.error,
+    };
   })
-)
+);

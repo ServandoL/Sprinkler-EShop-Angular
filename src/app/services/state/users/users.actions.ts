@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { IUser } from '../../../models/user.model';
-import { deleteUserResponse, userResponse } from './users.state';
+import { UserResponse } from '../../../models/user.model';
+import { deleteUserResponse } from './users.state';
 
 const CurrentUserAction = '[User] Set Current User';
 const ClearCurrentUserAction = '[User] Clear Current User';
@@ -33,7 +33,7 @@ export const createUser = createAction(
 
 export const createUserResponse = createAction(
   CreateUserActionResponse,
-  props<{ response: userResponse }>()
+  props<{ response: UserResponse }>()
 );
 
 export const createUserFailure = createAction(
@@ -45,7 +45,7 @@ export const clearCurrentUser = createAction(ClearCurrentUserAction);
 export const initializeCurrentUser = createAction(InitCurrnetUserAction);
 export const loadUserSuccess = createAction(
   LoadCurrentUserSuccessAction,
-  props<{ user: IUser }>()
+  props<{ response: UserResponse }>()
 );
 export const loadUserFailure = createAction(
   LoadCurrentUserFailureAction,
@@ -67,5 +67,5 @@ export const deleteUserActionResponse = createAction(
 
 export const deleteUserActionFailure = createAction(
   DeleteUserActionFailure,
-  props<{ error: string }>()
+  props<{ error: UserResponse }>()
 );

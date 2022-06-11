@@ -1,4 +1,4 @@
-<div *ngIf="(productsLoading$ | async)?.isLoading">
+<div *ngIf="(productsLoading$ | async) === true">
   <app-shared-loader></app-shared-loader>
 </div>
 <div class="container">
@@ -59,6 +59,16 @@
             (submitClicked)="submit(product, $event)"
           ></app-product-card>
         </div>
+      </div>
+      <div class="row my-md-2">
+        <app-pagination
+          [current]="paging.currentPage"
+          [total]="paging.totalElements"
+          [numberOfPages]="paging.totalPages"
+          (goTo)="onGoTo($event)"
+          (next)="onNext($event)"
+          (previous)="onPrevious($event)"
+        ></app-pagination>
       </div>
     </div>
   </div>

@@ -140,6 +140,22 @@ export type OrderType = {
   total?: Maybe<Scalars['Float']>;
 };
 
+export type Page = {
+  pageNumber?: InputMaybe<Scalars['Int']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+};
+
+export type Pagination = {
+  __typename?: 'Pagination';
+  currentPage?: Maybe<Scalars['Int']>;
+  firstPage?: Maybe<Scalars['Boolean']>;
+  lastPage?: Maybe<Scalars['Boolean']>;
+  pageNumber?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  totalElements?: Maybe<Scalars['Int']>;
+  totalPages?: Maybe<Scalars['Int']>;
+};
+
 export type Payment = {
   cardNumber?: InputMaybe<Scalars['String']>;
   cvv?: InputMaybe<Scalars['String']>;
@@ -169,14 +185,32 @@ export type Product = {
   stock: Scalars['Int'];
 };
 
+export type ProductInput = {
+  brand?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Scalars['String']>;
+  deleted_by?: InputMaybe<Scalars['String']>;
+  deleted_date?: InputMaybe<Scalars['String']>;
+  isDeleted?: InputMaybe<Scalars['Boolean']>;
+  page?: InputMaybe<Page>;
+  price?: InputMaybe<Scalars['Float']>;
+  productName?: InputMaybe<Scalars['String']>;
+  stock?: InputMaybe<Scalars['Int']>;
+};
+
 export type Query = {
   __typename?: 'Query';
+  allProducts?: Maybe<GetProductResponse>;
   cart?: Maybe<GetCartResponse>;
   orders?: Maybe<Array<Maybe<OrderType>>>;
   productById?: Maybe<Product>;
-  products?: Maybe<Array<Maybe<Product>>>;
+  products?: Maybe<GetProductResponse>;
   userById?: Maybe<User>;
-  users?: Maybe<Array<Maybe<User>>>;
+  users?: Maybe<GetUserResponse>;
+};
+
+
+export type QueryAllProductsArgs = {
+  productRequest?: InputMaybe<ProductInput>;
 };
 
 
@@ -196,15 +230,7 @@ export type QueryProductByIdArgs = {
 
 
 export type QueryProductsArgs = {
-  _id?: InputMaybe<Scalars['ID']>;
-  brand?: InputMaybe<Scalars['String']>;
-  category?: InputMaybe<Scalars['String']>;
-  deleted_by?: InputMaybe<Scalars['String']>;
-  deleted_date?: InputMaybe<Scalars['String']>;
-  isDeleted?: InputMaybe<Scalars['Boolean']>;
-  price?: InputMaybe<Scalars['Float']>;
-  productName?: InputMaybe<Scalars['String']>;
-  stock?: InputMaybe<Scalars['Int']>;
+  productRequest?: InputMaybe<ProductInput>;
 };
 
 
@@ -214,9 +240,7 @@ export type QueryUserByIdArgs = {
 
 
 export type QueryUsersArgs = {
-  _id?: InputMaybe<Scalars['ID']>;
   email?: InputMaybe<Scalars['String']>;
-  isAdmin?: InputMaybe<Scalars['Boolean']>;
   password?: InputMaybe<Scalars['String']>;
 };
 
@@ -244,7 +268,7 @@ export type ShippingType = {
 
 export type User = {
   __typename?: 'User';
-  _id: Scalars['ID'];
+  _id?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   fname: Scalars['String'];
   isAdmin: Scalars['Boolean'];
@@ -299,6 +323,19 @@ export type GetCartResponse = {
   user_id?: Maybe<Scalars['String']>;
 };
 
+export type GetProductResponse = {
+  __typename?: 'getProductResponse';
+  data?: Maybe<Array<Maybe<Product>>>;
+  pagination?: Maybe<Pagination>;
+};
+
+export type GetUserResponse = {
+  __typename?: 'getUserResponse';
+  message?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
+  user?: Maybe<User>;
+};
+
 export type RemoveFromCartResponse = {
   __typename?: 'removeFromCartResponse';
   message?: Maybe<Scalars['String']>;
@@ -336,44 +373,13 @@ export type DeleteProductMutationVariables = Exact<{
 
 export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct?: { __typename?: 'deleteProductResponse', message?: string | null | undefined, success?: boolean | null | undefined } | null | undefined };
 
-export type GetProductByBrandQueryVariables = Exact<{
-  brand?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type GetProductByBrandQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', _id: string, productName: string, deleted_date?: string | null | undefined, deleted_by?: string | null | undefined, isDeleted?: boolean | null | undefined, imageUrl?: string | null | undefined, stock: number, brand: string, category: string, price: number } | null | undefined> | null | undefined };
-
-export type GetProductByCategoryQueryVariables = Exact<{
-  category?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type GetProductByCategoryQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', _id: string, productName: string, deleted_date?: string | null | undefined, deleted_by?: string | null | undefined, isDeleted?: boolean | null | undefined, imageUrl?: string | null | undefined, stock: number, brand: string, category: string, price: number } | null | undefined> | null | undefined };
-
-export type GetProductByIdQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
-}>;
-
-
-export type GetProductByIdQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', _id: string, productName: string, deleted_date?: string | null | undefined, deleted_by?: string | null | undefined, isDeleted?: boolean | null | undefined, imageUrl?: string | null | undefined, stock: number, brand: string, category: string, price: number } | null | undefined> | null | undefined };
-
-export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllProductsQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', _id: string, productName: string, deleted_date?: string | null | undefined, deleted_by?: string | null | undefined, isDeleted?: boolean | null | undefined, imageUrl?: string | null | undefined, stock: number, brand: string, category: string, price: number } | null | undefined> | null | undefined };
-
-export type GetFiltersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetFiltersQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', category: string, brand: string } | null | undefined> | null | undefined };
-
 export type GetUserQueryVariables = Exact<{
   email?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', fname: string, lname: string, email: string, isAdmin: boolean } | null | undefined> | null | undefined };
+export type GetUserQuery = { __typename?: 'Query', users?: { __typename?: 'getUserResponse', message?: string | null | undefined, success?: boolean | null | undefined, user?: { __typename?: 'User', _id?: string | null | undefined, fname: string, lname: string, email: string, password: string, isAdmin: boolean } | null | undefined } | null | undefined };
 
 export type CreateUserMutationVariables = Exact<{
   fname?: InputMaybe<Scalars['String']>;
@@ -451,6 +457,20 @@ export type OrdersQueryVariables = Exact<{
 
 export type OrdersQuery = { __typename?: 'Query', orders?: Array<{ __typename?: 'OrderType', _id?: string | null | undefined, email?: string | null | undefined, orderedDate?: string | null | undefined, total?: number | null | undefined, orderId?: string | null | undefined, order?: Array<{ __typename?: 'Cart', user_id?: string | null | undefined, productName?: string | null | undefined, price?: number | null | undefined, category?: string | null | undefined, brand?: string | null | undefined, stock?: number | null | undefined, imageUrl?: string | null | undefined, quantity?: number | null | undefined } | null | undefined> | null | undefined, shipping?: { __typename?: 'ShippingType', address?: string | null | undefined, address2?: string | null | undefined, city?: string | null | undefined, state?: string | null | undefined, zipCode?: string | null | undefined } | null | undefined, payment?: { __typename?: 'PaymentType', cardNumber?: string | null | undefined, month?: string | null | undefined, year?: string | null | undefined, cvv?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined };
 
+export type GetProductsQueryVariables = Exact<{
+  productRequest?: InputMaybe<ProductInput>;
+}>;
+
+
+export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'getProductResponse', data?: Array<{ __typename?: 'Product', _id: string, productName: string, price: number, category: string, brand: string, stock: number, imageUrl?: string | null | undefined, isDeleted?: boolean | null | undefined, deleted_by?: string | null | undefined, deleted_date?: string | null | undefined } | null | undefined> | null | undefined, pagination?: { __typename?: 'Pagination', pageSize?: number | null | undefined, pageNumber?: number | null | undefined, firstPage?: boolean | null | undefined, lastPage?: boolean | null | undefined, currentPage?: number | null | undefined, totalElements?: number | null | undefined, totalPages?: number | null | undefined } | null | undefined } | null | undefined };
+
+export type GetAllProductsQueryVariables = Exact<{
+  productRequest?: InputMaybe<ProductInput>;
+}>;
+
+
+export type GetAllProductsQuery = { __typename?: 'Query', allProducts?: { __typename?: 'getProductResponse', data?: Array<{ __typename?: 'Product', _id: string, productName: string, price: number, category: string, brand: string, stock: number, imageUrl?: string | null | undefined, isDeleted?: boolean | null | undefined, deleted_by?: string | null | undefined, deleted_date?: string | null | undefined } | null | undefined> | null | undefined, pagination?: { __typename?: 'Pagination', pageSize?: number | null | undefined, pageNumber?: number | null | undefined, firstPage?: boolean | null | undefined, lastPage?: boolean | null | undefined, currentPage?: number | null | undefined, totalElements?: number | null | undefined, totalPages?: number | null | undefined } | null | undefined } | null | undefined };
+
 export const CreateProductDocument = gql`
     mutation createProduct($productName: String, $price: Float, $category: String, $brand: String, $stock: Int, $id: ID) {
   addProduct(
@@ -507,140 +527,19 @@ export const DeleteProductDocument = gql`
       super(apollo);
     }
   }
-export const GetProductByBrandDocument = gql`
-    query getProductByBrand($brand: String) {
-  products(brand: $brand) {
-    _id
-    productName
-    deleted_date
-    deleted_by
-    isDeleted
-    imageUrl
-    stock
-    brand
-    category
-    price
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetProductByBrandGQL extends Apollo.Query<GetProductByBrandQuery, GetProductByBrandQueryVariables> {
-    document = GetProductByBrandDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetProductByCategoryDocument = gql`
-    query getProductByCategory($category: String) {
-  products(category: $category) {
-    _id
-    productName
-    deleted_date
-    deleted_by
-    isDeleted
-    imageUrl
-    stock
-    brand
-    category
-    price
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetProductByCategoryGQL extends Apollo.Query<GetProductByCategoryQuery, GetProductByCategoryQueryVariables> {
-    document = GetProductByCategoryDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetProductByIdDocument = gql`
-    query getProductById($id: ID) {
-  products(_id: $id) {
-    _id
-    productName
-    deleted_date
-    deleted_by
-    isDeleted
-    imageUrl
-    stock
-    brand
-    category
-    price
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetProductByIdGQL extends Apollo.Query<GetProductByIdQuery, GetProductByIdQueryVariables> {
-    document = GetProductByIdDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetAllProductsDocument = gql`
-    query getAllProducts {
-  products {
-    _id
-    productName
-    deleted_date
-    deleted_by
-    isDeleted
-    imageUrl
-    stock
-    brand
-    category
-    price
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetAllProductsGQL extends Apollo.Query<GetAllProductsQuery, GetAllProductsQueryVariables> {
-    document = GetAllProductsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetFiltersDocument = gql`
-    query getFilters {
-  products {
-    category
-    brand
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetFiltersGQL extends Apollo.Query<GetFiltersQuery, GetFiltersQueryVariables> {
-    document = GetFiltersDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const GetUserDocument = gql`
     query getUser($email: String, $password: String) {
   users(email: $email, password: $password) {
-    fname
-    lname
-    email
-    isAdmin
+    message
+    success
+    user {
+      _id
+      fname
+      lname
+      email
+      password
+      isAdmin
+    }
   }
 }
     `;
@@ -894,6 +793,82 @@ export const OrdersDocument = gql`
   })
   export class OrdersGQL extends Apollo.Query<OrdersQuery, OrdersQueryVariables> {
     document = OrdersDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetProductsDocument = gql`
+    query getProducts($productRequest: ProductInput) {
+  products(productRequest: $productRequest) {
+    data {
+      _id
+      productName
+      price
+      category
+      brand
+      stock
+      imageUrl
+      isDeleted
+      deleted_by
+      deleted_date
+    }
+    pagination {
+      pageSize
+      pageNumber
+      firstPage
+      lastPage
+      currentPage
+      totalElements
+      totalPages
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetProductsGQL extends Apollo.Query<GetProductsQuery, GetProductsQueryVariables> {
+    document = GetProductsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetAllProductsDocument = gql`
+    query getAllProducts($productRequest: ProductInput) {
+  allProducts(productRequest: $productRequest) {
+    data {
+      _id
+      productName
+      price
+      category
+      brand
+      stock
+      imageUrl
+      isDeleted
+      deleted_by
+      deleted_date
+    }
+    pagination {
+      pageSize
+      pageNumber
+      firstPage
+      lastPage
+      currentPage
+      totalElements
+      totalPages
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetAllProductsGQL extends Apollo.Query<GetAllProductsQuery, GetAllProductsQueryVariables> {
+    document = GetAllProductsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

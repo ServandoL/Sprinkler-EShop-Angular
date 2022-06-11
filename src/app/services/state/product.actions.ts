@@ -1,16 +1,16 @@
 import { createAction, props } from '@ngrx/store';
-import { IProduct } from '../../models/product.model';
+import {
+  IProduct,
+  ProductRequest,
+  ProductResponse,
+} from '../../models/product.model';
 import { ObjectId } from 'mongodb';
 
 const CurrentProductAction = '[Product] Set Current Product';
 const ClearProductAction = '[Product] Clear Current Product';
 const InitCurrentProductAction = '[Product] Initialize Current Product';
 const LoadProductsAction = '[Product] Load Products';
-const LoadControllersAction = '[Product] Load Controllers';
-const LoadRotorsAction = '[Product] Load Rotors';
-const LoadValvesAction = '[Product] Load Valves';
-const LoadSprinklerBodiesAction = '[Product] Load Sprinkler Bodies';
-const LoadSprinklerNozzlesAction = '[Product] Load Sprinkler Nozzles';
+const LoadAllProductsAction = '[Product] Load All Products';
 const LoadProductsSuccessAction = '[Product] Load Success';
 const LoadProductsFailureAction = '[Product] Load Failure';
 const UpdateProductAction = '[Product] Update Product';
@@ -32,21 +32,19 @@ export const clearCurrentProduct = createAction(ClearProductAction);
 
 export const initializeCurrentProduct = createAction(InitCurrentProductAction);
 
-export const loadProducts = createAction(LoadProductsAction);
+export const loadProducts = createAction(
+  LoadProductsAction,
+  props<{ request: ProductRequest }>()
+);
 
-export const loadControllers = createAction(LoadControllersAction);
-
-export const loadRotors = createAction(LoadRotorsAction);
-
-export const loadValves = createAction(LoadValvesAction);
-
-export const loadSprinklerBodies = createAction(LoadSprinklerBodiesAction);
-
-export const loadSprinklerNozzles = createAction(LoadSprinklerNozzlesAction);
+export const loadAllProducts = createAction(
+  LoadAllProductsAction,
+  props<{ request: ProductRequest }>()
+);
 
 export const loadProductsSuccess = createAction(
   LoadProductsSuccessAction,
-  props<{ products: IProduct[] }>()
+  props<{ response: ProductResponse }>()
 );
 
 export const loadProductsFailure = createAction(
@@ -93,7 +91,7 @@ export const deleteProduct = createAction(
 
 export const deleteProductSuccess = createAction(
   DeleteProductActionSuccess,
-  props<{ productId: string | ObjectId | null}>()
+  props<{ productId: string | ObjectId | null }>()
 );
 
 export const deleteProductFailure = createAction(
