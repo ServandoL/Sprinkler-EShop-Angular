@@ -1,4 +1,4 @@
-<div class="input-group mb-3">
+<div class="input-group mb-3 quantity-form">
   <button
     type="button"
     class="btn btn-outline-secondary qty-btn"
@@ -10,7 +10,7 @@
   <input
     type="number"
     #quantity
-    class="form-control"
+    class="form-control quantity"
     min="1"
     max="9999"
     [(ngModel)]="inputQuantity ? inputQuantity : qty"

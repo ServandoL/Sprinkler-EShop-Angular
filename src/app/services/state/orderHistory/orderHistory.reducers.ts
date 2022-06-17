@@ -55,7 +55,7 @@ export const orderHistoryReducer = createReducer<OrderHistoryState>(
     const orders = action.orders.map((order) => {
       return {
         ...order,
-        orderedDate: new Date(order.orderedDate),
+        orderedDate: order.orderedDate ? order.orderedDate : undefined,
       };
     });
 

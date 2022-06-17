@@ -31,17 +31,20 @@
           <tbody>
             <tr *ngFor="let product of cart$ | async as ICartItem">
               <th scope="row">
-                <span>
+                <figure class="figure">
                   <img
                     src="assets/{{ product.imageUrl }}"
-                    class="img-thumbnail"
+                    class="figure-img img-fluid rounded"
                     alt="productImage"
                     style="width: 100px"
-                  /> </span
-                ><span>{{ product?.productName }}</span>
+                  />
+                  <figcaption class="figure-caption">
+                    {{ product?.productName }}
+                  </figcaption>
+                </figure>
               </th>
               <td>${{ product?.price }}</td>
-              <td>
+              <td class="quantity">
                 <app-qty-form
                   (quantity)="updateQuantity($event, product)"
                   (submitted)="onUpdate($event, product)"

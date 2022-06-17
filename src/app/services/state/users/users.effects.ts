@@ -65,7 +65,7 @@ export class UserEffects {
           )
           .pipe(
             map((result: any) => {
-              const response: userResponse = result?.data?.addUser;
+              const response: UserResponse = result?.data?.addUser;
               return UserActions.createUserResponse({ response });
             }),
             catchError((error) => of(UserActions.createUserFailure({ error })))

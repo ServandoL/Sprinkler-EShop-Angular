@@ -12,13 +12,16 @@ const initialState: ProductState = {
   error: '',
   isLoading: false,
   page: {
-    pageSize: 0,
-    pageNumber: 0,
-    firstPage: false,
-    lastPage: false,
-    currentPage: 0,
-    totalElements: 0,
+    totalDocs: 0,
+    limit: 0,
+    hasPrevPage: false,
+    hasNextPage: false,
+    page: 0,
     totalPages: 0,
+    offset: 0,
+    prevPage: 0,
+    nextPage: 0,
+    pagingCounter: 0,
   },
 };
 

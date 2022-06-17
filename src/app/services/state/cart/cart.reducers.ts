@@ -7,12 +7,11 @@ import {
 import { ICartItem } from '../../../models/cart.model';
 import { CartState } from './cart.state';
 import * as CartActions from './cart.actions';
-import { exists } from 'fs';
 
 const initialState: CartState = {
-  user_id: '',
+  email: '',
   products: [],
-  currentProduct: null,
+  currentProduct: undefined,
   cartQuantity: 0,
   response: '',
   error: '',
@@ -37,20 +36,20 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.clearCart, (state, action): CartState => {
     return {
       ...initialState,
-      user_id: state.user_id,
+      email: state.email,
     };
   }),
   on(CartActions.clearCartApi, (state, action): CartState => {
     return {
       ...state,
-      user_id: state.user_id,
+      email: state.email,
       isLoading: true,
     };
   }),
   on(CartActions.clearCartSuccess, (state, action): CartState => {
     return {
       ...initialState,
-      user_id: state.user_id,
+      email: state.email,
       response: action.response.message,
       isLoading: false,
     };
@@ -83,7 +82,7 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.loadCart, (state, action): CartState => {
     return {
       ...state,
-      user_id: action.user_id,
+      email: action.user_id,
       isLoading: true,
     };
   }),
@@ -96,7 +95,7 @@ export const cartReducer = createReducer<CartState>(
       ...state,
       products: [...cart],
       cartQuantity: cart.length || 0,
-      user_id: state.user_id,
+      email: state.email,
       isLoading: false,
       emptyOnLogin: cart.length === 0,
     };
@@ -122,14 +121,14 @@ export const cartReducer = createReducer<CartState>(
     let products = state.products.length > 0 ? [...state.products] : [];
     if (action.product) {
       const exists = products.filter(
-        (product) => product.productName === action.product.productName
+        (product) => product._id === action.product._id
       );
       if (!exists.length) {
         products.push(action.product);
       } else {
         products = products.map((product) => {
-          if (product.productName === action.product.productName) {
-            const quantity = product.quantity + action.product.quantity;
+          if (product._id === action.product._id) {
+            const quantity = action.product.quantity;
             return {
               ...product,
               quantity: quantity,
@@ -142,7 +141,7 @@ export const cartReducer = createReducer<CartState>(
     }
     return {
       ...state,
-      user_id: action.product.user_id,
+      email: action.product.email,
       products: [...products],
       cartQuantity: products.length,
       currentProduct: action.product,
@@ -160,7 +159,7 @@ export const cartReducer = createReducer<CartState>(
     return {
       ...state,
       products: [],
-      currentProduct: null,
+      currentProduct: undefined,
       error: action.error as any,
       isLoading: false,
     };

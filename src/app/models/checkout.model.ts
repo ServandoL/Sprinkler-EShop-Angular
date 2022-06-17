@@ -20,7 +20,7 @@ export interface Order {
   shipping: Shipping;
   payment: CreditCard;
   email: string;
-  orderedDate: Date;
   total: number;
-  orderId: string;
+  orderId?: string;
+  orderedDate?: string;
 }

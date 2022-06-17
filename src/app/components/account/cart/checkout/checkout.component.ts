@@ -14,7 +14,6 @@ import {
   resetMessage,
 } from '../../../../services/state/checkout/checkout.actions';
 import { Order } from '../../../../models/checkout.model';
-import { v4 as uuidv4 } from 'uuid';
 import { CheckoutState } from '../../../../services/state/checkout/checkout.state';
 import {
   getErrorSelector,
@@ -146,9 +145,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         cvv: formValues.controls['cvv'].value,
       },
       email: this.user ? this.user : '',
-      orderedDate: new Date(),
       total: +(this.subtotal + this.subtotal * this.tax).toFixed(2),
-      orderId: uuidv4(),
     };
     this.store.dispatch(
       checkOutAction({

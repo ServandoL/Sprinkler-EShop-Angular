@@ -2,15 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { map } from 'rxjs/operators';
-import {
-  IFilter,
-  IProduct,
-  ProductRequest,
-  ProductResponse,
-} from '../../models/product.model';
+import { ProductRequest, ProductResponse } from '../../models/product.model';
 import { Observable } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { GetProductsDocument } from './generated/graphql';
+import { GetProductsQuery } from './product.schema';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -22,7 +17,7 @@ export class ProductService {
   getProductsByCategory$(request: ProductRequest): Observable<ProductResponse> {
     return this.apollo
       .watchQuery({
-        query: GetProductsDocument,
+        query: GetProductsQuery,
         variables: {
           productRequest: { category: request.category, page: request.page },
         },

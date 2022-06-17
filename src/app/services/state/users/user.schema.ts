@@ -33,3 +33,12 @@ export const UpdateUserMutation = gql`
     }
   }
 `;
+
+export const DeleteUserMutation = gql`
+  mutation deleteUser($email: String) {
+    deleteUser(email: $email) {
+      message
+      success
+    }
+  }
+`;

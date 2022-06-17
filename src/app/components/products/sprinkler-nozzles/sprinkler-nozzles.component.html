@@ -64,8 +64,8 @@
       </div>
       <div class="row my-md-2">
         <app-pagination
-          [current]="paging.currentPage"
-          [total]="paging.totalElements"
+          [current]="paging.page"
+          [total]="paging.totalDocs"
           [numberOfPages]="paging.totalPages"
           (goTo)="onGoTo($event)"
           (next)="onNext($event)"

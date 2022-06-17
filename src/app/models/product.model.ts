@@ -1,7 +1,8 @@
 import { Document, WithId } from 'mongodb';
 import { Pagination } from './pagination.model';
 
-export interface IProduct extends WithId<Document> {
+export interface IProduct {
+  _id: string;
   productName: string;
   price: number;
   category: string;

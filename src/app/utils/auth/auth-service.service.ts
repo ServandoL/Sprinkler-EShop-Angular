@@ -5,13 +5,13 @@ import { Store } from '@ngrx/store';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IUser } from '../../models/user.model';
-import { GetUserDocument } from '../../services/state/generated/graphql';
+import { UserResponse } from '../../models/user.model';
 import { AppState } from '../../models/AppState';
 import { clearCurrentUser } from '../../services/state/users/users.actions';
 import { clearCartState } from '../../services/state/cart/cart.actions';
 import { Router } from '@angular/router';
 import { clearOrderHistory } from '../../services/state/orderHistory/orderHistory.actions';
+import { GetUserQuery } from '../../services/state/users/user.schema';
 
 @Injectable({
   providedIn: 'root',
@@ -26,10 +26,10 @@ export class AuthService {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
-  getUser$(email: string, password: string): Observable<IUser> {
+  getUser$(email: string, password: string): Observable<UserResponse> {
     return this.apollo
       .watchQuery({
-        query: GetUserDocument,
+        query: GetUserQuery,
         variables: { email: email, password: password },
       })
       .valueChanges.pipe(
@@ -39,7 +39,7 @@ export class AuthService {
               error: result.errors.map((error) => error.message).join(', '),
             });
           } else {
-            return result.data.users;
+            return result.data.getUser;
           }
         })
       );

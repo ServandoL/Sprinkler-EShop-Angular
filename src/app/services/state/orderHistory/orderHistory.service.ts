@@ -5,7 +5,7 @@ import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Order } from '../../../models/checkout.model';
-import { OrdersDocument } from '../generated/graphql';
+import { GetOrderHistoryQuery } from './schema';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class OrderHistoryService {
   getOrders$(email: string): Observable<Order[]> {
     return this.apollo
       .watchQuery({
-        query: OrdersDocument,
+        query: GetOrderHistoryQuery,
         variables: {
           email: email,
         },
@@ -31,7 +31,7 @@ export class OrderHistoryService {
               error: result.errors.map((error) => error.message).join(', '),
             });
           } else {
-            return result?.data?.orders;
+            return result?.data?.orders.orders;
           }
         })
       );

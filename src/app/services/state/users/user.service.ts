@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import {
-  CreateUserDocument,
-  DeleteUserDocument,
-} from '../../../services/state/generated/graphql';
+  CreateUserMutation,
+  DeleteUserMutation,
+  UpdateUserMutation,
+} from './user.schema';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class UserService {
     password: string
   ): Observable<any> {
     return this.apollo.mutate({
-      mutation: CreateUserDocument,
+      mutation: CreateUserMutation,
       variables: {
         fname: firstName,
         lname: lastName,
@@ -35,9 +36,21 @@ export class UserService {
 
   deleteUser$(email: string): Observable<any> {
     return this.apollo.mutate({
-      mutation: DeleteUserDocument,
+      mutation: DeleteUserMutation,
       variables: {
         email: email,
+      },
+    });
+  }
+
+  updateUser$(request: any): Observable<any> {
+    return this.apollo.mutate({
+      mutation: UpdateUserMutation,
+      variables: {
+        email: request.email,
+        fname: request.fname,
+        lname: request.lname,
+        password: request.password,
       },
     });
   }

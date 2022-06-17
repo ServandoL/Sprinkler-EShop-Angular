@@ -6,15 +6,14 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GetCartResponse, ICartItem } from '../../../models/cart.model';
 import { Order } from '../../../models/checkout.model';
-
+import { CreateOrderMutation } from '../orderHistory/schema';
 import {
-  AddToCartDocument,
-  CheckoutDocument,
-  ClearCartDocument,
-  GetCartDocument,
-  SaveCartDocument,
-  UpdateCartDocument,
-} from '../generated/graphql';
+  AddToCartMutation,
+  ClearCartMutation,
+  GetCartQuery,
+  SaveCartMutation,
+  UpdateCartQuantityMutation,
+} from './cart.schema';
 
 @Injectable({
   providedIn: 'root',
@@ -28,9 +27,9 @@ export class CartService {
   getCart$(user_id: string | null): Observable<GetCartResponse> {
     return this.apollo
       .watchQuery({
-        query: GetCartDocument,
+        query: GetCartQuery,
         variables: {
-          userId: user_id,
+          email: user_id,
         },
       })
       .valueChanges.pipe(
@@ -40,7 +39,7 @@ export class CartService {
               error: result.errors.map((error) => error.message).join(', '),
             });
           } else {
-            return result?.data?.cart as GetCartResponse;
+            return result?.data?.getCart as GetCartResponse;
           }
         })
       );
@@ -48,9 +47,10 @@ export class CartService {
 
   addToCart$(product: ICartItem): Observable<any> {
     return this.apollo.mutate({
-      mutation: AddToCartDocument,
+      mutation: AddToCartMutation,
       variables: {
-        userId: product.user_id,
+        _id: product._id,
+        email: product.email,
         quantity: product.quantity,
         productName: product.productName,
         price: product.price,
@@ -64,20 +64,20 @@ export class CartService {
 
   clearCart$(user_id: string): Observable<any> {
     return this.apollo.mutate({
-      mutation: ClearCartDocument,
+      mutation: ClearCartMutation,
       variables: {
-        userId: user_id,
+        email: user_id,
       },
     });
   }
 
   saveCart$(cart: ICartItem[], email: string): Observable<any> {
     return this.apollo.mutate({
-      mutation: SaveCartDocument,
+      mutation: SaveCartMutation,
       variables: {
-        cart: {
+        request: {
           cart: cart,
-          user_id: email,
+          email: email,
         },
       },
     });
@@ -85,14 +85,14 @@ export class CartService {
 
   updateCartQuantity(
     user_id: string | null,
-    productName: string,
+    _id: string,
     quantity: number
   ): Observable<any> {
     return this.apollo.mutate({
-      mutation: UpdateCartDocument,
+      mutation: UpdateCartQuantityMutation,
       variables: {
-        userId: user_id,
-        productName: productName,
+        _id: _id,
+        email: user_id,
         quantity: quantity,
       },
     });
@@ -100,9 +100,9 @@ export class CartService {
 
   checkout$(order: Order): Observable<any> {
     return this.apollo.mutate({
-      mutation: CheckoutDocument,
+      mutation: CreateOrderMutation,
       variables: {
-        checkoutRequest: { ...order },
+        request: { ...order },
       },
     });
   }
