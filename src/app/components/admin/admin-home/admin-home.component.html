@@ -1,4 +1,4 @@
-<div *ngIf="(productsLoading$ | async)?.isLoading === true">
+<div *ngIf="(productsLoading$ | async) === true">
   <app-shared-loader></app-shared-loader>
 </div>
 <div
@@ -72,6 +72,16 @@
             (clickedUpdate)="onUpdate($event)"
           ></app-admin-cards>
         </div>
+      </div>
+      <div class="row my-md-2">
+        <app-pagination
+          [current]="paging.page"
+          [total]="paging.totalDocs"
+          [numberOfPages]="paging.totalPages"
+          (goTo)="onGoTo($event)"
+          (next)="onNext($event)"
+          (previous)="onPrevious($event)"
+        ></app-pagination>
       </div>
     </div>
   </div>

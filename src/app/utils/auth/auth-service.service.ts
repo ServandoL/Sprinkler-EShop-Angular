@@ -57,6 +57,7 @@ export class AuthService {
     this.store.dispatch(clearCartState());
     this.store.dispatch(clearOrderHistory());
     sessionStorage.clear();
+    localStorage.removeItem('state');
     setTimeout(() => {
       this.router.navigateByUrl('/home');
     }, 500);

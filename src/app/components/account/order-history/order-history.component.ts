@@ -3,13 +3,16 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../../../models/AppState';
 import { Order } from '../../../models/checkout.model';
-import { loadOrders } from '../../../services/state/orderHistory/orderHistory.actions';
+import { OrderHistoryRequest } from '../../../models/orderHistory.model';
+import { Pagination } from '../../../models/pagination.model';
+import * as OrderHistoryActions from '../../../services/state/orderHistory/orderHistory.actions';
 import {
-  getHistoryError,
   getHistoryLoading,
   getHistoryResponse,
+  getHistoryError,
   getOrders,
-} from '../../../services/state/orderHistory/orderHistory.reducers';
+  getOrderPagination,
+} from '../../../services/state/orderHistory/orderHistory.selectors';
 import { SALES_TAX } from '../../../utils/common/constants';
 
 @Component({
@@ -25,9 +28,12 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
   message$!: Observable<string>;
   error$!: Observable<string>;
   tax = SALES_TAX;
-  orders: Order[] = [];
+  pagination$!: Observable<Pagination>;
+  paging!: Pagination;
+  request!: OrderHistoryRequest;
 
   constructor(private store: Store<AppState>) {
+    this.pagination$ = this.store.select(getOrderPagination);
     this.isLoading$ = this.store.select(getHistoryLoading);
     this.message$ = this.store.select(getHistoryResponse);
     this.error$ = this.store.select(getHistoryError);
@@ -36,23 +42,64 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
       sessionStorage.getItem('SessionUser') ||
       sessionStorage.getItem('SessionAdmin') ||
       '';
+    this.request = {
+      email: this.user,
+      page: {
+        pageNumber: 1,
+        pageSize: 2,
+      },
+    };
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadOrders({ email: this.user }));
-    // this.subscriptions.push(
-    //   this.orders$.subscribe((orders) => {
-    //     if (orders?.length) {
-    //       this.orders = [...orders];
-    //       this.orders.forEach(
-    //         (order) => (order.orderedDate = new Date(order.orderedDate))
-    //       );
-    //     }
-    //   })
-    // );
+    this.store.dispatch(
+      OrderHistoryActions.loadOrders({ request: this.request })
+    );
+    this.subscriptions.push(
+      this.pagination$.subscribe((page) => (this.paging = page))
+    );
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  onGoTo(page: number): void {
+    this.request = {
+      email: this.user,
+      page: {
+        pageNumber: page,
+        pageSize: 2,
+      },
+    };
+    this.store.dispatch(
+      OrderHistoryActions.loadOrders({ request: this.request })
+    );
+  }
+
+  onNext(page: number): void {
+    this.request = {
+      email: this.user,
+      page: {
+        pageNumber: page + 1,
+        pageSize: 2,
+      },
+    };
+    this.store.dispatch(
+      OrderHistoryActions.loadOrders({ request: this.request })
+    );
+  }
+
+  onPrevious(page: number): void {
+    this.request = {
+      email: this.user,
+      page: {
+        pageNumber: page - 1,
+        pageSize: 2,
+      },
+    };
+    this.store.dispatch(
+      OrderHistoryActions.loadOrders({ request: this.request })
+    );
   }
 }

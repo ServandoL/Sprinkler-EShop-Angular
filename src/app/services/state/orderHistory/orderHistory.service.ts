@@ -5,6 +5,10 @@ import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Order } from '../../../models/checkout.model';
+import {
+  OrderHistoryRequest,
+  OrderHistoryResponse,
+} from '../../../models/orderHistory.model';
 import { GetOrderHistoryQuery } from './schema';
 
 @Injectable({
@@ -16,12 +20,16 @@ export class OrderHistoryService {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
-  getOrders$(email: string): Observable<Order[]> {
+  getOrders$(request: OrderHistoryRequest): Observable<OrderHistoryResponse> {
     return this.apollo
       .watchQuery({
         query: GetOrderHistoryQuery,
         variables: {
-          email: email,
+          orderHistoryRequest: {
+            email: request.email,
+            page: request.page,
+          },
+          fetchPolicy: 'no-cache',
         },
       })
       .valueChanges.pipe(
@@ -31,7 +39,7 @@ export class OrderHistoryService {
               error: result.errors.map((error) => error.message).join(', '),
             });
           } else {
-            return result?.data?.orders.orders;
+            return result?.data?.orders as OrderHistoryResponse;
           }
         })
       );

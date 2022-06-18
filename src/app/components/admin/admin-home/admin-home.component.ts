@@ -24,7 +24,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   errroMessage!: Observable<string>;
   subscription: Subscription[] = [];
   products$!: Observable<IProduct[]>;
-  productsLoading$!: Observable<ProductState>;
+  productsLoading$!: Observable<boolean>;
   productToUpdate!: IProduct;
   showDeleteModal = false;
   deleted = false;
@@ -43,7 +43,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   ) {
     this.products$ = this.store.select(getProducts);
     this.pagination$ = this.store.select(getProductPagination);
-    this.productsLoading$ = this.store.select(getProductFeatureState);
+    this.productsLoading$ = this.store.select(getLoading);
     this.request = {
       category: undefined,
       page: {
@@ -54,9 +54,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(
-      ProductActions.loadAllProducts({ request: this.request })
-    );
+    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
     this.subscription.push(
       this.authService
         .getToken$()
@@ -68,9 +66,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
       })
     );
     this.subscription.push(
-      this.pagination$.subscribe((data) => {
-        this.paging = { ...data };
-      })
+      this.pagination$.subscribe((page) => (this.paging = page))
     );
   }
 
@@ -101,9 +97,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
         pageSize: 8,
       },
     };
-    this.store.dispatch(
-      ProductActions.loadAllProducts({ request: this.request })
-    );
+    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
   }
 
   onNext(page: number): void {
@@ -114,9 +108,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
         pageSize: 8,
       },
     };
-    this.store.dispatch(
-      ProductActions.loadAllProducts({ request: this.request })
-    );
+    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
   }
 
   onPrevious(page: number): void {
@@ -127,8 +119,6 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
         pageSize: 8,
       },
     };
-    this.store.dispatch(
-      ProductActions.loadAllProducts({ request: this.request })
-    );
+    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
   }
 }

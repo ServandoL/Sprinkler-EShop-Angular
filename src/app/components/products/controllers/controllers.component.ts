@@ -88,11 +88,6 @@ export class ControllersComponent implements OnInit, OnDestroy {
         this.products = [...data];
       })
     );
-    this.subscription.push(
-      this.pagination$.subscribe((data) => {
-        this.paging = { ...data };
-      })
-    );
   }
 
   ngOnDestroy(): void {

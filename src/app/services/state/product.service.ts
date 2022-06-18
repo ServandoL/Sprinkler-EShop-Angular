@@ -21,6 +21,7 @@ export class ProductService {
         variables: {
           productRequest: { category: request.category, page: request.page },
         },
+        fetchPolicy: 'no-cache',
       })
       .valueChanges.pipe(
         map((result: ApolloQueryResult<any>) => {

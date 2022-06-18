@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
+import { OrderHistoryResponse } from '../../../models/orderHistory.model';
 import {
   loadOrders,
   loadOrdersFailure,
@@ -22,14 +23,10 @@ export class OrderHistoryEffects {
     return this.actions$.pipe(
       ofType(loadOrders),
       mergeMap((action) =>
-        this.orderHistoryService.getOrders$(action.email).pipe(
-          map((response) => {
-            const message = 'Successfully retrieved your orders.';
-            return loadOrdersSuccess({
-              response: message,
-              orders: response,
-            });
-          }),
+        this.orderHistoryService.getOrders$(action.request).pipe(
+          map((response: OrderHistoryResponse) =>
+            loadOrdersSuccess({ response })
+          ),
           catchError((error) => of(loadOrdersFailure({ error })))
         )
       )

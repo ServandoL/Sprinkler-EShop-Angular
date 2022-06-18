@@ -1,9 +1,9 @@
 import { gql } from 'apollo-angular';
 
 export const GetOrderHistoryQuery = gql`
-  query getOrders($email: String) {
-    orders(email: $email) {
-      orders {
+  query getOrderHistory($orderHistoryRequest: OrderHistoryRequest) {
+    orders(orderHistoryRequest: $orderHistoryRequest) {
+      data {
         _id
         order {
           _id
@@ -33,6 +33,18 @@ export const GetOrderHistoryQuery = gql`
         orderedDate
         total
         orderId
+      }
+      pagination {
+        totalDocs
+        limit
+        hasPrevPage
+        hasNextPage
+        page
+        totalPages
+        offset
+        prevPage
+        nextPage
+        pagingCounter
       }
     }
   }
