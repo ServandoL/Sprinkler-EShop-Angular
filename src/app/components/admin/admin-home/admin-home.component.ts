@@ -12,8 +12,9 @@ import * as ProductActions from '../../../services/state/product.actions';
 import { IProduct, ProductRequest } from '../../../models/product.model';
 import { Router } from '@angular/router';
 import { Pagination } from '../../../models/pagination.model';
-import { ProductState } from '../../../services/state/product.state';
 import { AuthService } from '../../../utils/auth/auth-service.service';
+import { IUser } from '../../../models/user.model';
+import { getUser } from '../../../services/state/users/users.selectors';
 
 @Component({
   selector: 'app-admin-home',
@@ -35,6 +36,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   products: IProduct[] = [];
   pagination$!: Observable<Pagination>;
   validated!: boolean;
+  user$!: Observable<IUser>;
 
   constructor(
     private store: Store<AppState>,
@@ -44,6 +46,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.products$ = this.store.select(getProducts);
     this.pagination$ = this.store.select(getProductPagination);
     this.productsLoading$ = this.store.select(getLoading);
+    this.user$ = this.store.select(getUser);
     this.request = {
       category: undefined,
       page: {

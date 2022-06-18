@@ -17,7 +17,10 @@ export const clearUser = createSelector(
   getUserFeatureState,
   (state) => state.user
 );
-export const getUser = createSelector(getUserFeatureState, (state) => state);
+export const getUser = createSelector(
+  getUserFeatureState,
+  (state) => state.user
+);
 export const createUser = createSelector(
   getUserFeatureState,
   (state) => state.userResponse
