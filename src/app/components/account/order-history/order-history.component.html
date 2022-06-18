@@ -46,7 +46,7 @@
         </caption>
         <thead class="table-light">
           <tr>
-            <th scope="col">PRODUCT</th>
+            <th scope="col" class="table-header">PRODUCT</th>
             <th scope="col">ORDER DATE</th>
             <th scope="col">QUANTITY</th>
             <th scope="col">PRICE</th>
@@ -56,20 +56,19 @@
         <tbody>
           <!-- {% for product in order_history[key] %} -->
           <tr *ngFor="let product of order.order">
-            <td>
-              <div>
-                <span
-                  ><img
-                    src="assets/{{ product.imageUrl }}"
-                    class="img-thumbnail"
-                    alt="{{ product.productName }}"
-                    style="width: 100px"
-                /></span>
-              </div>
-              <div>
-                <span>{{ product.productName }}</span>
-              </div>
-            </td>
+            <th scope="row" class="table-header">
+              <figure class="figure">
+                <img
+                  src="assets/{{ product.imageUrl }}"
+                  class="figure-img img-fluid rounded"
+                  alt="productImage"
+                  style="width: 100px"
+                />
+                <figcaption class="figure-caption">
+                  {{ product?.productName }}
+                </figcaption>
+              </figure>
+            </th>
 
             <td>{{ order.orderedDate | date: "medium" }}</td>
             <td>{{ product.quantity }}</td>
@@ -88,6 +87,16 @@
         </tfoot>
       </table>
       <!-- {% endfor %} {% endif %} -->
+      <div class="row my-md-2">
+        <app-pagination
+          [current]="paging.page"
+          [total]="paging.totalDocs"
+          [numberOfPages]="paging.totalPages"
+          (goTo)="onGoTo($event)"
+          (next)="onNext($event)"
+          (previous)="onPrevious($event)"
+        ></app-pagination>
+      </div>
     </div>
   </div>
 </div>

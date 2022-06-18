@@ -1,9 +1,9 @@
 import { CartGqlResponse, ICartItem } from '../../../models/cart.model';
 
 export interface CartState {
-  user_id: string | null;
+  email: string | undefined | null;
   products: ICartItem[];
-  currentProduct: ICartItem | null;
+  currentProduct: ICartItem | undefined;
   error: string;
   response: string;
   isLoading: boolean;

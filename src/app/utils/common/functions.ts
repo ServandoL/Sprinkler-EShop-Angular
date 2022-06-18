@@ -11,7 +11,8 @@ export function addToCartFunction(
   store: Store<AppState>
 ) {
   const cartItem: ICartItem = {
-    user_id:
+    _id: product._id,
+    email:
       sessionStorage.getItem('SessionUser') ||
       sessionStorage.getItem('SessionAdmin'),
     productName: product.productName,

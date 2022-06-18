@@ -50,7 +50,7 @@ export const resetMessage = createAction(ResetMessageAction);
 
 export const saveCart = createAction(
   SaveCartAction,
-  props<{ products: ICartItem[]; user_id: string }>()
+  props<{ products: ICartItem[]; email: string }>()
 );
 
 export const saveCartSuccess = createAction(

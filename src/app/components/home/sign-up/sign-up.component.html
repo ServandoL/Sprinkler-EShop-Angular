@@ -7,11 +7,17 @@
     <div class="col-lg-6 mx-auto">
       <fieldset>
         <legend>Create New Customer Account</legend>
-        <div class="alert alert-success" *ngIf="(signUpMessage$ | async)?.success">
+        <div
+          class="alert alert-success"
+          *ngIf="(signUpMessage$ | async)?.success"
+        >
           Account created successfully. You may now log in.
         </div>
-        <div class="alert alert-danger" *ngIf="(signUpMessage$ | async)?.success === false">
-          {{ (signUpMessage$ | async)?.message }} {{(signUpMessage$ | async)?.details}}
+        <div
+          class="alert alert-danger"
+          *ngIf="(signUpMessage$ | async)?.success === false"
+        >
+          {{ (signUpMessage$ | async)?.message }}
         </div>
         <form
           [formGroup]="createUserForm"

@@ -34,7 +34,7 @@
       </div> -->
       <div
         class="col"
-        *ngIf="(products$ | async)?.length === 0"
+        *ngIf="products.length === 0"
         class="alert alert-danger"
         role="alert"
       >
@@ -52,10 +52,7 @@
         Please log in to add to your cart.
       </div>
 
-      <div
-        class="row row-cols-1 row-cols-lg-4 g-4"
-        *ngIf="products$ | async as products"
-      >
+      <div class="row row-cols-1 row-cols-lg-4 g-4" *ngIf="products.length">
         <div class="col" *ngFor="let product of products">
           <app-product-card
             [product]="product"
@@ -64,6 +61,16 @@
             (submitClicked)="submit(product, $event)"
           ></app-product-card>
         </div>
+      </div>
+      <div class="row my-md-2">
+        <app-pagination
+          [current]="paging.page"
+          [total]="paging.totalDocs"
+          [numberOfPages]="paging.totalPages"
+          (goTo)="onGoTo($event)"
+          (next)="onNext($event)"
+          (previous)="onPrevious($event)"
+        ></app-pagination>
       </div>
     </div>
   </div>

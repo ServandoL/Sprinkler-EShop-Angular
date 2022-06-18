@@ -49,7 +49,7 @@ export class CartEffects {
     return this.actions$.pipe(
       ofType(CartActions.saveCart),
       mergeMap((action) =>
-        this.cartService.saveCart$(action.products, action.user_id).pipe(
+        this.cartService.saveCart$(action.products, action.email).pipe(
           map((result: any) => {
             const response = result?.data?.saveCart;
             return CartActions.saveCartSuccess({

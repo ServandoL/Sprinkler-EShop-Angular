@@ -18,52 +18,40 @@ const initialState: OrderHistoryState = {
   error: '',
   response: '',
   isLoading: false,
+  page: {
+    totalDocs: 0,
+    limit: 0,
+    hasPrevPage: false,
+    hasNextPage: false,
+    page: 0,
+    totalPages: 0,
+    offset: 0,
+    prevPage: 0,
+    nextPage: 0,
+    pagingCounter: 0,
+  },
 };
-
-const getOrdersFeatureState =
-  createFeatureSelector<OrderHistoryState>('orderHistory');
-
-export const getHistoryLoading = createSelector(
-  getOrdersFeatureState,
-  (state) => state.isLoading
-);
-
-export const getHistoryError = createSelector(
-  getOrdersFeatureState,
-  (state) => state.error
-);
-
-export const getHistoryResponse = createSelector(
-  getOrdersFeatureState,
-  (state) => state.response
-);
-
-export const getOrders = createSelector(getOrdersFeatureState, (state) =>
-  state.orders ? [...state.orders] : []
-);
 
 export const orderHistoryReducer = createReducer<OrderHistoryState>(
   initialState,
   on(loadOrders, (state, action): OrderHistoryState => {
     return {
       ...state,
-      user_id: action.email,
+      user_id: action.request.email,
       isLoading: true,
     };
   }),
   on(loadOrdersSuccess, (state, action): OrderHistoryState => {
-    const orders = action.orders.map((order) => {
-      return {
-        ...order,
-        orderedDate: new Date(order.orderedDate),
-      };
-    });
-
+    const message =
+      action.response.data.length === 0
+        ? "You haven't placed an order yet."
+        : '';
     return {
       ...state,
-      orders: [...orders],
+      orders: [...action.response.data],
+      page: { ...action.response.pagination },
+      response: message,
       isLoading: false,
-      response: action.response,
     };
   }),
   on(loadOrdersFailure, (state, action): OrderHistoryState => {

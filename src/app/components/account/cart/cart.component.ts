@@ -110,7 +110,7 @@ export class CartComponent implements OnInit, OnDestroy {
       this.store.dispatch(
         CartActions.saveCart({
           products: [...this.cart],
-          user_id: this.user,
+          email: this.user,
         })
       );
     }

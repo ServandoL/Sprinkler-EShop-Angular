@@ -1,7 +1,6 @@
-import { ObjectId } from 'mongodb';
-
 export interface ICartItem {
-  user_id: string | null;
+  _id: string;
+  email: string | undefined | null;
   productName: string;
   price: number;
   category: string;

@@ -4,11 +4,10 @@ import { IProduct } from '../../../models/product.model';
 @Component({
   selector: 'app-admin-cards',
   templateUrl: './admin-cards.component.html',
-  styleUrls: ['./admin-cards.component.css']
+  styleUrls: ['./admin-cards.component.css'],
 })
 export class AdminCardsComponent {
-
-  constructor() { }
+  constructor() {}
 
   @Input() product!: IProduct;
   @Output() clickedUpdate = new EventEmitter();

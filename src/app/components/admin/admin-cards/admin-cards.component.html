@@ -13,28 +13,28 @@
     <p class="card-text out-of-stock" *ngIf="product.stock <= 0">
       Out of Stock
     </p>
-    <div class="card-footer">
-      <div class="button-div">
-        <button
-          type="submit"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#updateItemModal"
-          (click)="updateClicked(product)"
-        >
-          Update
-        </button>
-        <button
-          type="submit"
-          name="delete"
-          class="btn btn-outline-danger"
-          data-bs-toggle="modal"
-          data-bs-target="#deleteModal"
-          (click)="deleteClicked(product)"
-        >
-          Delete
-        </button>
-      </div>
+  </div>
+  <div class="card-footer">
+    <div class="button-div">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#updateItemModal"
+        (click)="updateClicked(product)"
+      >
+        Update
+      </button>
+      <button
+        type="submit"
+        name="delete"
+        class="btn btn-outline-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteModal"
+        (click)="deleteClicked(product)"
+      >
+        Delete
+      </button>
     </div>
   </div>
 </div>
