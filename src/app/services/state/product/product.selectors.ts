@@ -4,7 +4,7 @@ import { ProductState } from './product.state';
 export const getProductFeatureState =
   createFeatureSelector<ProductState>('products');
 
-export const getLoading = createSelector(
+export const getProductLoading = createSelector(
   getProductFeatureState,
   (state) => state.isLoading
 );
@@ -31,4 +31,9 @@ export const getUpdateResponse = createSelector(
 export const getDeleteResponse = createSelector(
   getProductFeatureState,
   (state) => state.deleteSuccess
+);
+
+export const getAddSuccess = createSelector(
+  getProductFeatureState,
+  (state) => state.addSuccess
 );

@@ -10,15 +10,14 @@ import { SharedAppModule } from '../shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
-import { filterReducer } from '../../services/state/product-filters/filter.reducers';
 import { ProductEffects } from '../../services/state/product/product.effects';
 import { productReducer } from '../../services/state/product/product.reducers';
+import { FilterService } from '../../services/state/product-filters/filter.service';
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(adminRoutes),
     StoreModule.forFeature('products', productReducer),
-    StoreModule.forFeature('filters', filterReducer),
     EffectsModule.forFeature([ProductEffects]),
     FormsModule,
     ReactiveFormsModule,
@@ -31,6 +30,6 @@ import { productReducer } from '../../services/state/product/product.reducers';
     AdminCardsComponent,
     AdminHomeComponent,
   ],
-  providers: [],
+  providers: [FilterService],
 })
 export class AdminModule {}

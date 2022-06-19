@@ -56,3 +56,19 @@ export interface DeleteProductRequest {
   };
   email: string;
 }
+
+export interface AddProductRequest {
+  productName: string;
+  price: number;
+  category: string;
+  brand: string;
+  stock: number;
+  imageUrl: string;
+  createdBy: string;
+}
+
+export interface FilterResponse {
+  brands: string[];
+  categories: string[];
+  success: boolean;
+}

@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import {
+  AddProductRequest,
   DeleteProductRequest,
-  IProduct,
   ProductRequest,
   ProductResponse,
   UpdateProductRequest,
@@ -27,6 +27,9 @@ const DeleteProductAction = '[Product] Delete Product';
 const DeleteProductActionSuccess = '[Product] Delete Product Success';
 const DeleteProductActionFailure = '[Product] Delete Product Failure';
 const ResetDeleteResponse = '[Product] Reset Delete Response';
+const ResetAddSuccess = '[Product] Reset Add Success';
+
+export const resetAddSuccess = createAction(ResetAddSuccess);
 
 export const resetDeleteResponse = createAction(ResetDeleteResponse);
 
@@ -80,12 +83,12 @@ export const updateProductFailure = createAction(
 
 export const addNewProduct = createAction(
   AddProductAction,
-  props<{ product: IProduct }>()
+  props<{ request: AddProductRequest }>()
 );
 
 export const addNewProductSuccess = createAction(
   AddNewProductSuccessAction,
-  props<{ product: IProduct }>()
+  props<{ response: GenericResponse }>()
 );
 
 export const addNewProductFailure = createAction(

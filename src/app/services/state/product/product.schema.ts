@@ -88,3 +88,12 @@ export const UpdateProductMutation = gql`
     }
   }
 `;
+
+export const GetProductFiltersQuery = gql`
+  query getFilters($filterRequest: FilterInput) {
+    getFilters(filterRequest: $filterRequest) {
+      brands
+      categories
+    }
+  }
+`;

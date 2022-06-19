@@ -136,7 +136,13 @@
       <div class="bottom-border my-2"></div>
       <ul class="list-group">
         <li class="list-group-item">
-          <a [routerLink]="['/admin/create-item']">Insert a new item.</a>
+          <button
+            type="button"
+            class="btn btn-sm btn-link"
+            [routerLink]="['/admin/create-item']"
+          >
+            Insert a new item
+          </button>
         </li>
       </ul>
     </div>

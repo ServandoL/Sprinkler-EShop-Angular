@@ -5,19 +5,53 @@
       <div class="bottom-border my-2"></div>
       <ul class="list-group">
         <li class="list-group-item">
-          <a [routerLink]="['/admin/dashboard']">Go back</a>
+          <button
+            type="button"
+            class="btn btn-sm btn-link"
+            [routerLink]="['/admin/dashboard']"
+            (click)="onReset()"
+          >
+            Go back
+          </button>
         </li>
         <li class="list-group-item">
-          <a [routerLink]="['/admin/create-item']">Insert a new item.</a>
+          <button
+            type="button"
+            class="btn btn-sm btn-link"
+            [routerLink]="['/admin/create-item']"
+            (click)="onReset()"
+          >
+            Insert a new item
+          </button>
         </li>
       </ul>
     </div>
     <div class="col-md-10">
-      <h3>Welcome administrator FIRST NAME, LAST NAME</h3>
+      <h3>Administrator {{ user.fname }} {{ user.lname }}</h3>
       <div class="bottom-border my-2"></div>
+      <div
+        class="col"
+        *ngIf="(addSuccess$ | async) === true"
+        class="alert alert-primary"
+        role="alert"
+      >
+        <p>Successfully created the product.</p>
+      </div>
+      <div
+        class="col"
+        *ngIf="errorMessage$ | async"
+        class="alert alert-danger"
+        role="alert"
+      >
+        <p>{{ errorMessage$ | async }}</p>
+      </div>
       <fieldset>
         <legend>Add a new item.</legend>
-        <form [formGroup]="createItemForm" (ngSubmit)="onSubmit()" #formDir="ngForm">
+        <form
+          [formGroup]="createItemForm"
+          (ngSubmit)="onSubmit()"
+          #formDir="ngForm"
+        >
           <div class="form-group mb-3 my-2">
             <label for="product-name">Enter Product Name *</label>
             <textarea
@@ -45,10 +79,14 @@
               class="form-control"
               id="product-category"
               formControlName="productCategory"
-
             >
-            <option [ngValue]="null" disabled>Select Category</option>
-            <option *ngFor="let category of categories$ | async" [ngValue]="category">{{ category }}</option>
+              <option [ngValue]="null" disabled>Select Category</option>
+              <option
+                *ngFor="let category of categories$ | async"
+                [ngValue]="category"
+              >
+                {{ category }}
+              </option>
             </select>
           </div>
           <div class="form-group mb-3 my-2">
@@ -58,8 +96,10 @@
               id="product-brand"
               formControlName="productBrand"
             >
-            <option [ngValue]="null" disabled>Select Category</option>
-            <option *ngFor="let brand of brands$ | async" [ngValue]="brand">{{ brand }}</option>
+              <option [ngValue]="null" disabled>Select Category</option>
+              <option *ngFor="let brand of brands$ | async" [ngValue]="brand">
+                {{ brand }}
+              </option>
             </select>
           </div>
           <div class="form-group mb-3 my-2">
@@ -82,24 +122,18 @@
             />
           </div>
           <div class="form-group my-2">
-            <button type="submit" class="btn btn-primary" id="addItemBtn" [disabled]="!createItemForm.valid">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="addItemBtn"
+              [disabled]="
+                !createItemForm.valid || (addSuccess$ | async) === true
+              "
+            >
               Submit
             </button>
           </div>
         </form>
-        <!-- {% if response == 'true' %}
-              <div class="mb-3 my-2">
-                  <div class="alert alert-primary" role="alert">
-                  Product was inserted successfully.
-                  </div>
-              </div>
-              {% elif response == 'false' %}
-              <div class="mb-3 my-2">
-                  <div class="alert alert-danger" role="alert">
-                      Error inserting Product. Product was not inserted.
-                  </div>
-              </div>
-              {% endif %} -->
       </fieldset>
     </div>
   </div>

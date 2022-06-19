@@ -16,7 +16,7 @@ import { getUser } from '../../../services/state/users/users.selectors';
 import {
   getProducts,
   getProductPagination,
-  getLoading,
+  getProductLoading,
   getDeleteResponse,
 } from '../../../services/state/product/product.selectors';
 
@@ -53,7 +53,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   ) {
     this.products$ = this.store.select(getProducts);
     this.pagination$ = this.store.select(getProductPagination);
-    this.productsLoading$ = this.store.select(getLoading);
+    this.productsLoading$ = this.store.select(getProductLoading);
     this.user$ = this.store.select(getUser);
     this.deleteSuccess$ = this.store.select(getDeleteResponse);
     this.request = {

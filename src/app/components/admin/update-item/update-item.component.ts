@@ -10,7 +10,7 @@ import {
   updateProduct,
 } from '../../../services/state/product/product.actions';
 import {
-  getLoading,
+  getProductLoading,
   getUpdateResponse,
 } from '../../../services/state/product/product.selectors';
 
@@ -21,7 +21,7 @@ import {
 })
 export class UpdateItemComponent implements OnInit {
   constructor(private store: Store<AppState>) {
-    this.isLoading$ = this.store.select(getLoading);
+    this.isLoading$ = this.store.select(getProductLoading);
     this.updateSuccess$ = this.store.select(getUpdateResponse);
   }
 

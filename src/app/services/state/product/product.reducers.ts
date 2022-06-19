@@ -8,6 +8,7 @@ const initialState: ProductState = {
   updateSuccess: false,
   isLoading: false,
   deleteSuccess: false,
+  addSuccess: false,
   page: {
     totalDocs: 0,
     limit: 0,
@@ -73,18 +74,25 @@ export const productReducer = createReducer<ProductState>(
       isLoading: false,
     };
   }),
-  on(ProductActions.addNewProductSuccess, (state, action): ProductState => {
-    const newProduct = [...state.products, action.product];
+  on(ProductActions.addNewProduct, (state, action): ProductState => {
     return {
       ...state,
-      products: newProduct,
-      error: '',
+      isLoading: true,
+    };
+  }),
+  on(ProductActions.addNewProductSuccess, (state, action): ProductState => {
+    return {
+      ...state,
+      addSuccess: true,
+      isLoading: false,
     };
   }),
   on(ProductActions.addNewProductFailure, (state, action): ProductState => {
     return {
       ...state,
       error: action.error,
+      isLoading: false,
+      addSuccess: false,
     };
   }),
   on(ProductActions.deleteProduct, (state, action): ProductState => {
@@ -111,6 +119,12 @@ export const productReducer = createReducer<ProductState>(
     return {
       ...state,
       deleteSuccess: false,
+    };
+  }),
+  on(ProductActions.resetAddSuccess, (state, action): ProductState => {
+    return {
+      ...state,
+      addSuccess: false,
     };
   })
 );

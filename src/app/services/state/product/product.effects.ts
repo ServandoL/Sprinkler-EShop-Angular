@@ -12,18 +12,6 @@ export class ProductEffects {
     private productService: ProductService
   ) {}
 
-  // loadFilters$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(FilterActions.loadProductFilter),
-  //     mergeMap(() =>
-  //       this.productService.getProductFilters$().pipe(
-  //         map((filter) => FilterActions.loadFilterSuccess({ filter })),
-  //         catchError((error) => of(FilterActions.loadFilterFailure({ error })))
-  //       )
-  //     )
-  //   );
-  // });
-
   loadProducts$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductActions.loadProducts),
@@ -51,6 +39,24 @@ export class ProductEffects {
             catchError((error) =>
               of(ProductActions.deleteProductFailure({ error }))
             )
+          )
+        )
+      )
+    );
+  });
+
+  addProduct$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.addNewProduct),
+      mergeMap((action) =>
+        this.productService.addProduct$(action.request).pipe(
+          map((response) =>
+            ProductActions.addNewProductSuccess({
+              response: response.data.addProduct,
+            })
+          ),
+          catchError((error) =>
+            of(ProductActions.addNewProductFailure({ error }))
           )
         )
       )

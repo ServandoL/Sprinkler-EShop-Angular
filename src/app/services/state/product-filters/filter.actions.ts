@@ -1,17 +1,21 @@
 import { createAction, props } from '@ngrx/store';
-import { IFilter } from '../../../models/product.model';
+import { FilterResponse } from '../../../models/product.model';
 
-const LoadFilters = '[Filter] Load Product Filters';
-const LoadFilterSuccess = '[Filter] Load Filter Success';
-const LoadFilterFailure = '[Filter] Load Filter Failure';
+const LoadProductFiltersAction = '[Product] Load Product Filters';
+const LoadProductFiltersSuccess = '[Product] Load Product Filters Success';
+const LoadProductFiltersFailure = '[Product] Load Product Filters Failure';
 
-export const loadProductFilter = createAction(LoadFilters);
-
-export const loadFilterSuccess = createAction(
-  LoadFilterSuccess,
-  props<{ filter: IFilter }>()
+export const loadProductFilters = createAction(
+  LoadProductFiltersAction,
+  props<{ request: string[] }>()
 );
-export const loadFilterFailure = createAction(
-  LoadFilterFailure,
+
+export const loadProductFiltersSuccess = createAction(
+  LoadProductFiltersSuccess,
+  props<{ response: FilterResponse }>()
+);
+
+export const loadProductFiltersFailure = createAction(
+  LoadProductFiltersFailure,
   props<{ error: string }>()
 );

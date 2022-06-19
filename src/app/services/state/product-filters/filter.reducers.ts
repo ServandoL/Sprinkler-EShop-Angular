@@ -1,54 +1,38 @@
-import {
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  on,
-} from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { FilterState } from './filter.state';
 import * as FilterActions from './filter.actions';
 
 const initialFilterState: FilterState = {
   categories: [],
   brands: [],
+  success: false,
+  isLoading: false,
   error: '',
 };
 
-export const getFilterFeatureState =
-  createFeatureSelector<FilterState>('filters');
-
-export const getError = createSelector(
-  getFilterFeatureState,
-  (state) => state.error
-);
-
-export const getCategories = createSelector(
-  getFilterFeatureState,
-  (state) => state.categories
-);
-
-export const getBrands = createSelector(
-  getFilterFeatureState,
-  (state) => state.brands
-);
-
 export const filterReducer = createReducer<FilterState>(
   initialFilterState,
-  on(FilterActions.loadProductFilter, (state, action): FilterState => {
+  on(FilterActions.loadProductFilters, (state, action): FilterState => {
     return {
       ...state,
+      isLoading: true,
     };
   }),
-  on(FilterActions.loadFilterSuccess, (state, action): FilterState => {
+  on(FilterActions.loadProductFiltersSuccess, (state, action): FilterState => {
     return {
       ...state,
-      categories: action.filter.categories,
-      brands: action.filter.brands,
+      categories: action.response.categories,
+      brands: action.response.brands,
+      isLoading: false,
+      success: true,
     };
   }),
-  on(FilterActions.loadFilterFailure, (state, action): FilterState => {
+  on(FilterActions.loadProductFiltersFailure, (state, action): FilterState => {
     return {
       ...state,
       error: action.error,
+      isLoading: false,
+      success: false,
     };
   })
 );

@@ -5,11 +5,14 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client/core';
 import {
+  AddProductMutation,
   DeleteProductMutation,
+  GetProductFiltersQuery,
   GetProductsQuery,
   UpdateProductMutation,
 } from './product.schema';
 import {
+  AddProductRequest,
   DeleteProductRequest,
   ProductRequest,
   ProductResponse,
@@ -54,11 +57,31 @@ export class ProductService {
     });
   }
 
+  addProduct$(request: AddProductRequest): Observable<any> {
+    return this.apollo.mutate({
+      mutation: AddProductMutation,
+      variables: {
+        addProductRequest: request,
+      },
+    });
+  }
+
   updateProduct$(request: UpdateProductRequest): Observable<any> {
     return this.apollo.mutate({
       mutation: UpdateProductMutation,
       variables: {
         updateRequest: request,
+      },
+    });
+  }
+
+  getProductFilters$(request: string[]): Observable<any> {
+    return this.apollo.mutate({
+      mutation: GetProductFiltersQuery,
+      variables: {
+        filterRequest: {
+          filters: request,
+        },
       },
     });
   }

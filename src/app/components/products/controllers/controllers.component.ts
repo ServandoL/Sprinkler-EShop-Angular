@@ -15,7 +15,7 @@ import { Pagination } from '../../../models/pagination.model';
 import {
   getProducts,
   getProductPagination,
-  getLoading,
+  getProductLoading,
 } from '../../../services/state/product/product.selectors';
 
 @Component({
@@ -43,7 +43,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>, public authService: AuthService) {
     this.products$ = this.store.select(getProducts);
     this.pagination$ = this.store.select(getProductPagination);
-    this.productsLoading$ = this.store.select(getLoading);
+    this.productsLoading$ = this.store.select(getProductLoading);
     this.addToCartLoading$ = this.store.select(getCartFeatureState);
     this.addToCartResponse$ = this.store.select(addToCart);
     this.request = {
