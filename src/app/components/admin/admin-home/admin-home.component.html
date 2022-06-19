@@ -19,23 +19,60 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
+          (click)="resetDeleteResponse()"
         ></button>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to delete this item?</p>
+        <div class="row-cols-1 my-2">
+          <ng-container
+            *ngTemplateOutlet="
+              !productToDelete?.isDeleted
+                ? showDeleteConfirmation
+                : showAlreadyDeleted
+            "
+          ></ng-container>
+          <ng-template #showDeleteConfirmation
+            ><p class="alert alert-danger">
+              Are you sure you want to delete this product?
+            </p></ng-template
+          >
+          <ng-template #showAlreadyDeleted
+            ><p class="alert alert-warning">
+              This product is already marked for deletion.
+            </p></ng-template
+          >
+        </div>
+        <div class="row-cols-1">
+          <div class="col-md-12" *ngIf="(deleteSuccess$ | async) === true">
+            <p class="alert alert-success">
+              The product was deleted successfully. Please refresh the page.
+            </p>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-dismiss="modal"
-          (click)="onConfirmDelete()"
-        >
-          Confirm
-        </button>
+        <div class="row">
+          <div class="col">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              (click)="resetDeleteResponse()"
+            >
+              Cancel
+            </button>
+          </div>
+          <div class="col">
+            <button
+              type="button"
+              class="btn btn-primary"
+              [disabled]="productToDelete?.isDeleted"
+              (click)="onConfirmDelete(productToDelete)"
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -65,7 +102,7 @@
       </div>
       <div class="modal-body">
         <p>Marked by: {{ iconClickedProduct?.deleted_by }}</p>
-        <p>Date marked: {{ iconClickedProduct?.deleted_date }}</p>
+        <p>Date marked: {{ iconClickedProduct?.deleted_date | date }}</p>
       </div>
       <div class="modal-footer">
         <button

@@ -5,6 +5,7 @@ export interface ProductState {
   products: IProduct[];
   page: Pagination;
   updateSuccess: boolean;
+  deleteSuccess: boolean;
   error: string;
   isLoading: boolean;
 }

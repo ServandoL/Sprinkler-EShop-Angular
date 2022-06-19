@@ -3,7 +3,11 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../../../models/AppState';
 import * as ProductActions from '../../../services/state/product/product.actions';
-import { IProduct, ProductRequest } from '../../../models/product.model';
+import {
+  DeleteProductRequest,
+  IProduct,
+  ProductRequest,
+} from '../../../models/product.model';
 import { Router } from '@angular/router';
 import { Pagination } from '../../../models/pagination.model';
 import { AuthService } from '../../../utils/auth/auth-service.service';
@@ -13,6 +17,7 @@ import {
   getProducts,
   getProductPagination,
   getLoading,
+  getDeleteResponse,
 } from '../../../services/state/product/product.selectors';
 
 @Component({
@@ -25,7 +30,9 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   products$!: Observable<IProduct[]>;
   productsLoading$!: Observable<boolean>;
+  deleteSuccess$!: Observable<boolean>;
   productToUpdate!: IProduct;
+  productToDelete!: IProduct;
   showDeleteModal = false;
   deleted = false;
   confirmDelete = false;
@@ -36,6 +43,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   pagination$!: Observable<Pagination>;
   validated!: boolean;
   user$!: Observable<IUser>;
+  user!: IUser;
   iconClickedProduct!: IProduct | undefined;
 
   constructor(
@@ -47,6 +55,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.pagination$ = this.store.select(getProductPagination);
     this.productsLoading$ = this.store.select(getLoading);
     this.user$ = this.store.select(getUser);
+    this.deleteSuccess$ = this.store.select(getDeleteResponse);
     this.request = {
       category: undefined,
       page: {
@@ -58,6 +67,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
+    this.subscription.push(this.user$.subscribe((user) => (this.user = user)));
     this.subscription.push(
       this.authService
         .getToken$()
@@ -89,15 +99,25 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.productToUpdate = value;
   }
 
-  onConfirmDelete() {
-    this.deleted = true;
-    setTimeout(() => {
-      this.deleted = false;
-    }, 5000);
+  resetDeleteResponse() {
+    this.store.dispatch(ProductActions.resetDeleteResponse());
+  }
+
+  onConfirmDelete(request: IProduct) {
+    this.store.dispatch(
+      ProductActions.deleteProduct({
+        request: {
+          product: {
+            _id: request._id,
+          },
+          email: this.user.email,
+        },
+      })
+    );
   }
 
   onDelete(value: IProduct) {
-    console.log(value);
+    this.productToDelete = value;
   }
 
   onGoTo(page: number): void {

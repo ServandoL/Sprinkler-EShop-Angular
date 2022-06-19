@@ -7,6 +7,7 @@ const initialState: ProductState = {
   error: '',
   updateSuccess: false,
   isLoading: false,
+  deleteSuccess: false,
   page: {
     totalDocs: 0,
     limit: 0,
@@ -95,6 +96,7 @@ export const productReducer = createReducer<ProductState>(
   on(ProductActions.deleteProductSuccess, (state, action): ProductState => {
     return {
       ...state,
+      deleteSuccess: action.response.success,
       isLoading: false,
     };
   }),
@@ -103,6 +105,12 @@ export const productReducer = createReducer<ProductState>(
       ...state,
       isLoading: false,
       error: action.error,
+    };
+  }),
+  on(ProductActions.resetDeleteResponse, (state, action): ProductState => {
+    return {
+      ...state,
+      deleteSuccess: false,
     };
   })
 );

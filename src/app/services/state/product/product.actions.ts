@@ -26,6 +26,9 @@ const AddNewProductFailureAction = '[Product] Add New Product Failure';
 const DeleteProductAction = '[Product] Delete Product';
 const DeleteProductActionSuccess = '[Product] Delete Product Success';
 const DeleteProductActionFailure = '[Product] Delete Product Failure';
+const ResetDeleteResponse = '[Product] Reset Delete Response';
+
+export const resetDeleteResponse = createAction(ResetDeleteResponse);
 
 export const setCurrentProduct = createAction(
   CurrentProductAction,

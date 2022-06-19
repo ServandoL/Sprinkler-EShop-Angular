@@ -27,3 +27,8 @@ export const getUpdateResponse = createSelector(
   getProductFeatureState,
   (state) => state.updateSuccess
 );
+
+export const getDeleteResponse = createSelector(
+  getProductFeatureState,
+  (state) => state.deleteSuccess
+);

@@ -38,6 +38,25 @@ export class ProductEffects {
     );
   });
 
+  deleteProduct$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.deleteProduct),
+      mergeMap((action) =>
+        this.productService.deleteProduct$(action.request).pipe(
+          map(
+            (response) =>
+              ProductActions.deleteProductSuccess({
+                response: response.data.deleteProduct,
+              }),
+            catchError((error) =>
+              of(ProductActions.deleteProductFailure({ error }))
+            )
+          )
+        )
+      )
+    );
+  });
+
   updateProduct$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductActions.updateProduct),
