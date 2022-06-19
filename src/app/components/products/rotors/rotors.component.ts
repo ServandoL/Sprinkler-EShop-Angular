@@ -3,20 +3,20 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { AppState } from '../../../models/AppState';
-import * as ProductActions from '../../../services/state/product.actions';
-import {
-  getProductFeatureState,
-  getProductPagination,
-  getProducts,
-} from '../../../services/state/product.reducers';
+import * as ProductActions from '../../../services/state/product/product.actions';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import { addToCart } from '../../../services/state/cart/cart.selectors';
 import { IProduct, ProductRequest } from '../../../models/product.model';
 import { addToCartFunction } from '../../../utils/common/functions';
 import { CartState } from '../../../services/state/cart/cart.state';
-import { ProductState } from '../../../services/state/product.state';
 import * as CartActions from '../../../services/state/cart/cart.actions';
 import { Pagination } from '../../../models/pagination.model';
+import {
+  getProducts,
+  getProductPagination,
+  getProductFeatureState,
+} from '../../../services/state/product/product.selectors';
+import { ProductState } from '../../../services/state/product/product.state';
 
 @Component({
   selector: 'app-rotors',

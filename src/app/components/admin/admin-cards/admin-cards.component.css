@@ -1,7 +1,13 @@
 .button-div {
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
 }
 
 .btn {
   margin: 5px;
+}
+
+.deleted-icon {
+  border-width: 2px;
 }

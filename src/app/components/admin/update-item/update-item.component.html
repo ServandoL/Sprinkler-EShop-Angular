@@ -1,3 +1,6 @@
+<div *ngIf="(isLoading$ | async) === true">
+  <app-shared-loader></app-shared-loader>
+</div>
 <div
   class="modal fade"
   id="updateItemModal"
@@ -16,63 +19,94 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
+          (click)="onClose()"
         ></button>
       </div>
       <div class="modal-body">
-        <img src="/assets/{{ product?.imageUrl }}"
-        alt="product-image" class="rounded mx-auto d-block img-thumbnail img-size" />
-        <form
-          [formGroup]="updateItemForm"
-          (ngSubmit)="onSubmit()"
-          #formDir="ngForm"
-        >
-          <div class="form-group my-2">
-            <label for="product-name">Enter Product Name</label>
-            <textarea
-              class="form-control"
-              rows="3"
-              id="product-name"
-              formControlName="productName"
-              [value]="product?.productName"
-            ></textarea
+        <div class="row my-2">
+          <div class="col">
+            <img
+              src="/assets/{{ product?.imageUrl }}"
+              alt="product-image"
+              class="rounded mx-auto d-block img-thumbnail img-size"
+            />
+            <form
+              [formGroup]="updateItemForm"
+              (ngSubmit)="onUpdate()"
+              #formDir="ngForm"
             >
+              <div class="form-group my-2">
+                <label for="product-name" class="form-label"
+                  >Enter Product Name</label
+                >
+                <textarea
+                  class="form-control"
+                  rows="3"
+                  id="product-name"
+                  formControlName="productName"
+                  [value]="product?.productName"
+                ></textarea>
+              </div>
+              <div class="form-group my-2">
+                <label for="product-price" class="form-label"
+                  >Enter Product Price</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="product-price"
+                  formControlName="price"
+                  [value]="product?.price"
+                />
+              </div>
+              <div class="form-group my-2">
+                <label for="product-stock" class="form-label"
+                  >Enter Product Stock</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="product-stock"
+                  formControlName="stock"
+                  [value]="product?.stock"
+                />
+              </div>
+              <div class="form-group my-2">
+                <label for="product-image" class="form-label"
+                  >Product Image</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="product-image"
+                  formControlName="imageUrl"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </form>
           </div>
-          <div class="form-group my-2">
-            <label for="product-price">Enter Product Price</label>
-            <input
-              type="text"
-              class="form-control"
-              id="product-price"
-              formControlName="productPrice"
-              [value]="product?.price"
-            />
+        </div>
+        <div class="row">
+          <div class="col-md-12" *ngIf="(updateSuccess$ | async) === true">
+            <p class="alert alert-success">
+              The product was updated successfully.
+            </p>
           </div>
-          <div class="form-group my-2">
-            <label for="product-stock">Enter Product Stock</label>
-            <input
-              type="number"
-              class="form-control"
-              id="product-stock"
-              formControlName="productStock"
-              [value]="product?.stock"
-            />
-          </div>
-          <div class="form-group my-2">
-            <label for="product-image">Product Image</label>
-            <input
-              type="file"
-              class="form-control"
-              id="product-image"
-              formControlName="productImage"
-            />
-          </div>
-          <button type="submit" class="btn btn-primary">Update</button>
-        </form>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
+        <div class="row">
+          <div class="col">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              (click)="onClose()"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

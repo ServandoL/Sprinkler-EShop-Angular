@@ -39,3 +39,20 @@ export interface ProductResponse {
   data: IProduct[];
   pagination: Pagination;
 }
+
+export interface UpdateProductRequest {
+  productId: string;
+  productName: string;
+  modifiedDate: string;
+  modifiedBy: string;
+  price: number;
+  stock: number;
+  imageUrl: string;
+}
+
+export interface DeleteProductRequest {
+  product: {
+    _id: string;
+  };
+  email: string;
+}

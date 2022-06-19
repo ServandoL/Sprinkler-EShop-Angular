@@ -40,7 +40,58 @@
     </div>
   </div>
 </div>
-<app-update-item [product]="productToUpdate"></app-update-item>
+<div
+  class="modal fade"
+  tabindex="-1"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  aria-labelledby="deleteIconModal"
+  aria-hidden="true"
+  id="deleteIconModal"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="deleteModal">
+          This product has been marked for deletion.
+        </h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="onIconClickedConfirm()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Marked by: {{ iconClickedProduct?.deleted_by }}</p>
+        <p>Date marked: {{ iconClickedProduct?.deleted_date }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="onIconClickedConfirm()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="onIconClickedConfirm()"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-update-item
+  [product]="productToUpdate"
+  [user]="user$ | async"
+></app-update-item>
 <div class="container">
   <div class="row py-2">
     <div class="col-md-2">
@@ -73,6 +124,7 @@
             [product]="product"
             (clickedDelete)="onDelete($event)"
             (clickedUpdate)="onUpdate($event)"
+            (clickedDeleteIcon)="onIconClicked($event)"
           ></app-admin-cards>
         </div>
       </div>

@@ -1,4 +1,5 @@
 <div class="card w-100 h-100">
+  <div class="card-header">Product ID: {{ product._id }}</div>
   <img
     class="card-img-top mx-auto"
     src="/assets/{{ product.imageUrl }}"
@@ -15,26 +16,43 @@
     </p>
   </div>
   <div class="card-footer">
-    <div class="button-div">
-      <button
-        type="submit"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#updateItemModal"
-        (click)="updateClicked(product)"
-      >
-        Update
-      </button>
-      <button
-        type="submit"
-        name="delete"
-        class="btn btn-outline-danger"
-        data-bs-toggle="modal"
-        data-bs-target="#deleteModal"
-        (click)="deleteClicked(product)"
-      >
-        Delete
-      </button>
+    <div class="row">
+      <div class="col">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#updateItemModal"
+          (click)="updateClicked(product)"
+        >
+          Update
+        </button>
+      </div>
+      <div class="col">
+        <button
+          type="submit"
+          name="delete"
+          class="btn btn-outline-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteModal"
+          (click)="deleteClicked(product)"
+        >
+          Delete
+        </button>
+      </div>
+
+      <div *ngIf="product.isDeleted" class="col">
+        <button
+          type="button"
+          name="delete-icon"
+          class="btn btn-sm btn-outline-warning deleted-icon"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteIconModal"
+          (click)="iconClicked(product)"
+        >
+          <img class="delete-icon" src="assets\images\exclamation-circle.svg" />
+        </button>
+      </div>
     </div>
   </div>
 </div>

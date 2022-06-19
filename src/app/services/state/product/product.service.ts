@@ -2,10 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { map } from 'rxjs/operators';
-import { ProductRequest, ProductResponse } from '../../models/product.model';
 import { Observable } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { GetProductsQuery } from './product.schema';
+import {
+  DeleteProductMutation,
+  GetProductsQuery,
+  UpdateProductMutation,
+} from './product.schema';
+import {
+  DeleteProductRequest,
+  ProductRequest,
+  ProductResponse,
+  UpdateProductRequest,
+} from '../../../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -34,6 +43,24 @@ export class ProductService {
           }
         })
       );
+  }
+
+  deleteProduct$(request: DeleteProductRequest): Observable<any> {
+    return this.apollo.mutate({
+      mutation: DeleteProductMutation,
+      variables: {
+        deleteRequest: request,
+      },
+    });
+  }
+
+  updateProduct$(request: UpdateProductRequest): Observable<any> {
+    return this.apollo.mutate({
+      mutation: UpdateProductMutation,
+      variables: {
+        updateRequest: request,
+      },
+    });
   }
 
   // getProductFilters$(): Observable<IFilter> {

@@ -1,6 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IProduct } from '../../../models/product.model';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { AppState } from '../../../models/AppState';
+import { IProduct, UpdateProductRequest } from '../../../models/product.model';
+import { IUser } from '../../../models/user.model';
+import {
+  resetUpdateResponse,
+  updateProduct,
+} from '../../../services/state/product/product.actions';
+import {
+  getLoading,
+  getUpdateResponse,
+} from '../../../services/state/product/product.selectors';
 
 @Component({
   selector: 'app-update-item',
@@ -8,25 +20,61 @@ import { IProduct } from '../../../models/product.model';
   styleUrls: ['./update-item.component.css'],
 })
 export class UpdateItemComponent implements OnInit {
-  constructor() {}
+  constructor(private store: Store<AppState>) {
+    this.isLoading$ = this.store.select(getLoading);
+    this.updateSuccess$ = this.store.select(getUpdateResponse);
+  }
 
   @Input() product!: IProduct;
+  @Input() user!: IUser | null;
+  updateItemForm!: FormGroup;
+  isLoading$!: Observable<boolean>;
+  updateSuccess$!: Observable<boolean>;
+  subscriptions!: Subscription[];
 
-  updateItemForm = new FormGroup({
-    productName: new FormControl(this.product?.productName),
-    productPrice: new FormControl(this.product?.price, [
-      Validators.pattern(
-        /(?:^[1-9]([0-9]+)?(?:\.[0-9]{1,2})?$)|(?:^(?:0)$)|(?:^[0-9]\.[0-9](?:[0-9])?$)/
-      ),
-    ]),
-    productStock: new FormControl(this.product?.stock),
-    productImage: new FormControl(this.product?.imageUrl),
-  });
+  ngOnInit(): void {
+    this.updateItemForm = new FormGroup({
+      productName: new FormControl(this.product?.productName),
+      price: new FormControl(this.product?.price.toString(), [
+        Validators.pattern(
+          /(?:^[1-9]([0-9]+)?(?:\.[0-9]{1,2})?$)|(?:^(?:0)$)|(?:^[0-9]\.[0-9](?:[0-9])?$)/
+        ),
+      ]),
+      stock: new FormControl(this.product?.stock.toString()),
+      imageUrl: new FormControl(this.product?.imageUrl),
+    });
+  }
 
-  ngOnInit(): void {}
+  get productName() {
+    return this.updateItemForm.get('productName');
+  }
 
-  onSubmit() {
-    alert('product updated');
-    console.log(this.product);
+  get price() {
+    return this.updateItemForm.get('price');
+  }
+
+  get stock() {
+    return this.updateItemForm.get('stock');
+  }
+
+  get imageUrl() {
+    return this.updateItemForm.get('imageUrl');
+  }
+
+  onUpdate() {
+    const request: UpdateProductRequest = {
+      productId: this.product._id,
+      productName: this.productName?.value || this.product.productName,
+      modifiedDate: new Date().toISOString(),
+      modifiedBy: this.user ? this.user.email : '',
+      price: this.price?.value || this.product.price,
+      stock: this.stock?.value || this.product.stock,
+      imageUrl: this.imageUrl?.value || this.product.imageUrl,
+    };
+    this.store.dispatch(updateProduct({ request }));
+  }
+
+  onClose() {
+    this.store.dispatch(resetUpdateResponse());
   }
 }

@@ -79,3 +79,12 @@ export const AddProductMutation = gql`
     }
   }
 `;
+
+export const UpdateProductMutation = gql`
+  mutation updateProduct($updateRequest: UpdateProductRequest) {
+    updateProduct(updateRequest: $updateRequest) {
+      message
+      success
+    }
+  }
+`;

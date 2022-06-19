@@ -1,10 +1,13 @@
 import { createAction, props } from '@ngrx/store';
 import {
+  DeleteProductRequest,
   IProduct,
   ProductRequest,
   ProductResponse,
-} from '../../models/product.model';
+  UpdateProductRequest,
+} from '../../../models/product.model';
 import { ObjectId } from 'mongodb';
+import { GenericResponse } from '../../../models/AppState';
 
 const CurrentProductAction = '[Product] Set Current Product';
 const ClearProductAction = '[Product] Clear Current Product';
@@ -16,6 +19,7 @@ const LoadProductsFailureAction = '[Product] Load Failure';
 const UpdateProductAction = '[Product] Update Product';
 const UpdateProductSuccessAction = '[Product] Update Product Success';
 const UpdateProductFailureAction = '[Product] Update Product Fail';
+const ResetUpdateResponse = '[Product] Reset Update Success';
 const AddProductAction = '[Product] Add New Product';
 const AddNewProductSuccessAction = '[Product] Add New Product Success';
 const AddNewProductFailureAction = '[Product] Add New Product Failure';
@@ -27,6 +31,8 @@ export const setCurrentProduct = createAction(
   CurrentProductAction,
   props<{ currentProductId: string | ObjectId | null }>()
 );
+
+export const resetUpdateResponse = createAction(ResetUpdateResponse);
 
 export const clearCurrentProduct = createAction(ClearProductAction);
 
@@ -54,13 +60,13 @@ export const loadProductsFailure = createAction(
 
 export const updateProduct = createAction(
   UpdateProductAction,
-  props<{ product: IProduct }>()
+  props<{ request: UpdateProductRequest }>()
 );
 
 // action for the successfull completion of the operation - it will dispatch from the reducer if the save from the back-end server was successfull
 export const updateProductSuccess = createAction(
   UpdateProductSuccessAction,
-  props<{ product: IProduct }>()
+  props<{ response: GenericResponse }>()
 );
 
 // action for an error or failure - it will dispatch from the reducer if the save from the back-end server was not successfull
@@ -86,12 +92,12 @@ export const addNewProductFailure = createAction(
 
 export const deleteProduct = createAction(
   DeleteProductAction,
-  props<{ productId: string | ObjectId | null }>()
+  props<{ request: DeleteProductRequest }>()
 );
 
 export const deleteProductSuccess = createAction(
   DeleteProductActionSuccess,
-  props<{ productId: string | ObjectId | null }>()
+  props<{ response: GenericResponse }>()
 );
 
 export const deleteProductFailure = createAction(

@@ -3,21 +3,20 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { AppState } from '../../../models/AppState';
-import * as ProductActions from '../../../services/state/product.actions';
-import {
-  getLoading,
-  getProductFeatureState,
-  getProductPagination,
-  getProducts,
-} from '../../../services/state/product.reducers';
+import * as ProductActions from '../../../services/state/product/product.actions';
+
 import { IProduct, ProductRequest } from '../../../models/product.model';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import { addToCart } from '../../../services/state/cart/cart.selectors';
 import { addToCartFunction } from '../../../utils/common/functions';
-import { ProductState } from '../../../services/state/product.state';
 import { CartState } from '../../../services/state/cart/cart.state';
 import * as CartActions from '../../../services/state/cart/cart.actions';
 import { Pagination } from '../../../models/pagination.model';
+import {
+  getProducts,
+  getProductPagination,
+  getLoading,
+} from '../../../services/state/product/product.selectors';
 
 @Component({
   selector: 'app-controllers',

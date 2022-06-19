@@ -8,11 +8,11 @@ import { UpdateItemComponent } from './update-item/update-item.component';
 import { AdminCardsComponent } from './admin-cards/admin-cards.component';
 import { SharedAppModule } from '../shared/shared.module';
 import { StoreModule } from '@ngrx/store';
-import { productReducer } from '../../services/state/product.reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { ProductEffects } from '../../services/state/product.effects';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { filterReducer } from '../../services/state/product-filters/filter.reducers';
+import { ProductEffects } from '../../services/state/product/product.effects';
+import { productReducer } from '../../services/state/product/product.reducers';
 @NgModule({
   imports: [
     CommonModule,

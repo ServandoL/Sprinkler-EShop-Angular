@@ -12,3 +12,8 @@ export interface AppState {
   order: Order | undefined;
   orderHistory: OrderHistory | undefined;
 }
+
+export interface GenericResponse {
+  message: string;
+  success: boolean;
+}

@@ -1,15 +1,11 @@
-import {
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  on,
-} from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { ProductState } from './product.state';
 import * as ProductActions from './product.actions';
 
 const initialState: ProductState = {
   products: [],
   error: '',
+  updateSuccess: false,
   isLoading: false,
   page: {
     totalDocs: 0,
@@ -24,28 +20,6 @@ const initialState: ProductState = {
     pagingCounter: 0,
   },
 };
-
-export const getProductFeatureState =
-  createFeatureSelector<ProductState>('products');
-
-export const getLoading = createSelector(
-  getProductFeatureState,
-  (state) => state.isLoading
-);
-
-export const getError = createSelector(
-  getProductFeatureState,
-  (state) => state.error
-);
-
-export const getProducts = createSelector(
-  getProductFeatureState,
-  (state) => state.products
-);
-export const getProductPagination = createSelector(
-  getProductFeatureState,
-  (state) => state.page
-);
 
 export const productReducer = createReducer<ProductState>(
   initialState,
@@ -72,20 +46,30 @@ export const productReducer = createReducer<ProductState>(
       isLoading: false,
     };
   }),
-  on(ProductActions.updateProductSuccess, (state, action): ProductState => {
-    const updatedProducts = state.products.map((item) =>
-      action.product._id === item._id ? action.product : item
-    );
+  on(ProductActions.updateProduct, (state, action): ProductState => {
     return {
       ...state,
-      products: updatedProducts,
-      error: '',
+      isLoading: true,
+    };
+  }),
+  on(ProductActions.resetUpdateResponse, (state, action): ProductState => {
+    return {
+      ...state,
+      updateSuccess: false,
+    };
+  }),
+  on(ProductActions.updateProductSuccess, (state, action): ProductState => {
+    return {
+      ...state,
+      updateSuccess: action.response.success,
+      isLoading: false,
     };
   }),
   on(ProductActions.updateProductFailure, (state, action): ProductState => {
     return {
       ...state,
       error: action.error,
+      isLoading: false,
     };
   }),
   on(ProductActions.addNewProductSuccess, (state, action): ProductState => {
@@ -102,19 +86,22 @@ export const productReducer = createReducer<ProductState>(
       error: action.error,
     };
   }),
-  on(ProductActions.deleteProductSuccess, (state, action): ProductState => {
-    const products = state.products.filter(
-      (item) => item._id !== action.productId
-    );
+  on(ProductActions.deleteProduct, (state, action): ProductState => {
     return {
       ...state,
-      products: products,
-      error: '',
+      isLoading: true,
+    };
+  }),
+  on(ProductActions.deleteProductSuccess, (state, action): ProductState => {
+    return {
+      ...state,
+      isLoading: false,
     };
   }),
   on(ProductActions.deleteProductFailure, (state, action): ProductState => {
     return {
       ...state,
+      isLoading: false,
       error: action.error,
     };
   })

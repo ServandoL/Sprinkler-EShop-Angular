@@ -1,20 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import {
-  getLoading,
-  getProductFeatureState,
-  getProductPagination,
-  getProducts,
-} from '../../../services/state/product.reducers';
 import { AppState } from '../../../models/AppState';
-import * as ProductActions from '../../../services/state/product.actions';
+import * as ProductActions from '../../../services/state/product/product.actions';
 import { IProduct, ProductRequest } from '../../../models/product.model';
 import { Router } from '@angular/router';
 import { Pagination } from '../../../models/pagination.model';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { IUser } from '../../../models/user.model';
 import { getUser } from '../../../services/state/users/users.selectors';
+import {
+  getProducts,
+  getProductPagination,
+  getLoading,
+} from '../../../services/state/product/product.selectors';
 
 @Component({
   selector: 'app-admin-home',
@@ -37,6 +36,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   pagination$!: Observable<Pagination>;
   validated!: boolean;
   user$!: Observable<IUser>;
+  iconClickedProduct!: IProduct | undefined;
 
   constructor(
     private store: Store<AppState>,
@@ -75,6 +75,14 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
+  }
+
+  onIconClicked(product: IProduct) {
+    this.iconClickedProduct = product;
+  }
+
+  onIconClickedConfirm() {
+    this.iconClickedProduct = undefined;
   }
 
   onUpdate(value: IProduct) {
