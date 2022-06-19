@@ -58,6 +58,7 @@
       >
         <div class="col" *ngFor="let product of products">
           <app-product-card
+            *ngIf="!product.isDeleted"
             [product]="product"
             [title]="'Add to cart'"
             (quantityUpdated)="updateQuantity($event)"
