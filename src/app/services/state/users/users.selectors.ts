@@ -7,16 +7,6 @@ export const getError = createSelector(
   getUserFeatureState,
   (state) => state.error
 );
-
-export const selectUser = createSelector(
-  getUserFeatureState,
-  (state) => state.user
-);
-
-export const clearUser = createSelector(
-  getUserFeatureState,
-  (state) => state.user
-);
 export const getUser = createSelector(
   getUserFeatureState,
   (state) => state.user
@@ -25,7 +15,8 @@ export const createUser = createSelector(
   getUserFeatureState,
   (state) => state.userResponse
 );
-export const deleteUser = createSelector(
+
+export const getUserLoading = createSelector(
   getUserFeatureState,
-  (state) => state.deleteUserResponse
+  (state) => state.isLoading
 );

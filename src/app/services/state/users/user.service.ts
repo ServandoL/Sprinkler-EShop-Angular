@@ -25,20 +25,22 @@ export class UserService {
     return this.apollo.mutate({
       mutation: CreateUserMutation,
       variables: {
-        fname: firstName,
-        lname: lastName,
-        email: email,
-        password: password,
-        isAdmin: false,
+        request: {
+          fname: firstName,
+          lname: lastName,
+          email: email,
+          password: password,
+          isAdmin: false,
+        },
       },
     });
   }
 
-  deleteUser$(email: string): Observable<any> {
+  deleteUser$(_id: string): Observable<any> {
     return this.apollo.mutate({
       mutation: DeleteUserMutation,
       variables: {
-        email: email,
+        _id: _id,
       },
     });
   }

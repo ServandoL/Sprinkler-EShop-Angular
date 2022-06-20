@@ -35,8 +35,8 @@ export const UpdateUserMutation = gql`
 `;
 
 export const DeleteUserMutation = gql`
-  mutation deleteUser($email: String) {
-    deleteUser(email: $email) {
+  mutation deleteUser($id: String) {
+    deleteUser(_id: $id) {
       message
       success
     }

@@ -14,7 +14,6 @@ const initialState: UserState = {
   error: '',
   isLoading: false,
   userResponse: null,
-  deleteUserResponse: null,
 };
 
 export const userReducer = createReducer<UserState>(
@@ -25,11 +24,17 @@ export const userReducer = createReducer<UserState>(
       isLoading: true,
     };
   }),
-  on(UserActions.deleteUserActionResponse, (state, action): UserState => {
+  on(UserActions.deleteUserActionSuccess, (state, action): UserState => {
     return {
       ...state,
-      deleteUserResponse: action.response,
       isLoading: false,
+    };
+  }),
+  on(UserActions.deleteUserActionFailure, (state, action): UserState => {
+    return {
+      ...state,
+      isLoading: false,
+      error: action.error,
     };
   }),
   on(UserActions.getCurrentUser, (state): UserState => {

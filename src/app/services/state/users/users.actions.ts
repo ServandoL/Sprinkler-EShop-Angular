@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
+import { GenericResponse } from '../../../models/AppState';
 import { UserResponse } from '../../../models/user.model';
-import { deleteUserResponse } from './users.state';
 
 const CurrentUserAction = '[User] Set Current User';
 const ClearCurrentUserAction = '[User] Clear Current User';
@@ -12,7 +12,7 @@ const GetCurrentUserAction = '[User] Get Current User';
 const CreateUserAction = '[User] Create User';
 const CreateUserActionResponse = '[User] Create User Response';
 const DeleteUserAction = '[User] Delete User';
-const DeleteUserActionResponse = '[User] Delete User Response';
+const DeleteUserActionSuccess = '[User] Delete User Success';
 const DeleteUserActionFailure = '[User] Delete User Failure';
 
 export const setCurrentUser = createAction(
@@ -57,15 +57,15 @@ export const getCurrentUser = createAction(GetCurrentUserAction);
 
 export const deleteUser = createAction(
   DeleteUserAction,
-  props<{ email: string }>()
+  props<{ _id: string }>()
 );
 
-export const deleteUserActionResponse = createAction(
-  DeleteUserActionResponse,
-  props<{ response: deleteUserResponse }>()
+export const deleteUserActionSuccess = createAction(
+  DeleteUserActionSuccess,
+  props<{ response: GenericResponse }>()
 );
 
 export const deleteUserActionFailure = createAction(
   DeleteUserActionFailure,
-  props<{ error: UserResponse }>()
+  props<{ error: string }>()
 );

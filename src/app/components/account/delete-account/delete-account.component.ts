@@ -2,8 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../services/state/users/users.state';
 import * as UserActions from '../../../services/state/users/users.actions';
-import { deleteUser, getUserFeatureState } from '../../../services/state/users/users.selectors';
+import {
+  getError,
+  getUser,
+  getUserLoading,
+} from '../../../services/state/users/users.selectors';
 import { IUser } from '../../../models/user.model';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-delete-account',
@@ -11,20 +16,30 @@ import { IUser } from '../../../models/user.model';
   styleUrls: ['./delete-account.component.css'],
 })
 export class DeleteAccountComponent implements OnInit {
-  constructor(private store: Store<UserState>) {}
-
-  ngOnInit(): void {
-    this.user$.subscribe((user) => (this.currentUser = user.user));
+  currentUser!: IUser;
+  user$!: Observable<IUser>;
+  isLoading$!: Observable<boolean>;
+  error$!: Observable<string>;
+  error!: string;
+  subscriptions: Subscription[] = [];
+  constructor(private store: Store<UserState>) {
+    this.user$ = this.store.select(getUser);
+    this.isLoading$ = this.store.select(getUserLoading);
+    this.error$ = this.store.select(getError);
   }
 
-  currentUser!: IUser;
-
-  user$ = this.store.select(getUserFeatureState);
-  message$ = this.store.select(deleteUser)
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.user$.subscribe((user) => (this.currentUser = user))
+    );
+    this.subscriptions.push(
+      this.error$.subscribe((error: any) => {
+        this.error = error.graphQLErrors[0].message;
+      })
+    );
+  }
 
   deleteAccount() {
-    this.store.dispatch(
-      UserActions.deleteUser({ email: this.currentUser.email })
-    );
+    this.store.dispatch(UserActions.deleteUser({ _id: this.currentUser._id }));
   }
 }

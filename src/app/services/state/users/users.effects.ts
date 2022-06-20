@@ -4,12 +4,11 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { AppState } from '../../../models/AppState';
+import { AppState, GenericResponse } from '../../../models/AppState';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { UserService } from './user.service';
 import * as UserActions from './users.actions';
 import * as CartActions from '../cart/cart.actions';
-import { deleteUserResponse } from './users.state';
 import { UserResponse } from '../../../models/user.model';
 
 @Injectable()
@@ -78,12 +77,11 @@ export class UserEffects {
     return this.actions$.pipe(
       ofType(UserActions.deleteUser),
       mergeMap((action) =>
-        this.userService.deleteUser$(action.email).pipe(
+        this.userService.deleteUser$(action._id).pipe(
           map((result: any) => {
             this.authService.logout();
-            this.router.navigateByUrl('/');
-            const response: deleteUserResponse = result?.data?.deleteUser;
-            return UserActions.deleteUserActionResponse({ response });
+            const response: GenericResponse = result?.data?.deleteUser;
+            return UserActions.deleteUserActionSuccess({ response });
           }),
           catchError((error) =>
             of(UserActions.deleteUserActionFailure({ error }))

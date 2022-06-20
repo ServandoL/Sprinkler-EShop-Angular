@@ -3,10 +3,7 @@ import { CanActivate, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { AuthService } from './auth-service.service';
-import {
-  getUserFeatureState,
-  selectUser,
-} from '../../services/state/users/users.selectors';
+import { getUserFeatureState } from '../../services/state/users/users.selectors';
 import { UserState } from '../../services/state/users/users.state';
 
 @Injectable({
@@ -18,7 +15,7 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private store: Store
   ) {
-    this.currentUser$.subscribe(user => this.currentUser = user)
+    this.currentUser$.subscribe((user) => (this.currentUser = user));
   }
 
   currentUser!: UserState;

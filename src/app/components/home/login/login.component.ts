@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import {
   getError,
   getUserFeatureState,
-  selectUser,
 } from '../../../services/state/users/users.selectors';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import * as UserActions from '../../../services/state/users/users.actions';
