@@ -18,6 +18,9 @@ const initialState: UserState = {
 
 export const userReducer = createReducer<UserState>(
   initialState,
+  on(UserActions.resetUserResponse, (state): UserState => {
+    return { ...state, userResponse: null };
+  }),
   on(UserActions.deleteUser, (state): UserState => {
     return {
       ...state,

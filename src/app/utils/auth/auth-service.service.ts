@@ -53,9 +53,6 @@ export class AuthService {
   }
 
   logout(): void {
-    this.store.dispatch(clearCurrentUser());
-    this.store.dispatch(clearCartState());
-    this.store.dispatch(clearOrderHistory());
     sessionStorage.clear();
     localStorage.removeItem('state');
     setTimeout(() => {

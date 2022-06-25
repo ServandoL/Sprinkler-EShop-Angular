@@ -25,8 +25,8 @@
       <div class="bottom-border"></div>
       <fieldset>
         <legend>Are you sure you want to delete your account?</legend>
-        <div class="alert alert-danger" *ngIf="error !== undefined">
-          {{ error }}
+        <div class="alert alert-danger" *ngIf="error$ | async">
+          {{ error$ | async }}
         </div>
         <div class="form-text my-2 text-red">This action cannot be undone.</div>
         <button

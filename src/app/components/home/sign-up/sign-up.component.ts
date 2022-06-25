@@ -7,9 +7,13 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as UserActions from '../../../services/state/users/users.actions';
-import { createUser, getUserFeatureState } from '../../../services/state/users/users.selectors';
+import {
+  createUser,
+  getUserFeatureState,
+} from '../../../services/state/users/users.selectors';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,11 +21,10 @@ import { createUser, getUserFeatureState } from '../../../services/state/users/u
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent {
-  constructor(private store: Store) {
-  }
+  constructor(private store: Store, private router: Router) {}
 
   signUpMessage$ = this.store.select(createUser);
-  loading$ = this.store.select(getUserFeatureState)
+  loading$ = this.store.select(getUserFeatureState);
 
   createUserForm = new FormGroup(
     {
@@ -66,6 +69,11 @@ export class SignUpComponent {
         isAdmin: false,
       })
     );
+  }
+
+  onLogin() {
+    this.store.dispatch(UserActions.resetUserResponse());
+    this.router.navigateByUrl('/login');
   }
 }
 export const passwordMatchValidator: ValidatorFn = (

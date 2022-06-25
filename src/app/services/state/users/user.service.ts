@@ -40,7 +40,7 @@ export class UserService {
     return this.apollo.mutate({
       mutation: DeleteUserMutation,
       variables: {
-        _id: _id,
+        id: _id,
       },
     });
   }

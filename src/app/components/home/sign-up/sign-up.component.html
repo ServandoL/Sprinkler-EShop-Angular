@@ -111,6 +111,7 @@
             >
               Create an account
             </button>
+            <button *ngIf="(signUpMessage$ | async)?.success" type="button" class="btn btn-primary login-btn" (click)="onLogin()">Log in</button>
           </div>
           <span class="mx-sm-3"
             ><small style="color: red">* Required Fields</small></span

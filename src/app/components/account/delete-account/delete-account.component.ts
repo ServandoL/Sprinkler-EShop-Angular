@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../services/state/users/users.state';
 import * as UserActions from '../../../services/state/users/users.actions';
@@ -15,12 +15,11 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './delete-account.component.html',
   styleUrls: ['./delete-account.component.css'],
 })
-export class DeleteAccountComponent implements OnInit {
+export class DeleteAccountComponent implements OnInit, OnDestroy {
   currentUser!: IUser;
   user$!: Observable<IUser>;
   isLoading$!: Observable<boolean>;
   error$!: Observable<string>;
-  error!: string;
   subscriptions: Subscription[] = [];
   constructor(private store: Store<UserState>) {
     this.user$ = this.store.select(getUser);
@@ -32,11 +31,10 @@ export class DeleteAccountComponent implements OnInit {
     this.subscriptions.push(
       this.user$.subscribe((user) => (this.currentUser = user))
     );
-    this.subscriptions.push(
-      this.error$.subscribe((error: any) => {
-        this.error = error.graphQLErrors[0].message;
-      })
-    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   deleteAccount() {

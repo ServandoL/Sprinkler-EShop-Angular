@@ -1,4 +1,4 @@
-import { CartGqlResponse, ICartItem } from '../../../models/cart.model';
+import { ICartItem } from '../../../models/cart.model';
 
 export interface CartState {
   email: string | undefined | null;

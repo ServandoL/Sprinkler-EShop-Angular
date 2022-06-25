@@ -14,6 +14,9 @@ const CreateUserActionResponse = '[User] Create User Response';
 const DeleteUserAction = '[User] Delete User';
 const DeleteUserActionSuccess = '[User] Delete User Success';
 const DeleteUserActionFailure = '[User] Delete User Failure';
+const ResetUserResponse = '[User] Reset User Response';
+
+export const resetUserResponse = createAction(ResetUserResponse);
 
 export const setCurrentUser = createAction(
   CurrentUserAction,
