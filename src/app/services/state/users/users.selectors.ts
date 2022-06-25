@@ -20,3 +20,8 @@ export const getUserLoading = createSelector(
   getUserFeatureState,
   (state) => state.isLoading
 );
+
+export const getUpdateSuccessMessage = createSelector(
+  getUserFeatureState,
+  (state) => state.userResponse?.message
+);

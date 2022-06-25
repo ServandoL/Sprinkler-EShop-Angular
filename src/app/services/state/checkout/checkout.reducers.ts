@@ -8,6 +8,7 @@ import {
   checkOutAction,
   checkOutFailure,
   checkOutSuccess,
+  clearCheckoutState,
   resetMessage,
 } from './checkout.actions';
 import { CheckoutState } from './checkout.state';
@@ -46,6 +47,11 @@ export const getSuccessSelector = createSelector(
 
 export const checkoutReducer = createReducer<CheckoutState>(
   initialState,
+  on(clearCheckoutState, (state): CheckoutState => {
+    return {
+      ...initialState,
+    };
+  }),
   on(resetMessage, (state, action): CheckoutState => {
     return {
       ...state,

@@ -7,11 +7,13 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserResponse } from '../../models/user.model';
 import { AppState } from '../../models/AppState';
-import { clearCurrentUser } from '../../services/state/users/users.actions';
-import { clearCartState } from '../../services/state/cart/cart.actions';
 import { Router } from '@angular/router';
-import { clearOrderHistory } from '../../services/state/orderHistory/orderHistory.actions';
 import { GetUserQuery } from '../../services/state/users/user.schema';
+import { clearCartState } from '../../services/state/cart/cart.actions';
+import { clearProductState } from '../../services/state/product/product.actions';
+import { clearUserState } from '../../services/state/users/users.actions';
+import { clearOrderHistory } from '../../services/state/orderHistory/orderHistory.actions';
+import { clearCheckoutState } from '../../services/state/checkout/checkout.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -54,7 +56,11 @@ export class AuthService {
 
   logout(): void {
     sessionStorage.clear();
-    localStorage.removeItem('state');
+    this.store.dispatch(clearCartState());
+    this.store.dispatch(clearProductState());
+    this.store.dispatch(clearUserState());
+    this.store.dispatch(clearOrderHistory());
+    this.store.dispatch(clearCheckoutState());
     setTimeout(() => {
       this.router.navigateByUrl('/home');
     }, 500);

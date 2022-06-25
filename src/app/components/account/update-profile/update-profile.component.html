@@ -37,9 +37,11 @@
           {% endwith %} -->
       <fieldset>
         <legend>Update Email</legend>
-        <form method="POST">
+        <form [formGroup]="updateForm">
           <div class="form-group col-md-6 my-2">
-            <label class="form-label">Current email: EMAIL</label>
+            <label class="form-label"
+              >Current email: {{ (user$ | async)?.email }}</label
+            >
             <input
               type="email"
               class="form-control"

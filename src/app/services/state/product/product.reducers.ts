@@ -126,5 +126,10 @@ export const productReducer = createReducer<ProductState>(
       ...state,
       addSuccess: false,
     };
+  }),
+  on(ProductActions.clearProductState, (): ProductState => {
+    return {
+      ...initialState,
+    };
   })
 );

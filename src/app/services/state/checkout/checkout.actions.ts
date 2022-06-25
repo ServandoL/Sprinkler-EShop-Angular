@@ -5,7 +5,9 @@ export const CheckoutAction = '[Checkout] Check Out';
 export const CheckoutSuccess = '[Checkout] Check Out Success';
 export const CheckoutFailure = '[Checkout] Check Out Failure';
 export const ResetMessage = '[Checkout] Reset Message';
+export const ClearCheckOutState = '[Checkout] Clear State';
 
+export const clearCheckoutState = createAction(ClearCheckOutState);
 export const checkOutAction = createAction(
   CheckoutAction,
   props<{ order: Order }>()

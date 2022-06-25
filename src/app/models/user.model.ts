@@ -11,3 +11,8 @@ export interface UserResponse {
   success: boolean;
   user: IUser;
 }
+export interface UpdateRequest {
+  _id: string;
+  email?: string;
+  newPassword?: string;
+}
