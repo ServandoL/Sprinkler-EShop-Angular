@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getUserFeatureState } from '../../services/state/users/users.selectors';
-import * as CartActions from '../../services/state/cart/cart.actions';
 import { AppState } from '../../models/AppState';
 
 @Component({

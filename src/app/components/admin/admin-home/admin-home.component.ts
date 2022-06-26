@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../../../models/AppState';
-import * as ProductActions from '../../../services/state/product/product.actions';
 import {
   DeleteProductRequest,
   IProduct,
@@ -19,6 +18,7 @@ import {
   getProductLoading,
   getDeleteResponse,
 } from '../../../services/state/product/product.selectors';
+import { ProductAppService } from '../../../services/state/services/product.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -47,8 +47,8 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   iconClickedProduct!: IProduct | undefined;
 
   constructor(
+    private productService: ProductAppService,
     private store: Store<AppState>,
-    private router: Router,
     public authService: AuthService
   ) {
     this.products$ = this.store.select(getProducts);
@@ -66,7 +66,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
+    this.productService.loadProducts(this.request);
     this.subscription.push(this.user$.subscribe((user) => (this.user = user)));
     this.subscription.push(
       this.authService
@@ -100,20 +100,17 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   }
 
   resetDeleteResponse() {
-    this.store.dispatch(ProductActions.resetDeleteResponse());
+    this.productService.resetDeleteResponse();
   }
 
   onConfirmDelete(request: IProduct) {
-    this.store.dispatch(
-      ProductActions.deleteProduct({
-        request: {
-          product: {
-            _id: request._id,
-          },
-          email: this.user.email,
-        },
-      })
-    );
+    const toDelete: DeleteProductRequest = {
+      product: {
+        _id: request._id,
+      },
+      email: this.user.email,
+    };
+    this.productService.deleteProduct(toDelete);
   }
 
   onDelete(value: IProduct) {
@@ -128,7 +125,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
         pageSize: 8,
       },
     };
-    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
+    this.productService.loadProducts(this.request);
   }
 
   onNext(page: number): void {
@@ -139,7 +136,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
         pageSize: 8,
       },
     };
-    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
+    this.productService.loadProducts(this.request);
   }
 
   onPrevious(page: number): void {
@@ -150,6 +147,6 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
         pageSize: 8,
       },
     };
-    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
+    this.productService.loadProducts(this.request);
   }
 }

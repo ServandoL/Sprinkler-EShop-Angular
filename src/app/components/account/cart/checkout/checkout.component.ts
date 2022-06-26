@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../../../../models/AppState';
@@ -7,20 +6,15 @@ import { ICartItem } from '../../../../models/cart.model';
 import { getCart } from '../../../../services/state/cart/cart.selectors';
 import { CartService } from '../../../../services/state/cart/cart.service';
 import { SALES_TAX, STATES } from '../../../../utils/common/constants';
-import * as CartActions from '../../../../services/state/cart/cart.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {
-  checkOutAction,
-  resetMessage,
-} from '../../../../services/state/checkout/checkout.actions';
 import { Order } from '../../../../models/checkout.model';
-import { CheckoutState } from '../../../../services/state/checkout/checkout.state';
 import {
   getErrorSelector,
   getLoadingSelector,
   getResponseSelector,
   getSuccessSelector,
 } from '../../../../services/state/checkout/checkout.reducers';
+import { CheckoutAppService } from '../../../../services/state/services/checkout.service';
 
 @Component({
   selector: 'app-checkout',
@@ -47,7 +41,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     public cartService: CartService,
-    private router: Router
+    private checkoutService: CheckoutAppService
   ) {
     this.cart$ = this.store.select(getCart);
     this.isLoading$ = this.store.select(getLoadingSelector);
@@ -101,7 +95,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(resetMessage());
+    this.checkoutService.resetCheckoutMessage();
     this.subscriptions.push(
       this.cart$.subscribe((state) => {
         this.length = state.length;
@@ -147,11 +141,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       email: this.user ? this.user : '',
       total: +(this.subtotal + this.subtotal * this.tax).toFixed(2),
     };
-    this.store.dispatch(
-      checkOutAction({
-        order: { ...order },
-      })
-    );
+    this.checkoutService.checkout(order);
   }
 
   ngOnDestroy(): void {

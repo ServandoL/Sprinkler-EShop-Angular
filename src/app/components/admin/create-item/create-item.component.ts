@@ -11,14 +11,10 @@ import {
   getFilterLoading,
   getFilterSuccess,
 } from '../../../services/state/product-filters/filter.selector';
-import * as FilterActions from '../../../services/state/product-filters/filter.actions';
 import { IUser } from '../../../models/user.model';
 import { getUser } from '../../../services/state/users/users.selectors';
-import {
-  addNewProduct,
-  resetAddSuccess,
-} from '../../../services/state/product/product.actions';
 import { getAddSuccess } from '../../../services/state/product/product.selectors';
+import { ProductAppService } from '../../../services/state/services/product.service';
 
 @Component({
   selector: 'app-create-item',
@@ -37,7 +33,10 @@ export class CreateItemComponent implements OnInit {
   user!: IUser;
 
   newProduct!: IProduct;
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private store: Store<AppState>,
+    private productService: ProductAppService
+  ) {
     this.brands$ = this.store.select(getBrands);
     this.categories$ = this.store.select(getCategories);
     this.filterLoading$ = this.store.select(getFilterLoading);
@@ -48,11 +47,7 @@ export class CreateItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(
-      FilterActions.loadProductFilters({
-        request: ['category', 'brand'],
-      })
-    );
+    this.productService.loadProductFilters(['category', 'brand']);
     this.subscriptions.push(this.user$.subscribe((user) => (this.user = user)));
   }
 
@@ -99,11 +94,11 @@ export class CreateItemComponent implements OnInit {
       imageUrl: this.productImage?.value,
       createdBy: `${this.user.fname} ${this.user.lname} || ${this.user._id}`,
     };
-    this.store.dispatch(addNewProduct({ request }));
+    this.productService.createProduct(request);
   }
 
   onReset() {
     this.createItemForm.reset();
-    this.store.dispatch(resetAddSuccess());
+    this.productService.resetAddSuccess();
   }
 }

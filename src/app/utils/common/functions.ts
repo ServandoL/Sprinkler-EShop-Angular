@@ -1,14 +1,10 @@
-import { Store } from '@ngrx/store';
-import { AppState } from '../../models/AppState';
 import { ICartItem } from '../../models/cart.model';
 import { IProduct } from '../../models/product.model';
-import * as CartActions from '../../services/state/cart/cart.actions';
 
 export function addToCartFunction(
   product: IProduct,
   qty: number,
-  validated: boolean,
-  store: Store<AppState>
+  validated: boolean
 ) {
   const cartItem: ICartItem = {
     _id: product._id,
@@ -24,6 +20,7 @@ export function addToCartFunction(
     imageUrl: product.imageUrl,
   };
   if (validated) {
-    store.dispatch(CartActions.addToCart({ product: cartItem }));
+    return cartItem;
   }
+  return undefined;
 }

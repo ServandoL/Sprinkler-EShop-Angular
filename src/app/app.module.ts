@@ -30,6 +30,9 @@ import { orderHistoryReducer } from './services/state/orderHistory/orderHistory.
 import { OrderHistoryEffects } from './services/state/orderHistory/orderHistory.effects';
 import { FilterEffects } from './services/state/product-filters/filter.effect';
 import { filterReducer } from './services/state/product-filters/filter.reducers';
+import { ProductAppService } from './services/state/services/product.service';
+import { CartAppService } from './services/state/services/cart.service';
+import { CheckoutAppService } from './services/state/services/checkout.service';
 
 export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
@@ -74,7 +77,12 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
     GraphQLModule,
     SharedAppModule,
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    ProductAppService,
+    CartAppService,
+    CheckoutAppService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

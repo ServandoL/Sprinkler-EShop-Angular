@@ -7,13 +7,12 @@ import {
   getCart,
   saveCart,
 } from '../../../services/state/cart/cart.selectors';
-import { CartService } from '../../../services/state/cart/cart.service';
-import * as CartActions from '../../../services/state/cart/cart.actions';
 import { ICartItem } from '../../../models/cart.model';
 import { Observable, Subscription } from 'rxjs';
 import { CartState } from '../../../services/state/cart/cart.state';
 import { Router } from '@angular/router';
 import { SALES_TAX } from '../../../utils/common/constants';
+import { CartAppService } from '../../../services/state/services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -36,7 +35,7 @@ export class CartComponent implements OnInit, OnDestroy {
   user!: string | null;
   constructor(
     private store: Store<AppState>,
-    public cartService: CartService,
+    public cartService: CartAppService,
     private router: Router
   ) {
     this.cartLoading$ = this.store.select(getCartFeatureState);
@@ -51,7 +50,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(CartActions.resetMessage());
+    this.cartService.resetCartMessage();
     this.subscriptions.push(
       this.cart$.subscribe((state) => {
         this.length = state.length;
@@ -88,31 +87,22 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   updateQuantity(value: number, product: ICartItem) {
-    this.store.dispatch(
-      CartActions.updateProductQuantity({ product: product, quantity: value })
-    );
+    this.cartService.updateCartquantity(value, product);
   }
 
   onUpdate(qty: number, product: ICartItem) {
     this.subtotal = 0;
-    this.store.dispatch(
-      CartActions.updateCart({ product: product, quantity: qty })
-    );
+    this.cartService.onCartUpdate(qty, product);
   }
 
   onRemove(product: ICartItem) {
     this.subtotal = 0;
-    this.store.dispatch(CartActions.deleteFromCart({ product: product }));
+    this.cartService.deleteFromCart(product);
   }
 
   saveCart() {
     if (this.user) {
-      this.store.dispatch(
-        CartActions.saveCart({
-          products: [...this.cart],
-          email: this.user,
-        })
-      );
+      this.cartService.saveCart([...this.cart], this.user);
     }
   }
 
@@ -122,7 +112,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
   deleteCart() {
     if (this.user) {
-      this.store.dispatch(CartActions.clearCartApi({ email: this.user }));
+      this.cartService.deleteCart(this.user);
     }
   }
 

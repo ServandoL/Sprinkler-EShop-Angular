@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../services/state/users/users.state';
-import * as UserActions from '../../../services/state/users/users.actions';
 import {
   getError,
   getUser,
@@ -9,6 +8,7 @@ import {
 } from '../../../services/state/users/users.selectors';
 import { IUser } from '../../../models/user.model';
 import { Observable, Subscription } from 'rxjs';
+import { UserAppService } from '../../../services/state/services/user.service';
 
 @Component({
   selector: 'app-delete-account',
@@ -21,7 +21,10 @@ export class DeleteAccountComponent implements OnInit, OnDestroy {
   isLoading$!: Observable<boolean>;
   error$!: Observable<string>;
   subscriptions: Subscription[] = [];
-  constructor(private store: Store<UserState>) {
+  constructor(
+    private store: Store<UserState>,
+    private userService: UserAppService
+  ) {
     this.user$ = this.store.select(getUser);
     this.isLoading$ = this.store.select(getUserLoading);
     this.error$ = this.store.select(getError);
@@ -38,6 +41,6 @@ export class DeleteAccountComponent implements OnInit, OnDestroy {
   }
 
   deleteAccount() {
-    this.store.dispatch(UserActions.deleteUser({ _id: this.currentUser._id }));
+    this.userService.deleteAccount(this.currentUser._id);
   }
 }

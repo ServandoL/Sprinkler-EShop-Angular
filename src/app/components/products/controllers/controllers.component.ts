@@ -3,20 +3,20 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { AppState } from '../../../models/AppState';
-import * as ProductActions from '../../../services/state/product/product.actions';
 
 import { IProduct, ProductRequest } from '../../../models/product.model';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import { addToCart } from '../../../services/state/cart/cart.selectors';
 import { addToCartFunction } from '../../../utils/common/functions';
 import { CartState } from '../../../services/state/cart/cart.state';
-import * as CartActions from '../../../services/state/cart/cart.actions';
 import { Pagination } from '../../../models/pagination.model';
 import {
   getProducts,
   getProductPagination,
   getProductLoading,
 } from '../../../services/state/product/product.selectors';
+import { CartAppService } from '../../../services/state/services/cart.service';
+import { ProductAppService } from '../../../services/state/services/product.service';
 
 @Component({
   selector: 'app-controllers',
@@ -40,7 +40,12 @@ export class ControllersComponent implements OnInit, OnDestroy {
   products: IProduct[] = [];
   pagination$!: Observable<Pagination>;
 
-  constructor(private store: Store<AppState>, public authService: AuthService) {
+  constructor(
+    private store: Store<AppState>,
+    public authService: AuthService,
+    private cartService: CartAppService,
+    private productService: ProductAppService
+  ) {
     this.products$ = this.store.select(getProducts);
     this.pagination$ = this.store.select(getProductPagination);
     this.productsLoading$ = this.store.select(getProductLoading);
@@ -56,8 +61,8 @@ export class ControllersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
-    this.store.dispatch(CartActions.resetMessage());
+    this.productService.loadProducts(this.request);
+    this.cartService.resetCartMessage();
 
     this.success = false;
 
@@ -77,7 +82,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
         if (this.success && this.message?.length) {
           setTimeout(() => {
             this.success = false;
-            this.store.dispatch(CartActions.resetMessage());
+            this.cartService.resetCartMessage();
           }, 5000);
         }
       })
@@ -100,7 +105,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
         pageSize: 8,
       },
     };
-    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
+    this.productService.loadProducts(this.request);
   }
 
   onNext(page: number): void {
@@ -111,7 +116,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
         pageSize: 8,
       },
     };
-    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
+    this.productService.loadProducts(this.request);
   }
 
   onPrevious(page: number): void {
@@ -122,7 +127,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
         pageSize: 8,
       },
     };
-    this.store.dispatch(ProductActions.loadProducts({ request: this.request }));
+    this.productService.loadProducts(this.request);
   }
 
   updateQuantity(value: number) {
@@ -130,6 +135,9 @@ export class ControllersComponent implements OnInit, OnDestroy {
   }
 
   submit(product: IProduct, qty: number) {
-    addToCartFunction(product, qty, this.validated, this.store);
+    const cartItem = addToCartFunction(product, qty, this.validated);
+    if (cartItem) {
+      this.cartService.addToCart(cartItem);
+    }
   }
 }

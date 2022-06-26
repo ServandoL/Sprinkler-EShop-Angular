@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   getError,
   getUserFeatureState,
 } from '../../../services/state/users/users.selectors';
-import { AuthService } from '../../../utils/auth/auth-service.service';
-import * as UserActions from '../../../services/state/users/users.actions';
-import { clearCart } from '../../../services/state/cart/cart.actions';
+import { UserAppService } from '../../../services/state/services/user.service';
+import { CartAppService } from '../../../services/state/services/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +14,11 @@ import { clearCart } from '../../../services/state/cart/cart.actions';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService, private store: Store) {}
+  constructor(
+    private userService: UserAppService,
+    private cartService: CartAppService,
+    private store: Store
+  ) {}
 
   user$ = this.store.select(getUserFeatureState);
   errorMessage$ = this.store.select(getError);
@@ -36,16 +38,13 @@ export class LoginComponent implements OnInit {
   mouseoverLogin!: boolean;
 
   ngOnInit(): void {
-    this.store.dispatch(UserActions.clearCurrentUser());
-    this.store.dispatch(clearCart());
+    this.userService.clearCurrentUser();
+    this.cartService.clearCart();
   }
 
   login(formValues: FormGroup) {
-    this.store.dispatch(
-      UserActions.setCurrentUser({
-        email: formValues.controls['userName'].value,
-        password: formValues.controls['password'].value,
-      })
-    );
+    const email = this.userName?.value || '';
+    const password = this.password?.value || '';
+    this.userService.setCurrentUser(email, password);
   }
 }

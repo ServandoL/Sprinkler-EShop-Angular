@@ -5,7 +5,6 @@ import { AppState } from '../../../models/AppState';
 import { Order } from '../../../models/checkout.model';
 import { OrderHistoryRequest } from '../../../models/orderHistory.model';
 import { Pagination } from '../../../models/pagination.model';
-import * as OrderHistoryActions from '../../../services/state/orderHistory/orderHistory.actions';
 import {
   getHistoryLoading,
   getHistoryResponse,
@@ -13,6 +12,7 @@ import {
   getOrders,
   getOrderPagination,
 } from '../../../services/state/orderHistory/orderHistory.selectors';
+import { CheckoutAppService } from '../../../services/state/services/checkout.service';
 import { SALES_TAX } from '../../../utils/common/constants';
 
 @Component({
@@ -32,7 +32,10 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
   paging!: Pagination;
   request!: OrderHistoryRequest;
 
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private store: Store<AppState>,
+    private checkoutService: CheckoutAppService
+  ) {
     this.pagination$ = this.store.select(getOrderPagination);
     this.isLoading$ = this.store.select(getHistoryLoading);
     this.message$ = this.store.select(getHistoryResponse);
@@ -52,9 +55,7 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(
-      OrderHistoryActions.loadOrders({ request: this.request })
-    );
+    this.checkoutService.loadOrders(this.request);
     this.subscriptions.push(
       this.pagination$.subscribe((page) => (this.paging = page))
     );
@@ -72,9 +73,7 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
         pageSize: 2,
       },
     };
-    this.store.dispatch(
-      OrderHistoryActions.loadOrders({ request: this.request })
-    );
+    this.checkoutService.loadOrders(this.request);
   }
 
   onNext(page: number): void {
@@ -85,9 +84,7 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
         pageSize: 2,
       },
     };
-    this.store.dispatch(
-      OrderHistoryActions.loadOrders({ request: this.request })
-    );
+    this.checkoutService.loadOrders(this.request);
   }
 
   onPrevious(page: number): void {
@@ -98,8 +95,6 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
         pageSize: 2,
       },
     };
-    this.store.dispatch(
-      OrderHistoryActions.loadOrders({ request: this.request })
-    );
+    this.checkoutService.loadOrders(this.request);
   }
 }

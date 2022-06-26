@@ -8,8 +8,8 @@ import { AppState, GenericResponse } from '../../../models/AppState';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { UserService } from './user.service';
 import * as UserActions from './users.actions';
-import * as CartActions from '../cart/cart.actions';
 import { UserResponse } from '../../../models/user.model';
+import { CartAppService } from '../services/cart.service';
 
 @Injectable()
 export class UserEffects {
@@ -18,7 +18,8 @@ export class UserEffects {
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private cartService: CartAppService
   ) {}
 
   login$ = createEffect(() => {
@@ -30,17 +31,13 @@ export class UserEffects {
             if (response.user.isAdmin) {
               sessionStorage.setItem('SessionAdmin', response.user.email);
               this.router.navigateByUrl('/admin/dashboard');
-              this.store.dispatch(
-                CartActions.loadCart({ user_id: response.user.email })
-              );
+              this.cartService.loadCart(response.user.email);
               const result = UserActions.loadUserSuccess({ response });
               return result;
             } else {
               sessionStorage.setItem('SessionUser', response.user.email);
               this.router.navigateByUrl('account/profile');
-              this.store.dispatch(
-                CartActions.loadCart({ user_id: response.user.email })
-              );
+              this.cartService.loadCart(response.user.email);
               const result = UserActions.loadUserSuccess({ response });
               return result;
             }

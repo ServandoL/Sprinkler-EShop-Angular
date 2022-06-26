@@ -1,5 +1,5 @@
 <!-- Page Content -->
-<div *ngIf="(loading$ | async)?.isLoading">
+<div *ngIf="(isLoading$ | async) === true">
   <app-shared-loader></app-shared-loader>
 </div>
 <div class="container">
@@ -21,7 +21,7 @@
         </div>
         <form
           [formGroup]="createUserForm"
-          (ngSubmit)="onSubmit(createUserForm)"
+          (ngSubmit)="onSubmit()"
           #formDir="ngForm"
         >
           <h4>Personal Information</h4>
@@ -107,11 +107,21 @@
             <button
               type="submit"
               class="btn btn-primary"
-              [disabled]="!createUserForm.valid"
+              [disabled]="
+                !createUserForm.valid ||
+                (signUpMessage$ | async)?.success === true
+              "
             >
               Create an account
             </button>
-            <button *ngIf="(signUpMessage$ | async)?.success" type="button" class="btn btn-primary login-btn" (click)="onLogin()">Log in</button>
+            <button
+              *ngIf="(signUpMessage$ | async)?.success"
+              type="button"
+              class="btn btn-primary login-btn"
+              (click)="onLogin()"
+            >
+              Log in
+            </button>
           </div>
           <span class="mx-sm-3"
             ><small style="color: red">* Required Fields</small></span

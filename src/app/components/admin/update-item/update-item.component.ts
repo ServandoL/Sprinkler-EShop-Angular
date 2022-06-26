@@ -13,6 +13,7 @@ import {
   getProductLoading,
   getUpdateResponse,
 } from '../../../services/state/product/product.selectors';
+import { ProductAppService } from '../../../services/state/services/product.service';
 
 @Component({
   selector: 'app-update-item',
@@ -20,7 +21,10 @@ import {
   styleUrls: ['./update-item.component.css'],
 })
 export class UpdateItemComponent implements OnInit {
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private store: Store<AppState>,
+    private productService: ProductAppService
+  ) {
     this.isLoading$ = this.store.select(getProductLoading);
     this.updateSuccess$ = this.store.select(getUpdateResponse);
   }
@@ -71,10 +75,10 @@ export class UpdateItemComponent implements OnInit {
       stock: this.stock?.value || this.product.stock,
       imageUrl: this.imageUrl?.value || this.product.imageUrl,
     };
-    this.store.dispatch(updateProduct({ request }));
+    this.productService.updateProduct(request);
   }
 
   onClose() {
-    this.store.dispatch(resetUpdateResponse());
+    this.productService.resetUpdateResponse();
   }
 }
