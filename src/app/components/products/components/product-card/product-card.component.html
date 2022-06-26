@@ -13,6 +13,20 @@
     <p class="card-text out-of-stock" *ngIf="product.stock <= 0">
       Out of stock
     </p>
+    <div
+      class="col"
+      *ngIf="message.message && message.id === product._id"
+      class="alert alert-primary alert-dismissible fade show"
+      role="alert"
+    >
+      Added!
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
   </div>
   <div class="card-footer">
     <app-qty-form

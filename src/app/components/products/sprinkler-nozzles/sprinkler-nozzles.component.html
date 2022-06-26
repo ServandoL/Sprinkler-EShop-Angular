@@ -40,14 +40,6 @@
       >
         No products available.
       </div>
-      <div
-        class="col"
-        *ngIf="success && message"
-        class="alert alert-primary"
-        role="alert"
-      >
-        {{ message }}
-      </div>
       <div *ngIf="!validated" class="alert alert-warning" role="alert">
         Please log in to add to your cart.
       </div>
@@ -60,6 +52,7 @@
             [title]="'Add to cart'"
             (quantityUpdated)="updateQuantity($event)"
             (submitClicked)="submit(product, $event)"
+            [message]="{ message: message, id: submitted }"
           ></app-product-card>
         </div>
       </div>

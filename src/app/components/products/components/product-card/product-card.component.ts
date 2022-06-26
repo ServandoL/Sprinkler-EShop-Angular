@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IProduct } from '../../../../models/product.model';
 
 @Component({
@@ -11,6 +12,10 @@ export class ProductCardComponent {
 
   @Input() product!: IProduct;
   @Input() title!: string;
+  @Input() message!: {
+    message: string;
+    id: string;
+  };
   @Output() quantityUpdated = new EventEmitter();
   @Output() submitClicked = new EventEmitter();
 

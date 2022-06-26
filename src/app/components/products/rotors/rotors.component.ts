@@ -39,6 +39,7 @@ export class RotorsComponent implements OnInit, OnDestroy {
   paging!: Pagination;
   products: IProduct[] = [];
   pagination$!: Observable<Pagination>;
+  submitted!: string;
 
   constructor(
     private store: Store<AppState>,
@@ -63,7 +64,6 @@ export class RotorsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productService.loadProducts(this.request);
-    this.cartService.resetCartMessage();
 
     this.quantity = 1;
     this.subscription.push(
@@ -75,12 +75,6 @@ export class RotorsComponent implements OnInit, OnDestroy {
       this.addToCartLoading$.subscribe((state) => {
         this.success = state.error.length === 0;
         this.message = state.response;
-        if (this.success && this.message.length) {
-          setTimeout(() => {
-            this.success = false;
-            this.cartService.resetCartMessage();
-          }, 5000);
-        }
       })
     );
     this.subscription.push(
@@ -97,6 +91,7 @@ export class RotorsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    this.cartService.resetCartMessage();
   }
   onGoTo(page: number): void {
     this.request = {
@@ -139,6 +134,7 @@ export class RotorsComponent implements OnInit, OnDestroy {
     const cartItem = addToCartFunction(product, qty, this.validated);
     if (cartItem) {
       this.cartService.addToCart(cartItem);
+      this.submitted = cartItem._id;
     }
   }
 }
