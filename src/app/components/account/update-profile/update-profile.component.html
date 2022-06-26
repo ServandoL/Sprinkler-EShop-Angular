@@ -1,3 +1,6 @@
+<div *ngIf="(isLoading$ | async) === true">
+  <app-shared-loader></app-shared-loader>
+</div>
 <div class="container">
   <div class="row py-2">
     <div class="col-md-2">
@@ -5,24 +8,53 @@
       <div class="bottom-border my-2"></div>
       <ul class="list-group">
         <li class="list-group-item">
-          <a [routerLink]="['/account/order-history']">Order History</a>
-        </li>
-        <li class="list-group-item">
-          <a [routerLink]="['/account/update-profile']">Update Profile</a>
-        </li>
-        <li class="list-group-item">
-          <a [routerLink]="['/account/delete-account']" class="text-red"
-            >Delete Account</a
+          <button
+            type="button"
+            class="btn btn-sm btn-link"
+            [routerLink]="['/account/order-history']"
           >
+            Order History
+          </button>
+        </li>
+        <li class="list-group-item">
+          <button
+            type="button"
+            class="btn btn-sm btn-link"
+            [routerLink]="['/account/update-profile']"
+          >
+            Update Profile
+          </button>
+        </li>
+        <li class="list-group-item">
+          <button
+            type="button"
+            class="btn btn-sm btn-link"
+            [routerLink]="['/account/delete-account']"
+          >
+            Delete Account
+          </button>
         </li>
       </ul>
     </div>
     <div class="col-md-10">
       <h3>Update Profile</h3>
       <div class="bottom-border my-2"></div>
+      <div
+        class="alert alert-success"
+        *ngIf="(response$ | async)?.success === true"
+      >
+        {{ (response$ | async)?.message }}
+      </div>
+      <div class="alert alert-danger" *ngIf="(errorMessage$ | async)?.length">
+        {{ errorMessage$ | async }}
+      </div>
       <fieldset>
         <legend>Update Email</legend>
-        <form [formGroup]="updateForm">
+        <form
+          [formGroup]="updateForm"
+          (ngSubmit)="onUpdateClicked()"
+          #formDir="ngForm"
+        >
           <div class="form-group col-md-6 my-2">
             <label class="form-label"
               >Current email: {{ (user$ | async)?.email }}</label
@@ -30,74 +62,76 @@
             <input
               type="email"
               class="form-control"
-              id="inputEmail"
+              id="email"
               formControlName="email"
               placeholder="enter new email"
-              required
             />
-            <button type="submit" class="btn btn-primary my-2">Update</button>
           </div>
-        </form>
-      </fieldset>
-      <fieldset class="my-5">
-        <legend>Update Password</legend>
-        <form>
+          <legend>Update Password</legend>
           <div class="form-group col-md-6 my-2">
-            <label for="inputPassword" class="form-label"
+            <label for="password" class="form-label"
               >Current Password <span style="color: red">*</span></label
             >
             <input
               type="password"
               class="form-control"
               formControlName="password"
-              id="inputPassword"
+              id="password"
               placeholder="enter current password"
               required
               autofocus
             />
           </div>
           <div class="form-group col-md-6 my-2">
-            <label class="form-label" for="newPassword"
-              >Password <span style="color: red">*</span></label
-            >
+            <label class="form-label" for="newPassword">Password</label>
             <input
               type="password"
               class="form-control"
               formControlName="newPassword"
               id="newPassword"
               placeholder="enter new password"
+              [ngClass]="
+                !updateForm.errors?.['matchPassword'] &&
+                updateForm.controls['newPassword'].dirty
+                  ? 'is-valid'
+                  : ''
+              "
               title="at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              required
             />
           </div>
           <div class="form-group col-md-6 my-2">
             <label class="form-label" for="confirmPassword"
-              >Confirm Password <span style="color: red">*</span></label
+              >Confirm Password</label
             >
             <input
               type="password"
               class="form-control"
+              [ngClass]="
+                !updateForm.errors?.['matchPassword'] &&
+                updateForm.controls['newPassword'].dirty
+                  ? 'is-valid'
+                  : ''
+              "
               id="confirmPassword"
               formControlName="confirmPassword"
+              aria-describedby="passwordFeedback"
               placeholder="confirm new password"
-              required
             />
-          </div>
-          <div
-            *ngIf="updateForm.errors?.['matchPassword'] &&
+            <div
+              *ngIf="updateForm.errors?.['matchPassword'] &&
             (updateForm.controls['confirmPassword'].dirty ||
             updateForm.controls['confirmPassword'].touched)
             "
-          >
-            <div class="invalid-feedback">The passwords do not match.</div>
+            >
+              <div class="invalid-feedback" id="passwordFeedback">
+                The passwords do not match.
+              </div>
+            </div>
           </div>
           <button
             type="submit"
             class="btn btn-primary"
-            [disabled]="
-              !updateForm.valid || (response$ | async)?.success === false
-            "
+            [disabled]="!updateForm.valid"
           >
             Update
           </button>
@@ -109,6 +143,3 @@
     </div>
   </div>
 </div>
-<ng-container #valid>
-  <div class="valid-feedback">Looks good!</div>
-</ng-container>

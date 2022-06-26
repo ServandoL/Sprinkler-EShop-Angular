@@ -13,6 +13,7 @@ export interface UserResponse {
 }
 export interface UpdateUserRequest {
   _id: string;
+  currentPassword: string;
   email?: string;
   newPassword?: string;
 }

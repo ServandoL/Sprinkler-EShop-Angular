@@ -52,6 +52,7 @@ export class UserService {
       variables: {
         request: {
           _id: request._id,
+          currentPassword: request.currentPassword,
           email: request.email,
           newPassword: request.newPassword,
         },

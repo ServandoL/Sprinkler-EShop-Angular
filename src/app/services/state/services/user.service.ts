@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../models/AppState';
+import { UpdateUserRequest } from '../../../models/user.model';
 import * as UserActions from '../users/users.actions';
 
 @Injectable({ providedIn: 'root' })
@@ -37,5 +38,9 @@ export class UserAppService {
     this.store.dispatch(
       UserActions.createUser({ firstName, lastName, email, password, isAdmin })
     );
+  }
+
+  updateUserInformation(request: UpdateUserRequest) {
+    this.store.dispatch(UserActions.updateUser({ request }));
   }
 }

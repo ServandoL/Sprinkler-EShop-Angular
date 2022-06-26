@@ -8,9 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AppState, GenericResponse } from '../../../models/AppState';
-import { IUser } from '../../../models/user.model';
+import { IUser, UpdateUserRequest } from '../../../models/user.model';
+import { UserAppService } from '../../../services/state/services/user.service';
 import {
   getError,
   getGenericResponse,
@@ -28,10 +29,14 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   isLoading$!: Observable<boolean>;
   errorMessage$!: Observable<string>;
   response$!: Observable<GenericResponse | null>;
-
   updateForm!: FormGroup;
+  subscriptions: Subscription[] = [];
+  user!: IUser;
 
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private store: Store<AppState>,
+    private userService: UserAppService
+  ) {
     this.user$ = this.store.select(getUser);
     this.isLoading$ = this.store.select(getUserLoading);
     this.errorMessage$ = this.store.select(getError);
@@ -40,13 +45,22 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.subscriptions.push(this.user$.subscribe((user) => (this.user = user)));
   }
 
   ngOnDestroy(): void {
     this.updateForm.reset();
   }
 
-  onUpdateClicked() {}
+  onUpdateClicked() {
+    const request: UpdateUserRequest = {
+      _id: this.user._id,
+      currentPassword: this.password?.value || '',
+      newPassword: this.newPassword?.value || '',
+      email: this.email?.value || '',
+    };
+    this.userService.updateUserInformation(request);
+  }
 
   initializeForm() {
     this.updateForm = new FormGroup(
@@ -54,16 +68,15 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
         email: new FormControl(''),
         password: new FormControl('', [Validators.required]),
         newPassword: new FormControl('', [
-          Validators.required,
           Validators.minLength(8),
           Validators.pattern(
             /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
           ),
         ]),
-        confirmPassword: new FormControl('', [Validators.required]),
+        confirmPassword: new FormControl(''),
       },
       {
-        validators: passwordMatchValidator,
+        validators: this.passwordMatchValidator,
       }
     );
   }
@@ -83,14 +96,14 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   get confirmPassword() {
     return this.updateForm.get('confirmPassword');
   }
-}
 
-export const passwordMatchValidator: ValidatorFn = (
-  control: AbstractControl
-): ValidationErrors | null => {
-  const password = control.get('newPassword');
-  const passwordCheck = control.get('confirmPassword');
-  return password?.value !== passwordCheck?.value
-    ? { matchPassword: true }
-    : null;
-};
+  passwordMatchValidator: ValidatorFn = (
+    control: AbstractControl
+  ): ValidationErrors | null => {
+    const password = control.get('newPassword');
+    const passwordCheck = control.get('confirmPassword');
+    return password?.value !== passwordCheck?.value
+      ? { matchPassword: true }
+      : null;
+  };
+}
