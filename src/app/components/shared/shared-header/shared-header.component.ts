@@ -13,6 +13,7 @@ import {
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import { UserState } from '../../../services/state/users/users.state';
 import { CartState } from '../../../services/state/cart/cart.state';
+import { UserAppService } from '../../../services/state/services/user.service';
 
 @Component({
   selector: 'app-shared-header',
@@ -28,14 +29,15 @@ export class SharedHeaderComponent implements OnInit, OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private store: Store,
-    public authService: AuthService
+    public authService: AuthService,
+    private userService: UserAppService
   ) {
     this.currentUser$ = this.store.select(getUserFeatureState);
     this.cart$ = this.store.select(getCartFeatureState);
   }
 
   ngOnInit(): void {
-    this.store.dispatch(getCurrentUser());
+    this.userService.getCurrentUser();
     this.subscription.push(
       this.authService
         .getToken$()

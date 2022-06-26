@@ -7,6 +7,10 @@ import * as UserActions from '../users/users.actions';
 export class UserAppService {
   constructor(private store: Store<AppState>) {}
 
+  getCurrentUser() {
+    this.store.dispatch(UserActions.getCurrentUser());
+  }
+
   deleteAccount(_id: string) {
     this.store.dispatch(UserActions.deleteUser({ _id }));
   }
