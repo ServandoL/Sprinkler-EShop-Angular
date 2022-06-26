@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
+import { UpdateUserRequest } from '../../../models/user.model';
 import {
   CreateUserMutation,
   DeleteUserMutation,
@@ -45,14 +46,15 @@ export class UserService {
     });
   }
 
-  updateUser$(request: any): Observable<any> {
+  updateUser$(request: UpdateUserRequest): Observable<any> {
     return this.apollo.mutate({
       mutation: UpdateUserMutation,
       variables: {
-        email: request.email,
-        fname: request.fname,
-        lname: request.lname,
-        password: request.password,
+        request: {
+          _id: request._id,
+          email: request.email,
+          newPassword: request.newPassword,
+        },
       },
     });
   }

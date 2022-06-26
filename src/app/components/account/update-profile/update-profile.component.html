@@ -20,21 +20,6 @@
     <div class="col-md-10">
       <h3>Update Profile</h3>
       <div class="bottom-border my-2"></div>
-      <!-- {% with message = get_flashed_messages() %}
-          {% if message %}
-          {% for item in message %}
-              {% if item == "Password updated." %}
-                  <div class="alert alert-primary" role="alert">
-                      {{item}}
-                  </div>
-              {% else %}
-              <div class="alert alert-danger" role="alert">
-                  {{item}}
-              </div>
-              {% endif %}
-          {% endfor %}
-          {% endif %}
-          {% endwith %} -->
       <fieldset>
         <legend>Update Email</legend>
         <form [formGroup]="updateForm">
@@ -46,7 +31,7 @@
               type="email"
               class="form-control"
               id="inputEmail"
-              name="inputEmail"
+              formControlName="email"
               placeholder="enter new email"
               required
             />
@@ -56,7 +41,7 @@
       </fieldset>
       <fieldset class="my-5">
         <legend>Update Password</legend>
-        <form method="POST">
+        <form>
           <div class="form-group col-md-6 my-2">
             <label for="inputPassword" class="form-label"
               >Current Password <span style="color: red">*</span></label
@@ -64,7 +49,7 @@
             <input
               type="password"
               class="form-control"
-              name="inputPassword"
+              formControlName="password"
               id="inputPassword"
               placeholder="enter current password"
               required
@@ -78,7 +63,7 @@
             <input
               type="password"
               class="form-control"
-              name="newPassword"
+              formControlName="newPassword"
               id="newPassword"
               placeholder="enter new password"
               title="at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
@@ -94,12 +79,28 @@
               type="password"
               class="form-control"
               id="confirmPassword"
-              name="confirmPassword"
+              formControlName="confirmPassword"
               placeholder="confirm new password"
               required
             />
           </div>
-          <button type="submit" class="btn btn-primary">Update</button>
+          <div
+            *ngIf="updateForm.errors?.['matchPassword'] &&
+            (updateForm.controls['confirmPassword'].dirty ||
+            updateForm.controls['confirmPassword'].touched)
+            "
+          >
+            <div class="invalid-feedback">The passwords do not match.</div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="
+              !updateForm.valid || (response$ | async)?.success === false
+            "
+          >
+            Update
+          </button>
           <span class="mx-sm-3"
             ><small style="color: red">* Required Fields</small></span
           >
@@ -108,3 +109,6 @@
     </div>
   </div>
 </div>
+<ng-container #valid>
+  <div class="valid-feedback">Looks good!</div>
+</ng-container>

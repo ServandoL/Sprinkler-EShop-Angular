@@ -14,10 +14,31 @@ const initialState: UserState = {
   error: '',
   isLoading: false,
   userResponse: null,
+  genericResponse: null,
 };
 
 export const userReducer = createReducer<UserState>(
   initialState,
+  on(UserActions.updateUser, (state): UserState => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(UserActions.updateUserSuccess, (state, action): UserState => {
+    return {
+      ...state,
+      isLoading: false,
+      genericResponse: action.response,
+    };
+  }),
+  on(UserActions.updateUserFailure, (state, action): UserState => {
+    return {
+      ...state,
+      isLoading: false,
+      error: action.error,
+    };
+  }),
   on(UserActions.clearUserState, (): UserState => {
     return {
       ...initialState,

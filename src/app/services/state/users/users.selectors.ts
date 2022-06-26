@@ -21,7 +21,7 @@ export const getUserLoading = createSelector(
   (state) => state.isLoading
 );
 
-export const getUpdateSuccessMessage = createSelector(
+export const getGenericResponse = createSelector(
   getUserFeatureState,
-  (state) => state.userResponse?.message
+  (state) => state.genericResponse
 );

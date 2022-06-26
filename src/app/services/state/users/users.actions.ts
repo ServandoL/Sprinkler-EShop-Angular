@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { GenericResponse } from '../../../models/AppState';
-import { UserResponse } from '../../../models/user.model';
+import { UpdateUserRequest, UserResponse } from '../../../models/user.model';
 
 const CurrentUserAction = '[User] Set Current User';
 const ClearCurrentUserAction = '[User] Clear Current User';
@@ -16,6 +16,24 @@ const DeleteUserActionSuccess = '[User] Delete User Success';
 const DeleteUserActionFailure = '[User] Delete User Failure';
 const ResetUserResponse = '[User] Reset User Response';
 const ClearUserState = '[User] Clear User State';
+const UpdateUserAction = '[User] Update User';
+const UpdateUserActionSuccess = '[User] Update User Success';
+const UpdateUserActionFailure = '[User] Update User Failure';
+
+export const updateUser = createAction(
+  UpdateUserAction,
+  props<{ request: UpdateUserRequest }>()
+);
+
+export const updateUserSuccess = createAction(
+  UpdateUserActionSuccess,
+  props<{ response: GenericResponse }>()
+);
+
+export const updateUserFailure = createAction(
+  UpdateUserActionFailure,
+  props<{ error: string }>()
+);
 
 export const clearUserState = createAction(ClearUserState);
 export const resetUserResponse = createAction(ResetUserResponse);

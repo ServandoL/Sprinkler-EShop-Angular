@@ -7,11 +7,14 @@
     <div class="col-lg-9">
       <fieldset>
         <legend>Customer Login</legend>
-        <div class="alert alert-danger col-md-6 mx-sm-3" *ngIf="(errorMessage$ | async)">
+        <div
+          class="alert alert-danger col-md-6 mx-sm-3"
+          *ngIf="errorMessage$ | async"
+        >
           No account found with the provided email address or password.
         </div>
         <!-- TODO: Flash message if user accesses cart without being signed in -->
-        <form [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="form-group col-md-6 mx-sm-3">
             <label for="inputEmail"
               >Email address <span class="required">*</span></label

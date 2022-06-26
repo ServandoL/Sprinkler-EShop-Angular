@@ -87,4 +87,19 @@ export class UserEffects {
       )
     );
   });
+
+  updateUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.updateUser),
+      mergeMap((action) =>
+        this.userService.updateUser$(action.request).pipe(
+          map(
+            (response: GenericResponse) =>
+              UserActions.updateUserSuccess({ response }),
+            catchError((error) => of(UserActions.updateUserFailure({ error })))
+          )
+        )
+      )
+    );
+  });
 }

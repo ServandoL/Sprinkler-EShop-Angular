@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     this.cartService.clearCart();
   }
 
-  login(formValues: FormGroup) {
+  login() {
     const email = this.userName?.value || '';
     const password = this.password?.value || '';
     this.userService.setCurrentUser(email, password);
