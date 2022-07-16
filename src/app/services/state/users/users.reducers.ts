@@ -45,7 +45,13 @@ export const userReducer = createReducer<UserState>(
     };
   }),
   on(UserActions.resetUserResponse, (state): UserState => {
-    return { ...state, userResponse: null };
+    return { ...state, genericResponse: null };
+  }),
+  on(UserActions.resetError, (state): UserState => {
+    return {
+      ...state,
+      error: '',
+    };
   }),
   on(UserActions.deleteUser, (state): UserState => {
     return {

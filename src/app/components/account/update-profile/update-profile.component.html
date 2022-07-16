@@ -44,6 +44,7 @@
         *ngIf="(response$ | async)?.success === true"
       >
         {{ (response$ | async)?.message }}
+        You'll see the update the next time you log in.
       </div>
       <div class="alert alert-danger" *ngIf="(errorMessage$ | async)?.length">
         {{ errorMessage$ | async }}

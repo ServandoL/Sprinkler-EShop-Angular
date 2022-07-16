@@ -19,7 +19,9 @@ const ClearUserState = '[User] Clear User State';
 const UpdateUserAction = '[User] Update User';
 const UpdateUserActionSuccess = '[User] Update User Success';
 const UpdateUserActionFailure = '[User] Update User Failure';
+const ResetErrorMessage = '[User] Reset Error Message';
 
+export const resetError = createAction(ResetErrorMessage);
 export const updateUser = createAction(
   UpdateUserAction,
   props<{ request: UpdateUserRequest }>()

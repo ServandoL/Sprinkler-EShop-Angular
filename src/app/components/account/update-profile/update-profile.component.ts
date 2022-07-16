@@ -49,6 +49,8 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.userService.resetErrorMessage();
+    this.userService.resetUserResponse();
     this.updateForm.reset();
   }
 

@@ -28,6 +28,10 @@ export class UserAppService {
     this.store.dispatch(UserActions.resetUserResponse());
   }
 
+  resetErrorMessage() {
+    this.store.dispatch(UserActions.resetError());
+  }
+
   createUser(
     firstName: string,
     lastName: string,

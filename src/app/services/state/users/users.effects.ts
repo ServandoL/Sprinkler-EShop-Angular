@@ -93,8 +93,10 @@ export class UserEffects {
       ofType(UserActions.updateUser),
       mergeMap((action) =>
         this.userService.updateUser$(action.request).pipe(
-          map((response: GenericResponse) =>
-            UserActions.updateUserSuccess({ response })
+          map((response: any) =>
+            UserActions.updateUserSuccess({
+              response: response.data.updateUserInformation,
+            })
           ),
           catchError((error) =>
             of(UserActions.updateUserFailure({ error: error.message }))

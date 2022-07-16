@@ -81,7 +81,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
     );
     this.subscription.push(
       this.products$.subscribe((data) => {
-        this.products = [...data];
+        this.products = data.filter((product) => !product.isDeleted);
       })
     );
   }
