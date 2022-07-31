@@ -7,7 +7,6 @@ import {
   IProduct,
   ProductRequest,
 } from '../../../models/product.model';
-import { Router } from '@angular/router';
 import { Pagination } from '../../../models/pagination.model';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { IUser } from '../../../models/user.model';
@@ -45,6 +44,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   user$!: Observable<IUser>;
   user!: IUser;
   iconClickedProduct!: IProduct | undefined;
+  displayDelete = true;
 
   constructor(
     private productService: ProductAppService,
@@ -81,6 +81,13 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.pagination$.subscribe((page) => (this.paging = page))
     );
+    this.subscription.push(
+      this.deleteSuccess$.subscribe(deleted => {
+        if (deleted) {
+          this.displayDelete = false
+        }
+      })
+    )
   }
 
   ngOnDestroy(): void {
