@@ -36,7 +36,7 @@
       </div> -->
       <div
         class="col"
-        *ngIf="products.length === 0"
+        *ngIf="(products$ | async)?.length === 0"
         class="alert alert-danger"
         role="alert"
       >
@@ -46,10 +46,9 @@
         Please log in to add to your cart.
       </div>
 
-      <div class="row row-cols-1 row-cols-lg-4 g-4" *ngIf="products.length">
-        <div class="col" *ngFor="let product of products">
+      <div class="row row-cols-1 row-cols-lg-4 g-4" *ngIf="products$ | async">
+        <div class="col" *ngFor="let product of products$ | async">
           <app-product-card
-            *ngIf="!product.isDeleted"
             [product]="product"
             [title]="'Add to cart'"
             (quantityUpdated)="updateQuantity($event)"

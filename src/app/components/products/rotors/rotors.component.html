@@ -51,14 +51,15 @@
         *ngIf="products$ | async as products"
       >
         <div class="col" *ngFor="let product of products">
-          <app-product-card
-            *ngIf="!product.isDeleted"
-            [product]="product"
-            [title]="'Add to cart'"
-            (quantityUpdated)="updateQuantity($event)"
-            (submitClicked)="submit(product, $event)"
-            [message]="{ message: message, id: submitted }"
-          ></app-product-card>
+          <span *ngIf="!product.isDeleted">
+            <app-product-card
+              [product]="product"
+              [title]="'Add to cart'"
+              (quantityUpdated)="updateQuantity($event)"
+              (submitClicked)="submit(product, $event)"
+              [message]="{ message: message, id: submitted }"
+            ></app-product-card>
+          </span>
         </div>
       </div>
       <div class="row my-md-2">

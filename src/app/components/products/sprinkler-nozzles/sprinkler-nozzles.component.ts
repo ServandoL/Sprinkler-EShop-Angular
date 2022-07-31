@@ -38,7 +38,6 @@ export class SprinklerNozzlesComponent implements OnInit, OnDestroy {
   message!: string;
   request!: ProductRequest;
   paging!: Pagination;
-  products: IProduct[] = [];
   pagination$!: Observable<Pagination>;
   submitted!: string;
   constructor(
@@ -73,11 +72,6 @@ export class SprinklerNozzlesComponent implements OnInit, OnDestroy {
       this.addToCartLoading$.subscribe((state) => {
         this.success = state.error.length === 0;
         this.message = state.response;
-      })
-    );
-    this.subscription.push(
-      this.products$.subscribe((data) => {
-        this.products = [...data];
       })
     );
     this.subscription.push(

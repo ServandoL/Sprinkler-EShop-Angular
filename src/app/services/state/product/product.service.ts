@@ -85,38 +85,4 @@ export class ProductService {
       },
     });
   }
-
-  // getProductFilters$(): Observable<IFilter> {
-  //   return this.apollo
-  //     .watchQuery({
-  //       query: GetFiltersDocument,
-  //     })
-  //     .valueChanges.pipe(
-  //       map((result: ApolloQueryResult<any>) => {
-  //         if (result?.errors) {
-  //           throw new HttpErrorResponse({
-  //             error: result.errors.map((error) => error.message).join(', '),
-  //           });
-  //         } else {
-  //           const categories = result?.data?.products
-  //             .map((element: any) => element.category)
-  //             .filter(
-  //               (element: any, index: any, array: any) =>
-  //                 array.indexOf(element) === index
-  //             );
-  //           const brands = result?.data?.products
-  //             .map((element: any) => element.brand)
-  //             .filter(
-  //               (element: any, index: any, array: any) =>
-  //                 array.indexOf(element) === index
-  //             );
-  //           const filtered: IFilter = {
-  //             categories: categories,
-  //             brands: brands,
-  //           };
-  //           return filtered;
-  //         }
-  //       })
-  //     );
-  // }
 }
