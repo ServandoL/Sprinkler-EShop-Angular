@@ -1,9 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {
-  CartGqlResponse,
-  GetCartResponse,
-  ICartItem,
-} from '../../../models/cart.model';
+import { CartGqlResponse, GetCartResponse, ICartItem } from '../../../models/cart.model';
 
 const LoadCartAction = '[Cart] Load Cart';
 const LoadCartSuccess = '[Cart] Load Cart Success';
@@ -27,26 +23,22 @@ const SaveCartAction = '[Cart] Save Cart';
 const SaveCartSuccess = '[Cart] Save Cart Success';
 const SaveCartFailure = '[Cart] Save Cart Failure';
 const ClearCartState = '[Cart] Clear Cart State';
-
+const ClearSuccess = '[Cart] Clear Success Status';
 export const clearCartState = createAction(ClearCartState);
 export const clearCart = createAction(ClearCartAction);
 
-export const clearCartApi = createAction(
-  ClearCartApiAction,
-  props<{ email: string }>()
-);
+export const clearCartApi = createAction(ClearCartApiAction, props<{ email: string }>());
 
 export const clearCartSuccess = createAction(
   ClearCartActionSuccess,
   props<{ response: CartGqlResponse }>()
 );
 
-export const clearCartFailure = createAction(
-  ClearCartActionFailure,
-  props<{ error: string }>()
-);
+export const clearCartFailure = createAction(ClearCartActionFailure, props<{ error: string }>());
 
 export const resetMessage = createAction(ResetMessageAction);
+
+export const clearSuccess = createAction(ClearSuccess);
 
 export const saveCart = createAction(
   SaveCartAction,
@@ -58,41 +50,26 @@ export const saveCartSuccess = createAction(
   props<{ response: string; success: boolean }>()
 );
 
-export const saveCartFailure = createAction(
-  SaveCartFailure,
-  props<{ error: unknown }>()
-);
+export const saveCartFailure = createAction(SaveCartFailure, props<{ error: any }>());
 
 export const updateProductQuantity = createAction(
   UpdateCartQuantityAction,
   props<{ product: ICartItem; quantity: number }>()
 );
 
-export const loadCart = createAction(
-  LoadCartAction,
-  props<{ user_id: string | null }>()
-);
+export const loadCart = createAction(LoadCartAction, props<{ user_id: string | null }>());
 export const loadCartSuccess = createAction(
   LoadCartSuccess,
   props<{ response: GetCartResponse }>()
 );
-export const loadCartFailure = createAction(
-  LoadCartFailure,
-  props<{ error: unknown }>()
-);
+export const loadCartFailure = createAction(LoadCartFailure, props<{ error: any }>());
 
-export const deleteFromCart = createAction(
-  DeleteFromCartAction,
-  props<{ product: ICartItem }>()
-);
+export const deleteFromCart = createAction(DeleteFromCartAction, props<{ product: ICartItem }>());
 export const deleteFromCartSuccess = createAction(
   DeleteFromCartSuccess,
   props<{ response: CartGqlResponse }>()
 );
-export const deleteFromCartFailure = createAction(
-  DeleteFromCartFailure,
-  props<{ error: unknown }>()
-);
+export const deleteFromCartFailure = createAction(DeleteFromCartFailure, props<{ error: any }>());
 
 export const updateCart = createAction(
   UpdateCartAction,
@@ -102,20 +79,11 @@ export const updateCartSuccess = createAction(
   UpdateCartSuccess,
   props<{ response: CartGqlResponse }>()
 );
-export const updateCartFailure = createAction(
-  UpdateCartFailure,
-  props<{ error: unknown }>()
-);
+export const updateCartFailure = createAction(UpdateCartFailure, props<{ error: any }>());
 
-export const addToCart = createAction(
-  AddToCartAction,
-  props<{ product: ICartItem }>()
-);
+export const addToCart = createAction(AddToCartAction, props<{ product: ICartItem }>());
 export const addToCartSuccess = createAction(
   AddToCartSuccess,
   props<{ response: CartGqlResponse; product: ICartItem }>()
 );
-export const addToCartFailure = createAction(
-  AddToCartFailure,
-  props<{ error: unknown }>()
-);
+export const addToCartFailure = createAction(AddToCartFailure, props<{ error: any }>());

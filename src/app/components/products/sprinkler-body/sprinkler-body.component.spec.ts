@@ -8,9 +8,8 @@ describe('SprinklerBodyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SprinklerBodyComponent ]
-    })
-    .compileComponents();
+      declarations: [SprinklerBodyComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -21,10 +21,7 @@ import { ProductAppService } from '../../../services/state/services/product.serv
   styleUrls: ['./update-item.component.css'],
 })
 export class UpdateItemComponent implements OnInit {
-  constructor(
-    private store: Store<AppState>,
-    private productService: ProductAppService
-  ) {
+  constructor(private store: Store<AppState>, private productService: ProductAppService) {
     this.isLoading$ = this.store.select(getProductLoading);
     this.updateSuccess$ = this.store.select(getUpdateResponse);
   }

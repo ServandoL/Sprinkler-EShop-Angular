@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import {
-  getError,
-  getUserFeatureState,
-} from '../../../services/state/users/users.selectors';
+import { getError, getUserFeatureState } from '../../../services/state/users/users.selectors';
 import { UserAppService } from '../../../services/state/services/user.service';
 import { CartAppService } from '../../../services/state/services/cart.service';
 

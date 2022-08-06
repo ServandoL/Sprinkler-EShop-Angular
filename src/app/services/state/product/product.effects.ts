@@ -7,10 +7,7 @@ import { ProductService } from './product.service';
 
 @Injectable()
 export class ProductEffects {
-  constructor(
-    private actions$: Actions,
-    private productService: ProductService
-  ) {}
+  constructor(private actions$: Actions, private productService: ProductService) {}
 
   loadProducts$ = createEffect(() => {
     return this.actions$.pipe(
@@ -18,9 +15,7 @@ export class ProductEffects {
       mergeMap((action) =>
         this.productService.getProductsByCategory$(action.request).pipe(
           map((response) => ProductActions.loadProductsSuccess({ response })),
-          catchError((error) =>
-            of(ProductActions.loadProductsFailure({ error }))
-          )
+          catchError((error) => of(ProductActions.loadProductsFailure({ error })))
         )
       )
     );
@@ -36,9 +31,7 @@ export class ProductEffects {
               ProductActions.deleteProductSuccess({
                 response: response.data.deleteProduct,
               }),
-            catchError((error) =>
-              of(ProductActions.deleteProductFailure({ error }))
-            )
+            catchError((error) => of(ProductActions.deleteProductFailure({ error })))
           )
         )
       )
@@ -55,9 +48,7 @@ export class ProductEffects {
               response: response.data.addProduct,
             })
           ),
-          catchError((error) =>
-            of(ProductActions.addNewProductFailure({ error }))
-          )
+          catchError((error) => of(ProductActions.addNewProductFailure({ error })))
         )
       )
     );
@@ -73,9 +64,7 @@ export class ProductEffects {
               ProductActions.updateProductSuccess({
                 response: response.data.updateProduct,
               }),
-            catchError((error) =>
-              of(ProductActions.updateProductFailure({ error }))
-            )
+            catchError((error) => of(ProductActions.updateProductFailure({ error })))
           )
         )
       )

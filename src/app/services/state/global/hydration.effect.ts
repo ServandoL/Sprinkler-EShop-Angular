@@ -34,10 +34,7 @@ export class HydrationEffects implements OnInitEffects {
   serialize$ = createEffect(
     () =>
       this.action$.pipe(
-        ofType(
-          HydrationActions.hydrateSuccess,
-          HydrationActions.hydrateFailure
-        ),
+        ofType(HydrationActions.hydrateSuccess, HydrationActions.hydrateFailure),
         switchMap(() => this.store),
         distinctUntilChanged(),
         tap((state) => localStorage.setItem('state', JSON.stringify(state)))

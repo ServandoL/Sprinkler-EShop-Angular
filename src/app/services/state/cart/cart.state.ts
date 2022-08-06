@@ -9,4 +9,5 @@ export interface CartState {
   isLoading: boolean;
   cartQuantity: number;
   emptyOnLogin: boolean;
+  success: boolean;
 }

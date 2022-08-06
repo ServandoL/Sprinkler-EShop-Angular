@@ -1,12 +1,8 @@
-import {
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  on,
-} from '@ngrx/store';
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import { ICartItem } from '../../../models/cart.model';
 import { CartState } from './cart.state';
 import * as CartActions from './cart.actions';
+import { state } from '@angular/animations';
 
 const initialState: CartState = {
   email: '',
@@ -17,14 +13,12 @@ const initialState: CartState = {
   error: '',
   isLoading: false,
   emptyOnLogin: true,
+  success: false,
 };
 
 export const getCartFeatureState = createFeatureSelector<CartState>('cart');
 
-export const getError = createSelector(
-  getCartFeatureState,
-  (state) => state.error
-);
+export const getError = createSelector(getCartFeatureState, (state) => state.error);
 
 export const cartReducer = createReducer<CartState>(
   initialState,
@@ -61,24 +55,21 @@ export const cartReducer = createReducer<CartState>(
       isLoading: false,
     };
   }),
-  on(
-    CartActions.updateProductQuantity,
-    (state: CartState, action): CartState => {
-      let products: ICartItem[] = JSON.parse(JSON.stringify(state.products));
-      products.map((product) => {
-        if (product.productName === action.product.productName) {
-          product.quantity = action.quantity;
-          return product;
-        }
+  on(CartActions.updateProductQuantity, (state: CartState, action): CartState => {
+    let products: ICartItem[] = JSON.parse(JSON.stringify(state.products));
+    products.map((product) => {
+      if (product.productName === action.product.productName) {
+        product.quantity = action.quantity;
         return product;
-      });
+      }
+      return product;
+    });
 
-      return {
-        ...state,
-        products: [...products],
-      };
-    }
-  ),
+    return {
+      ...state,
+      products: [...products],
+    };
+  }),
   on(CartActions.loadCart, (state, action): CartState => {
     return {
       ...state,
@@ -120,9 +111,7 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.addToCart, (state, action): CartState => {
     let products = state.products.length > 0 ? [...state.products] : [];
     if (action.product) {
-      const exists = products.filter(
-        (product) => product._id === action.product._id
-      );
+      const exists = products.filter((product) => product._id === action.product._id);
       if (!exists.length) {
         products.push(action.product);
       } else {
@@ -189,13 +178,22 @@ export const cartReducer = createReducer<CartState>(
       ...state,
       isLoading: false,
       response: action.response,
+      success: action.success,
+      error: '',
     };
   }),
   on(CartActions.saveCartFailure, (state: CartState, action): CartState => {
     return {
       ...state,
-      error: action.error as any,
+      error: action.error,
+      success: false,
       isLoading: false,
+    };
+  }),
+  on(CartActions.clearSuccess, (state: CartState): CartState => {
+    return {
+      ...state,
+      success: false,
     };
   })
 );

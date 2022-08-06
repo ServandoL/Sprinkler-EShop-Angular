@@ -6,6 +6,9 @@ import {
   emptyOnLogin,
   getCart,
   saveCart,
+  saveCartError,
+  saveCartResponse,
+  saveCartSuccess,
 } from '../../../services/state/cart/cart.selectors';
 import { ICartItem } from '../../../models/cart.model';
 import { Observable, Subscription } from 'rxjs';
@@ -21,18 +24,18 @@ import { CartAppService } from '../../../services/state/services/cart.service';
 })
 export class CartComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  success!: boolean | undefined;
   tax = SALES_TAX;
   subtotal!: number;
   length!: number;
   cartLoading$!: Observable<CartState>;
   cart$!: Observable<ICartItem[]>;
   cart: ICartItem[] = [];
-  saveCartResponse$!: Observable<string>;
   emptyOnLogin$!: Observable<boolean>;
-  error!: string;
-  message!: string;
   user!: string | null;
+  saveCartResponse$: Observable<string>;
+  saveCartSuccess$: Observable<boolean>;
+  saveCartError$: Observable<string>;
+
   constructor(
     private store: Store<AppState>,
     public cartService: CartAppService,
@@ -42,15 +45,16 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cart$ = this.store.select(getCart);
     this.saveCartResponse$ = this.store.select(saveCart);
     this.emptyOnLogin$ = this.store.select(emptyOnLogin);
-
+    this.saveCartResponse$ = this.store.select(saveCartResponse);
+    this.saveCartSuccess$ = this.store.select(saveCartSuccess);
+    this.saveCartError$ = this.store.select(saveCartError);
     this.user =
-      sessionStorage.getItem('SessionUser') ||
-      sessionStorage.getItem('SessionAdmin') ||
-      '';
+      sessionStorage.getItem('SessionUser') || sessionStorage.getItem('SessionAdmin') || '';
   }
 
   ngOnInit(): void {
     this.cartService.resetCartMessage();
+    this.cartService.clearSuccess();
     this.subscriptions.push(
       this.cart$.subscribe((state) => {
         this.length = state.length;
@@ -72,15 +76,6 @@ export class CartComponent implements OnInit, OnDestroy {
         });
         if (products.length) {
           this.cart = [...products];
-        }
-      })
-    );
-    this.subscriptions.push(
-      this.cartLoading$.subscribe((state) => {
-        this.success = state.error.length === 0;
-        this.message = state.response;
-        if (state.error) {
-          this.message = state.error;
         }
       })
     );

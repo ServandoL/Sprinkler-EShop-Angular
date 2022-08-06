@@ -6,10 +6,7 @@ import { AuthService } from '../../../utils/auth/auth-service.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { getUserFeatureState } from '../../../services/state/users/users.selectors';
-import {
-  clearCurrentUser,
-  getCurrentUser,
-} from '../../../services/state/users/users.actions';
+import { clearCurrentUser, getCurrentUser } from '../../../services/state/users/users.actions';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import { UserState } from '../../../services/state/users/users.state';
 import { CartState } from '../../../services/state/cart/cart.state';
@@ -39,14 +36,10 @@ export class SharedHeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userService.getCurrentUser();
     this.subscription.push(
-      this.authService
-        .getToken$()
-        .subscribe((result) => (this.validated = result))
+      this.authService.getToken$().subscribe((result) => (this.validated = result))
     );
     this.subscription.push(
-      this.cart$.subscribe(
-        (result) => (this.cartQuantity = result.cartQuantity)
-      )
+      this.cart$.subscribe((result) => (this.cartQuantity = result.cartQuantity))
     );
   }
 
@@ -54,12 +47,10 @@ export class SharedHeaderComponent implements OnInit, OnDestroy {
     this.subscription.forEach((subscription) => subscription.unsubscribe());
   }
 
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      map((result) => result.matches),
-      shareReplay()
-    );
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map((result) => result.matches),
+    shareReplay()
+  );
 
   logout() {
     this.authService.logout();

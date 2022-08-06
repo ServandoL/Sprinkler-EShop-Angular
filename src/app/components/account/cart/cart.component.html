@@ -8,14 +8,19 @@
       <div class="bottom-border my-4"></div>
       <div
         class="col"
-        *ngIf="success && message"
+        *ngIf="(saveCartSuccess$ | async) === true"
         class="alert alert-primary"
         role="alert"
       >
-        {{ message }}
+        {{ saveCartResponse$ | async }}
       </div>
-      <div class="col" *ngIf="!success" class="alert alert-danger" role="alert">
-        {{ message }}
+      <div
+        class="col"
+        *ngIf="(saveCartSuccess$ | async) === false && (saveCartError$ | async)?.length"
+        class="alert alert-danger"
+        role="alert"
+      >
+        {{ saveCartError$ | async }}
       </div>
       <div class="table-responsive">
         <table class="table">
@@ -77,7 +82,7 @@
             Save your cart
           </button>
           <button
-            *ngIf="(emptyOnLogin$ | async) === false"
+            *ngIf="(emptyOnLogin$ | async) === false || (cart$ | async)?.length"
             id="checkout-button"
             type="submit"
             class="btn btn-outline-danger m-1"
@@ -96,9 +101,7 @@
         <div class="card-body">
           <form id="checkout-form">
             <div class="row mb-3">
-              <label for="subtotal" class="col-sm-8 col-form-label"
-                >Subtotal</label
-              >
+              <label for="subtotal" class="col-sm-8 col-form-label">Subtotal</label>
               <div class="col-sm-4">
                 <input
                   type="text"

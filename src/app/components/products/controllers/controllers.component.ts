@@ -65,13 +65,9 @@ export class ControllersComponent implements OnInit, OnDestroy {
 
     this.quantity = 1;
     this.subscription.push(
-      this.authService
-        .getToken$()
-        .subscribe((result) => (this.validated = result))
+      this.authService.getToken$().subscribe((result) => (this.validated = result))
     );
-    this.subscription.push(
-      this.pagination$.subscribe((page) => (this.paging = page))
-    );
+    this.subscription.push(this.pagination$.subscribe((page) => (this.paging = page)));
     this.subscription.push(
       this.addToCartLoading$.subscribe((state) => {
         this.success = state.error.length === 0;

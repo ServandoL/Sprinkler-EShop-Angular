@@ -42,18 +42,11 @@
       <div class="alert alert-warning" role="alert">
         Please refresh the page if you recently placed an order.
       </div>
-      <div
-        class="alert alert-warning"
-        role="alert"
-        *ngIf="(orders$ | async)?.length === 0"
-      >
+      <div class="alert alert-warning" role="alert" *ngIf="(orders$ | async)?.length === 0">
         There are no orders associated with this account.
       </div>
       <!-- for each order -->
-      <table
-        class="table caption-top"
-        *ngFor="let order of orders$ | async as Order"
-      >
+      <table class="table caption-top" *ngFor="let order of orders$ | async as Order">
         <caption>
           Confirmation ID:
           {{
@@ -86,11 +79,11 @@
               </figure>
             </th>
 
-            <td>{{ order.orderedDate | date: "medium" }}</td>
+            <td>{{ order.orderedDate | date: 'medium' }}</td>
             <td>{{ product.quantity }}</td>
-            <td>{{ product.price | currency: "USD":"symbol" }}</td>
+            <td>{{ product.price | currency: 'USD':'symbol' }}</td>
             <td>
-              {{ product.price * product.quantity | currency: "USD":"symbol" }}
+              {{ product.price * product.quantity | currency: 'USD':'symbol' }}
             </td>
           </tr>
           <!-- {% endfor %} -->
@@ -98,7 +91,7 @@
         <tfoot>
           Total:
           {{
-            order.total | currency: "USD":"symbol"
+            order.total | currency: 'USD':'symbol'
           }}
         </tfoot>
       </table>

@@ -3,11 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { CartService } from '../cart/cart.service';
-import {
-  checkOutAction,
-  checkOutFailure,
-  checkOutSuccess,
-} from './checkout.actions';
+import { checkOutAction, checkOutFailure, checkOutSuccess } from './checkout.actions';
 import { clearCart } from '../cart/cart.actions';
 
 @Injectable({

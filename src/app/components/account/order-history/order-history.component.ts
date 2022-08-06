@@ -32,19 +32,14 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
   paging!: Pagination;
   request!: OrderHistoryRequest;
 
-  constructor(
-    private store: Store<AppState>,
-    private checkoutService: CheckoutAppService
-  ) {
+  constructor(private store: Store<AppState>, private checkoutService: CheckoutAppService) {
     this.pagination$ = this.store.select(getOrderPagination);
     this.isLoading$ = this.store.select(getHistoryLoading);
     this.message$ = this.store.select(getHistoryResponse);
     this.error$ = this.store.select(getHistoryError);
     this.orders$ = this.store.select(getOrders);
     this.user =
-      sessionStorage.getItem('SessionUser') ||
-      sessionStorage.getItem('SessionAdmin') ||
-      '';
+      sessionStorage.getItem('SessionUser') || sessionStorage.getItem('SessionAdmin') || '';
     this.request = {
       email: this.user,
       page: {
@@ -56,9 +51,7 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.checkoutService.loadOrders(this.request);
-    this.subscriptions.push(
-      this.pagination$.subscribe((page) => (this.paging = page))
-    );
+    this.subscriptions.push(this.pagination$.subscribe((page) => (this.paging = page)));
   }
 
   ngOnDestroy(): void {

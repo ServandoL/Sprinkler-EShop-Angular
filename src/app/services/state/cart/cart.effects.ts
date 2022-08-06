@@ -37,9 +37,7 @@ export class CartEffects {
               response: response?.data?.clearCart,
             });
           }),
-          catchError((error: any) =>
-            of(CartActions.clearCartFailure({ error: error.message }))
-          )
+          catchError((error: any) => of(CartActions.clearCartFailure({ error: error.message })))
         )
       )
     );
@@ -57,9 +55,7 @@ export class CartEffects {
               success: response.success,
             });
           }),
-          catchError((error: unknown) =>
-            of(CartActions.saveCartFailure({ error }))
-          )
+          catchError((error: any) => of(CartActions.saveCartFailure({ error: error.message })))
         )
       )
     );

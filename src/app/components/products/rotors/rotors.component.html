@@ -1,9 +1,4 @@
-<div
-  *ngIf="
-    (productsLoading$ | async)?.isLoading ||
-    (addToCartLoading$ | async)?.isLoading
-  "
->
+<div *ngIf="(productsLoading$ | async)?.isLoading || (addToCartLoading$ | async)?.isLoading">
   <app-shared-loader></app-shared-loader>
 </div>
 <div class="container">
@@ -14,11 +9,7 @@
       <ul class="list-group">
         <li class="list-group-item">
           <button type="button" class="btn btn-sm btn-link">
-            <a
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=3s"
-              target="_blank"
-              >What do</a
-            >
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=3s" target="_blank">What do</a>
           </button>
         </li>
       </ul>
@@ -46,10 +37,7 @@
         Please log in to add to your cart.
       </div>
 
-      <div
-        class="row row-cols-1 row-cols-lg-4 g-4"
-        *ngIf="products$ | async as products"
-      >
+      <div class="row row-cols-1 row-cols-lg-4 g-4" *ngIf="products$ | async as products">
         <div class="col" *ngFor="let product of products">
           <span *ngIf="!product.isDeleted">
             <app-product-card

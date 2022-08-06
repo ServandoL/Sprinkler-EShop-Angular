@@ -8,9 +8,7 @@ function isHydrateSuccess(
   return action.type === HydrationActions.hydrateSuccess.type;
 }
 
-export const hydrationMetaReducer = (
-  reducer: ActionReducer<AppState>
-): ActionReducer<AppState> => {
+export const hydrationMetaReducer = (reducer: ActionReducer<AppState>): ActionReducer<AppState> => {
   return (state, action) => {
     if (isHydrateSuccess(action)) {
       return action.state;

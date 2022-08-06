@@ -1,15 +1,11 @@
-import {
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  on,
-} from '@ngrx/store';
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import {
   checkOutAction,
   checkOutFailure,
   checkOutSuccess,
   clearCheckoutState,
   resetMessage,
+  resetSuccess,
 } from './checkout.actions';
 import { CheckoutState } from './checkout.state';
 
@@ -22,13 +18,9 @@ const initialState: CheckoutState = {
   success: undefined,
 };
 
-export const getCheckoutFeatureState =
-  createFeatureSelector<CheckoutState>('checkout');
+export const getCheckoutFeatureState = createFeatureSelector<CheckoutState>('checkout');
 
-export const getErrorSelector = createSelector(
-  getCheckoutFeatureState,
-  (state) => state.error
-);
+export const getErrorSelector = createSelector(getCheckoutFeatureState, (state) => state.error);
 
 export const getResponseSelector = createSelector(
   getCheckoutFeatureState,
@@ -40,10 +32,7 @@ export const getLoadingSelector = createSelector(
   (state) => state.isLoading
 );
 
-export const getSuccessSelector = createSelector(
-  getCheckoutFeatureState,
-  (state) => state.success
-);
+export const getSuccessSelector = createSelector(getCheckoutFeatureState, (state) => state.success);
 
 export const checkoutReducer = createReducer<CheckoutState>(
   initialState,
@@ -79,6 +68,12 @@ export const checkoutReducer = createReducer<CheckoutState>(
       ...state,
       isLoading: false,
       error: action.error,
+      success: false,
+    };
+  }),
+  on(resetSuccess, (state: CheckoutState): CheckoutState => {
+    return {
+      ...state,
       success: false,
     };
   })

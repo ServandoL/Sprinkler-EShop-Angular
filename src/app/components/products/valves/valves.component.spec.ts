@@ -8,9 +8,8 @@ describe('ValvesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ValvesComponent ]
-    })
-    .compileComponents();
+      declarations: [ValvesComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

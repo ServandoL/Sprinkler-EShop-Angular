@@ -1,19 +1,11 @@
 <div class="card w-100 h-100">
   <div class="card-header">Product ID: {{ product._id }}</div>
-  <img
-    class="card-img-top mx-auto"
-    src="/assets/{{ product.imageUrl }}"
-    alt="product-image"
-  />
+  <img class="card-img-top mx-auto" src="/assets/{{ product.imageUrl }}" alt="product-image" />
   <div class="card-body">
     <h5 class="card-title">{{ product.productName }}</h5>
     <p class="card-text">${{ product.price }}</p>
-    <p class="card-text in-stock" *ngIf="product.stock > 0">
-      In stock: {{ product.stock }}
-    </p>
-    <p class="card-text out-of-stock" *ngIf="product.stock <= 0">
-      Out of Stock
-    </p>
+    <p class="card-text in-stock" *ngIf="product.stock > 0">In stock: {{ product.stock }}</p>
+    <p class="card-text out-of-stock" *ngIf="product.stock <= 0">Out of Stock</p>
   </div>
   <div class="card-footer">
     <div class="row">

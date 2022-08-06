@@ -7,10 +7,7 @@ import { FilterService } from './filter.service';
 
 @Injectable()
 export class FilterEffects {
-  constructor(
-    private actions$: Actions,
-    private filterService: FilterService
-  ) {}
+  constructor(private actions$: Actions, private filterService: FilterService) {}
   loadFilters$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(FilterActions.loadProductFilters),
@@ -21,9 +18,7 @@ export class FilterEffects {
               FilterActions.loadProductFiltersSuccess({
                 response: response,
               }),
-            catchError((error) =>
-              of(FilterActions.loadProductFiltersFailure({ error }))
-            )
+            catchError((error) => of(FilterActions.loadProductFiltersFailure({ error })))
           )
         )
       )

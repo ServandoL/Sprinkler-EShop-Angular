@@ -2,16 +2,10 @@ import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ICartItem } from '../../models/cart.model';
 import { IProduct } from '../../models/product.model';
 
-export function addToCartFunction(
-  product: IProduct,
-  qty: number,
-  validated: boolean
-) {
+export function addToCartFunction(product: IProduct, qty: number, validated: boolean) {
   const cartItem: ICartItem = {
     _id: product._id,
-    email:
-      sessionStorage.getItem('SessionUser') ||
-      sessionStorage.getItem('SessionAdmin'),
+    email: sessionStorage.getItem('SessionUser') || sessionStorage.getItem('SessionAdmin'),
     productName: product.productName,
     stock: product.stock,
     quantity: qty,

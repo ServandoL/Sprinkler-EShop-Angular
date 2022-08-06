@@ -7,18 +7,13 @@
     <div class="col-lg-9">
       <fieldset>
         <legend>Customer Login</legend>
-        <div
-          class="alert alert-danger col-md-6 mx-sm-3"
-          *ngIf="errorMessage$ | async"
-        >
+        <div class="alert alert-danger col-md-6 mx-sm-3" *ngIf="errorMessage$ | async">
           No account found with the provided email address or password.
         </div>
         <!-- TODO: Flash message if user accesses cart without being signed in -->
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="form-group col-md-6 mx-sm-3">
-            <label for="inputEmail"
-              >Email address <span class="required">*</span></label
-            >
+            <label for="inputEmail">Email address <span class="required">*</span></label>
             <em
               class="required"
               *ngIf="
@@ -42,9 +37,7 @@
             >
           </div>
           <div class="form-group col-md-6 mx-sm-3 my-2">
-            <label for="inputPassword"
-              >Password <span class="required">*</span></label
-            >
+            <label for="inputPassword">Password <span class="required">*</span></label>
             <em
               class="required"
               *ngIf="
@@ -65,22 +58,14 @@
             />
           </div>
           <div class="form-group mx-sm-3">
-            <span
-              (mouseenter)="mouseoverLogin = true"
-              (mouseleave)="mouseoverLogin = false"
-              ><button
-                type="submit"
-                [disabled]="loginForm.invalid"
-                class="btn btn-primary"
-              >
+            <span (mouseenter)="mouseoverLogin = true" (mouseleave)="mouseoverLogin = false"
+              ><button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">
                 Login
               </button></span
             >
             <a href="#" class="px-5">Forgot Password?</a>
           </div>
-          <span class="mx-sm-3"
-            ><small class="required">* Required Fields</small></span
-          >
+          <span class="mx-sm-3"><small class="required">* Required Fields</small></span>
         </form>
       </fieldset>
     </div>
@@ -97,9 +82,7 @@
 
           <div class="form-group mx-sm-3 my-2">
             <a routerLink="/sign-up"
-              ><button type="button" class="btn btn-primary">
-                Create an account
-              </button></a
+              ><button type="button" class="btn btn-primary">Create an account</button></a
             >
           </div>
         </form>

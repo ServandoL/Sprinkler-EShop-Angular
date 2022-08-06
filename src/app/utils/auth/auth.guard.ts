@@ -10,11 +10,7 @@ import { UserState } from '../../services/state/users/users.state';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private store: Store
-  ) {
+  constructor(private authService: AuthService, private router: Router, private store: Store) {
     this.currentUser$.subscribe((user) => (this.currentUser = user));
   }
 
@@ -22,9 +18,7 @@ export class AuthGuard implements CanActivate {
   isAuthenticated = false;
 
   currentUser$ = this.store.select(getUserFeatureState);
-  authenticated$ = this.authService
-    .getToken$()
-    .subscribe((data) => (this.isAuthenticated = data));
+  authenticated$ = this.authService.getToken$().subscribe((data) => (this.isAuthenticated = data));
 
   canActivate(): boolean {
     if (this.isAuthenticated) {

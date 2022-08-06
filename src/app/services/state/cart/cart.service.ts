@@ -83,11 +83,7 @@ export class CartService {
     });
   }
 
-  updateCartQuantity(
-    user_id: string | null,
-    _id: string,
-    quantity: number
-  ): Observable<any> {
+  updateCartQuantity(user_id: string | null, _id: string, quantity: number): Observable<any> {
     return this.apollo.mutate({
       mutation: UpdateCartQuantityMutation,
       variables: {

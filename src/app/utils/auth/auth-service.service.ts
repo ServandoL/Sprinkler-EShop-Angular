@@ -48,10 +48,7 @@ export class AuthService {
   }
 
   getToken$(): Observable<boolean> {
-    return of(
-      !!sessionStorage.getItem('SessionUser') ||
-        !!sessionStorage.getItem('SessionAdmin')
-    );
+    return of(!!sessionStorage.getItem('SessionUser') || !!sessionStorage.getItem('SessionAdmin'));
   }
 
   logout(): void {

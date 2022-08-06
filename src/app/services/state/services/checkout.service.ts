@@ -22,4 +22,8 @@ export class CheckoutAppService {
   checkout(order: Order) {
     this.store.dispatch(CheckoutActions.checkOutAction({ order }));
   }
+
+  resetSuccess() {
+    this.store.dispatch(CheckoutActions.resetSuccess());
+  }
 }

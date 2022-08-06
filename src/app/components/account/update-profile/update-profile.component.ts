@@ -33,10 +33,7 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   user!: IUser;
 
-  constructor(
-    private store: Store<AppState>,
-    private userService: UserAppService
-  ) {
+  constructor(private store: Store<AppState>, private userService: UserAppService) {
     this.user$ = this.store.select(getUser);
     this.isLoading$ = this.store.select(getUserLoading);
     this.errorMessage$ = this.store.select(getError);
@@ -71,9 +68,7 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
         password: new FormControl('', [Validators.required]),
         newPassword: new FormControl('', [
           Validators.minLength(8),
-          Validators.pattern(
-            /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
-          ),
+          Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/),
         ]),
         confirmPassword: new FormControl(''),
       },
@@ -99,13 +94,9 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     return this.updateForm.get('confirmPassword');
   }
 
-  passwordMatchValidator: ValidatorFn = (
-    control: AbstractControl
-  ): ValidationErrors | null => {
+  passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('newPassword');
     const passwordCheck = control.get('confirmPassword');
-    return password?.value !== passwordCheck?.value
-      ? { matchPassword: true }
-      : null;
+    return password?.value !== passwordCheck?.value ? { matchPassword: true } : null;
   };
 }

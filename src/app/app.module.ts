@@ -77,12 +77,7 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
     GraphQLModule,
     SharedAppModule,
   ],
-  providers: [
-    AuthService,
-    ProductAppService,
-    CartAppService,
-    CheckoutAppService,
-  ],
+  providers: [AuthService, ProductAppService, CartAppService, CheckoutAppService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

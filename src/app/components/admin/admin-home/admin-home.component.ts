@@ -2,11 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../../../models/AppState';
-import {
-  DeleteProductRequest,
-  IProduct,
-  ProductRequest,
-} from '../../../models/product.model';
+import { DeleteProductRequest, IProduct, ProductRequest } from '../../../models/product.model';
 import { Pagination } from '../../../models/pagination.model';
 import { AuthService } from '../../../utils/auth/auth-service.service';
 import { IUser } from '../../../models/user.model';
@@ -69,25 +65,21 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.productService.loadProducts(this.request);
     this.subscription.push(this.user$.subscribe((user) => (this.user = user)));
     this.subscription.push(
-      this.authService
-        .getToken$()
-        .subscribe((result) => (this.validated = result))
+      this.authService.getToken$().subscribe((result) => (this.validated = result))
     );
     this.subscription.push(
       this.products$.subscribe((data) => {
         this.products = [...data];
       })
     );
+    this.subscription.push(this.pagination$.subscribe((page) => (this.paging = page)));
     this.subscription.push(
-      this.pagination$.subscribe((page) => (this.paging = page))
-    );
-    this.subscription.push(
-      this.deleteSuccess$.subscribe(deleted => {
+      this.deleteSuccess$.subscribe((deleted) => {
         if (deleted) {
-          this.displayDelete = false
+          this.displayDelete = false;
         }
       })
-    )
+    );
   }
 
   ngOnDestroy(): void {

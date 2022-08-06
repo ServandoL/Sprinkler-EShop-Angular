@@ -53,12 +53,7 @@ export class UserEffects {
       ofType(UserActions.createUser),
       mergeMap((action) =>
         this.userService
-          .createUser$(
-            action.firstName,
-            action.lastName,
-            action.email,
-            action.password
-          )
+          .createUser$(action.firstName, action.lastName, action.email, action.password)
           .pipe(
             map((result: any) => {
               const response: UserResponse = result?.data?.addUser;
@@ -80,9 +75,7 @@ export class UserEffects {
             const response: GenericResponse = result?.data?.deleteUser;
             return UserActions.deleteUserActionSuccess({ response });
           }),
-          catchError((error) =>
-            of(UserActions.deleteUserActionFailure({ error }))
-          )
+          catchError((error) => of(UserActions.deleteUserActionFailure({ error })))
         )
       )
     );
@@ -98,9 +91,7 @@ export class UserEffects {
               response: response.data.updateUserInformation,
             })
           ),
-          catchError((error) =>
-            of(UserActions.updateUserFailure({ error: error.message }))
-          )
+          catchError((error) => of(UserActions.updateUserFailure({ error: error.message })))
         )
       )
     );

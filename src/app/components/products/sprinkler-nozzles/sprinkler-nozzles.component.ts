@@ -64,9 +64,7 @@ export class SprinklerNozzlesComponent implements OnInit, OnDestroy {
     this.productService.loadProducts(this.request);
 
     this.subscription.push(
-      this.authService
-        .getToken$()
-        .subscribe((result) => (this.validated = result))
+      this.authService.getToken$().subscribe((result) => (this.validated = result))
     );
     this.subscription.push(
       this.addToCartLoading$.subscribe((state) => {

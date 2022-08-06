@@ -8,9 +8,8 @@ describe('QtyFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QtyFormComponent ]
-    })
-    .compileComponents();
+      declarations: [QtyFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

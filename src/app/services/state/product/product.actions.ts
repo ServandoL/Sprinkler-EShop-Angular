@@ -46,10 +46,7 @@ export const clearCurrentProduct = createAction(ClearProductAction);
 
 export const initializeCurrentProduct = createAction(InitCurrentProductAction);
 
-export const loadProducts = createAction(
-  LoadProductsAction,
-  props<{ request: ProductRequest }>()
-);
+export const loadProducts = createAction(LoadProductsAction, props<{ request: ProductRequest }>());
 
 export const loadAllProducts = createAction(
   LoadAllProductsAction,

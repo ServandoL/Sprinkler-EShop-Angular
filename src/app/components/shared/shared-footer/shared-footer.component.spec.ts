@@ -8,9 +8,8 @@ describe('SharedFooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SharedFooterComponent ]
-    })
-    .compileComponents();
+      declarations: [SharedFooterComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

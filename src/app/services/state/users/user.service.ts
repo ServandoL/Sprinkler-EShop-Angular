@@ -2,11 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { UpdateUserRequest } from '../../../models/user.model';
-import {
-  CreateUserMutation,
-  DeleteUserMutation,
-  UpdateUserMutation,
-} from './user.schema';
+import { CreateUserMutation, DeleteUserMutation, UpdateUserMutation } from './user.schema';
 
 @Injectable({
   providedIn: 'root',

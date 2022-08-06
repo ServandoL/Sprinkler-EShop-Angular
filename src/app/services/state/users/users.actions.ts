@@ -22,20 +22,14 @@ const UpdateUserActionFailure = '[User] Update User Failure';
 const ResetErrorMessage = '[User] Reset Error Message';
 
 export const resetError = createAction(ResetErrorMessage);
-export const updateUser = createAction(
-  UpdateUserAction,
-  props<{ request: UpdateUserRequest }>()
-);
+export const updateUser = createAction(UpdateUserAction, props<{ request: UpdateUserRequest }>());
 
 export const updateUserSuccess = createAction(
   UpdateUserActionSuccess,
   props<{ response: GenericResponse }>()
 );
 
-export const updateUserFailure = createAction(
-  UpdateUserActionFailure,
-  props<{ error: string }>()
-);
+export const updateUserFailure = createAction(UpdateUserActionFailure, props<{ error: string }>());
 
 export const clearUserState = createAction(ClearUserState);
 export const resetUserResponse = createAction(ResetUserResponse);
@@ -61,10 +55,7 @@ export const createUserResponse = createAction(
   props<{ response: UserResponse }>()
 );
 
-export const createUserFailure = createAction(
-  CreateUserActionResponse,
-  props<{ error: string }>()
-);
+export const createUserFailure = createAction(CreateUserActionResponse, props<{ error: string }>());
 
 export const clearCurrentUser = createAction(ClearCurrentUserAction);
 export const initializeCurrentUser = createAction(InitCurrnetUserAction);
@@ -80,10 +71,7 @@ export const loadUsers = createAction(LoadUsers);
 
 export const getCurrentUser = createAction(GetCurrentUserAction);
 
-export const deleteUser = createAction(
-  DeleteUserAction,
-  props<{ _id: string }>()
-);
+export const deleteUser = createAction(DeleteUserAction, props<{ _id: string }>());
 
 export const deleteUserActionSuccess = createAction(
   DeleteUserActionSuccess,

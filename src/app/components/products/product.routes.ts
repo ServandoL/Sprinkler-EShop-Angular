@@ -11,5 +11,4 @@ export const productsRoutes: Routes = [
   { path: 'sprinkler-bodies', component: SprinklerBodyComponent },
   { path: 'sprinkler-nozzles', component: SprinklerNozzlesComponent },
   { path: 'valves', component: ValvesComponent },
-]
-
+];

@@ -1,9 +1,4 @@
-import {
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  on,
-} from '@ngrx/store';
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import {
   clearOrderHistory,
   loadOrders,
@@ -42,10 +37,7 @@ export const orderHistoryReducer = createReducer<OrderHistoryState>(
     };
   }),
   on(loadOrdersSuccess, (state, action): OrderHistoryState => {
-    const message =
-      action.response.data.length === 0
-        ? "You haven't placed an order yet."
-        : '';
+    const message = action.response.data.length === 0 ? "You haven't placed an order yet." : '';
     return {
       ...state,
       orders: [...action.response.data],

@@ -1,18 +1,12 @@
 <div class="card w-100 h-100">
-  <img
-    class="card-img-top mx-auto"
-    src="/assets/{{ product.imageUrl }}"
-    alt="product image"
-  />
+  <img class="card-img-top mx-auto" src="/assets/{{ product.imageUrl }}" alt="product image" />
   <div class="card-body">
     <h3 class="card-title">{{ product.productName }}</h3>
     <p class="card-text product-price">${{ product.price }}</p>
     <p class="card-text product-price" *ngIf="product.stock > 0">
       Inventory: <span class="in-stock">{{ product.stock }}</span>
     </p>
-    <p class="card-text out-of-stock" *ngIf="product.stock <= 0">
-      Out of stock
-    </p>
+    <p class="card-text out-of-stock" *ngIf="product.stock <= 0">Out of stock</p>
     <div
       class="col"
       *ngIf="message.message && message.id === product._id"
@@ -20,12 +14,7 @@
       role="alert"
     >
       Added!
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   </div>
   <div class="card-footer">

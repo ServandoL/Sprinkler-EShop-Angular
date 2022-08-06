@@ -66,9 +66,7 @@ export class RotorsComponent implements OnInit, OnDestroy {
 
     this.quantity = 1;
     this.subscription.push(
-      this.authService
-        .getToken$()
-        .subscribe((result) => (this.validated = result))
+      this.authService.getToken$().subscribe((result) => (this.validated = result))
     );
     this.subscription.push(
       this.addToCartLoading$.subscribe((state) => {

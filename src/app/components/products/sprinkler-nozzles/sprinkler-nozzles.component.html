@@ -1,9 +1,4 @@
-<div
-  *ngIf="
-    (productsLoading$ | async)?.isLoading ||
-    (addToCartLoading$ | async)?.isLoading
-  "
->
+<div *ngIf="(productsLoading$ | async)?.isLoading || (addToCartLoading$ | async)?.isLoading">
   <app-shared-loader></app-shared-loader>
 </div>
 <div class="container">
@@ -14,11 +9,7 @@
       <ul class="list-group">
         <li class="list-group-item">
           <button type="button" class="btn btn-sm btn-link">
-            <a
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=3s"
-              target="_blank"
-              >What do</a
-            >
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=3s" target="_blank">What do</a>
           </button>
         </li>
       </ul>

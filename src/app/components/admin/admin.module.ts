@@ -24,12 +24,7 @@ import { FilterService } from '../../services/state/product-filters/filter.servi
     SharedAppModule,
   ],
   exports: [],
-  declarations: [
-    CreateItemComponent,
-    UpdateItemComponent,
-    AdminCardsComponent,
-    AdminHomeComponent,
-  ],
+  declarations: [CreateItemComponent, UpdateItemComponent, AdminCardsComponent, AdminHomeComponent],
   providers: [FilterService],
 })
 export class AdminModule {}

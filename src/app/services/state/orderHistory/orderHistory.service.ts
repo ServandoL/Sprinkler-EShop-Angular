@@ -5,10 +5,7 @@ import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Order } from '../../../models/checkout.model';
-import {
-  OrderHistoryRequest,
-  OrderHistoryResponse,
-} from '../../../models/orderHistory.model';
+import { OrderHistoryRequest, OrderHistoryResponse } from '../../../models/orderHistory.model';
 import { GetOrderHistoryQuery } from './schema';
 
 @Injectable({

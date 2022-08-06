@@ -18,7 +18,7 @@ h1 {
   height: 45px;
   background-color: #333;
   animation: dip 1s;
-  animation-delay: ($animationTime - .5);
+  animation-delay: ($animationTime - 0.5);
 
   &::before,
   &::after {

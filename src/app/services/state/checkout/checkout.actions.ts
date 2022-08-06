@@ -6,21 +6,14 @@ export const CheckoutSuccess = '[Checkout] Check Out Success';
 export const CheckoutFailure = '[Checkout] Check Out Failure';
 export const ResetMessage = '[Checkout] Reset Message';
 export const ClearCheckOutState = '[Checkout] Clear State';
+export const ResetSuccess = '[Checkout] Reset Success';
 
 export const clearCheckoutState = createAction(ClearCheckOutState);
-export const checkOutAction = createAction(
-  CheckoutAction,
-  props<{ order: Order }>()
-);
+export const checkOutAction = createAction(CheckoutAction, props<{ order: Order }>());
 
-export const checkOutSuccess = createAction(
-  CheckoutSuccess,
-  props<{ response: string }>()
-);
+export const checkOutSuccess = createAction(CheckoutSuccess, props<{ response: string }>());
 
-export const checkOutFailure = createAction(
-  CheckoutFailure,
-  props<{ error: string }>()
-);
+export const checkOutFailure = createAction(CheckoutFailure, props<{ error: string }>());
 
 export const resetMessage = createAction(ResetMessage);
+export const resetSuccess = createAction(ResetSuccess);

@@ -1,8 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css');
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 
 .img-wrap {
   text-align: center;
@@ -35,7 +41,8 @@ div.bottom-border {
   width: 60%;
 }
 
-.btn.btn-primary, .qty-btn {
+.btn.btn-primary,
+.qty-btn {
   border: 2px solid #31b389;
   color: #31b389;
   background: #fff;
@@ -46,7 +53,7 @@ div.bottom-border {
   }
   &:disabled {
     background: #31b389;
-    opacity: .6;
+    opacity: 0.6;
     border: #31b389;
     color: #fff;
   }

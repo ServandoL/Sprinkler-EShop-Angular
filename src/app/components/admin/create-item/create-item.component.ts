@@ -33,10 +33,7 @@ export class CreateItemComponent implements OnInit {
   user!: IUser;
 
   newProduct!: IProduct;
-  constructor(
-    private store: Store<AppState>,
-    private productService: ProductAppService
-  ) {
+  constructor(private store: Store<AppState>, private productService: ProductAppService) {
     this.brands$ = this.store.select(getBrands);
     this.categories$ = this.store.select(getCategories);
     this.filterLoading$ = this.store.select(getFilterLoading);

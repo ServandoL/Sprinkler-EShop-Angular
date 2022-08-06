@@ -27,6 +27,10 @@ export class CartAppService {
     this.store.dispatch(CartActions.resetMessage());
   }
 
+  clearSuccess() {
+    this.store.dispatch(CartActions.clearSuccess());
+  }
+
   updateCartquantity(value: number, product: ICartItem) {
     this.store.dispatch(
       CartActions.updateProductQuantity({

@@ -49,9 +49,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.error$ = this.store.select(getErrorSelector);
     this.success$ = this.store.select(getSuccessSelector);
     this.user =
-      sessionStorage.getItem('SessionUser') ||
-      sessionStorage.getItem('SessionAdmin') ||
-      '';
+      sessionStorage.getItem('SessionUser') || sessionStorage.getItem('SessionAdmin') || '';
   }
 
   checkOutForm = new FormGroup({
@@ -96,6 +94,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.checkoutService.resetCheckoutMessage();
+    this.checkoutService.resetSuccess();
     this.subscriptions.push(
       this.cart$.subscribe((state) => {
         this.length = state.length;

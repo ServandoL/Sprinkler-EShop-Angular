@@ -39,9 +39,7 @@ export class UserAppService {
     password: string,
     isAdmin: boolean
   ) {
-    this.store.dispatch(
-      UserActions.createUser({ firstName, lastName, email, password, isAdmin })
-    );
+    this.store.dispatch(UserActions.createUser({ firstName, lastName, email, password, isAdmin }));
   }
 
   updateUserInformation(request: UpdateUserRequest) {

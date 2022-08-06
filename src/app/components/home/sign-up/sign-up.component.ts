@@ -12,10 +12,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UserResponse } from '../../../models/user.model';
 import { UserAppService } from '../../../services/state/services/user.service';
-import {
-  getUserLoading,
-  userResponse,
-} from '../../../services/state/users/users.selectors';
+import { getUserLoading, userResponse } from '../../../services/state/users/users.selectors';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,11 +24,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   isLoading$!: Observable<boolean>;
   createUserForm!: FormGroup;
 
-  constructor(
-    private store: Store,
-    private router: Router,
-    private userService: UserAppService
-  ) {
+  constructor(private store: Store, private router: Router, private userService: UserAppService) {
     this.signUpMessage$ = this.store.select(userResponse);
     this.isLoading$ = this.store.select(getUserLoading);
   }
@@ -61,9 +54,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         password: new FormControl('', [
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern(
-            /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
-          ),
+          Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/),
         ]),
         passwordCheck: new FormControl('', [Validators.required]),
       },
@@ -94,7 +85,5 @@ export const passwordMatchValidator: ValidatorFn = (
 ): ValidationErrors | null => {
   const password = control.get('password');
   const passwordCheck = control.get('passwordCheck');
-  return password?.value !== passwordCheck?.value
-    ? { matchPassword: true }
-    : null;
+  return password?.value !== passwordCheck?.value ? { matchPassword: true } : null;
 };

@@ -13,9 +13,7 @@ export class AccountComponent implements OnInit {
 
   constructor(private store: Store<AppState>) {
     this.user =
-      sessionStorage.getItem('SessionUser') ||
-      sessionStorage.getItem('SessionAdmin') ||
-      '';
+      sessionStorage.getItem('SessionUser') || sessionStorage.getItem('SessionAdmin') || '';
   }
 
   user$ = this.store.select(getUserFeatureState);
