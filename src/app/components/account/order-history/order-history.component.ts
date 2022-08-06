@@ -5,6 +5,7 @@ import { AppState } from '../../../models/AppState';
 import { Order } from '../../../models/checkout.model';
 import { OrderHistoryRequest } from '../../../models/orderHistory.model';
 import { Pagination } from '../../../models/pagination.model';
+import { IUser } from '../../../models/user.model';
 import {
   getHistoryLoading,
   getHistoryResponse,
@@ -13,6 +14,7 @@ import {
   getOrderPagination,
 } from '../../../services/state/orderHistory/orderHistory.selectors';
 import { CheckoutAppService } from '../../../services/state/services/checkout.service';
+import { getUser } from '../../../services/state/users/users.selectors';
 import { SALES_TAX } from '../../../utils/common/constants';
 
 @Component({
@@ -22,7 +24,6 @@ import { SALES_TAX } from '../../../utils/common/constants';
 })
 export class OrderHistoryComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  user!: string;
   orders$!: Observable<Order[] | undefined>;
   isLoading$!: Observable<boolean>;
   message$!: Observable<string>;
@@ -31,6 +32,8 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
   pagination$!: Observable<Pagination>;
   paging!: Pagination;
   request!: OrderHistoryRequest;
+  user$!: Observable<IUser>;
+  user!: IUser;
 
   constructor(private store: Store<AppState>, private checkoutService: CheckoutAppService) {
     this.pagination$ = this.store.select(getOrderPagination);
@@ -38,20 +41,24 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
     this.message$ = this.store.select(getHistoryResponse);
     this.error$ = this.store.select(getHistoryError);
     this.orders$ = this.store.select(getOrders);
-    this.user =
-      sessionStorage.getItem('SessionUser') || sessionStorage.getItem('SessionAdmin') || '';
-    this.request = {
-      email: this.user,
-      page: {
-        pageNumber: 1,
-        pageSize: 2,
-      },
-    };
+    this.user$ = this.store.select(getUser);
   }
 
   ngOnInit(): void {
-    this.checkoutService.loadOrders(this.request);
     this.subscriptions.push(this.pagination$.subscribe((page) => (this.paging = page)));
+    this.subscriptions.push(
+      this.user$.subscribe((user) => {
+        this.user = user;
+        this.request = {
+          userId: this.user._id,
+          page: {
+            pageNumber: 1,
+            pageSize: 2,
+          },
+        };
+      })
+    );
+    this.checkoutService.loadOrders(this.request);
   }
 
   ngOnDestroy(): void {
@@ -60,7 +67,7 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
 
   onGoTo(page: number): void {
     this.request = {
-      email: this.user,
+      userId: this.user._id,
       page: {
         pageNumber: page,
         pageSize: 2,
@@ -71,7 +78,7 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
 
   onNext(page: number): void {
     this.request = {
-      email: this.user,
+      userId: this.user._id,
       page: {
         pageNumber: page + 1,
         pageSize: 2,
@@ -82,7 +89,7 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
 
   onPrevious(page: number): void {
     this.request = {
-      email: this.user,
+      userId: this.user._id,
       page: {
         pageNumber: page - 1,
         pageSize: 2,

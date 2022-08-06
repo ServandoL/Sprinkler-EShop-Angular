@@ -16,6 +16,7 @@ export interface CreditCard {
 }
 
 export interface Order {
+  userId: string;
   order: ICartItem[];
   shipping: Shipping;
   payment: CreditCard;

@@ -6,7 +6,7 @@ export interface OrderHistory {
 }
 
 export interface OrderHistoryRequest {
-  email: string;
+  userId: string;
   page: {
     pageSize: number;
     pageNumber: number;

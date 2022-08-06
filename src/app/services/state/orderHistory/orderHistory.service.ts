@@ -23,7 +23,7 @@ export class OrderHistoryService {
         query: GetOrderHistoryQuery,
         variables: {
           orderHistoryRequest: {
-            email: request.email,
+            userId: request.userId,
             page: request.page,
           },
           fetchPolicy: 'no-cache',

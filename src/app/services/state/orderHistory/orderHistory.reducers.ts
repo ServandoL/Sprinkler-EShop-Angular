@@ -32,7 +32,7 @@ export const orderHistoryReducer = createReducer<OrderHistoryState>(
   on(loadOrders, (state, action): OrderHistoryState => {
     return {
       ...state,
-      user_id: action.request.email,
+      user_id: action.request.userId,
       isLoading: true,
     };
   }),

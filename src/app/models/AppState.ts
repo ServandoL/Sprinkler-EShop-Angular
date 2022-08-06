@@ -4,21 +4,12 @@ import { OrderHistoryState } from '../services/state/orderHistory/orderHistory.s
 import { ProductState } from '../services/state/product/product.state';
 import { UserState } from '../services/state/users/users.state';
 
-// export interface AppState {
-//   user: IUser | undefined;
-//   product: IProduct | undefined;
-//   filter: IFilter | undefined;
-//   cart: ICartItem | undefined;
-//   order: Order | undefined;
-//   orderHistory: OrderHistory | undefined;
-// }
-
 export interface AppState {
-  cart: CartState;
-  checkOut: CheckoutState;
-  orderHistory: OrderHistoryState;
-  product: ProductState;
-  user: UserState;
+  cart: CartState | undefined;
+  checkOut: CheckoutState | undefined;
+  orderHistory: OrderHistoryState | undefined;
+  product: ProductState | undefined;
+  user: UserState | undefined;
 }
 
 export interface GenericResponse {

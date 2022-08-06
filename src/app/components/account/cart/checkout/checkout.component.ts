@@ -3,7 +3,9 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../../../../models/AppState';
 import { ICartItem } from '../../../../models/cart.model';
+import { IUser } from '../../../../models/user.model';
 import { getCart } from '../../../../services/state/cart/cart.selectors';
+import { getUser } from '../../../../services/state/users/users.selectors';
 import { CartService } from '../../../../services/state/cart/cart.service';
 import { SALES_TAX, STATES } from '../../../../utils/common/constants';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -31,12 +33,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   cart: ICartItem[] = [];
   error!: string;
   message!: string;
-  user!: string | null;
+  user!: IUser;
   states = STATES;
   isLoading$!: Observable<boolean>;
   response$!: Observable<string>;
   error$!: Observable<string>;
   success$!: Observable<boolean | undefined>;
+  user$!: Observable<IUser>;
 
   constructor(
     private store: Store<AppState>,
@@ -48,8 +51,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.response$ = this.store.select(getResponseSelector);
     this.error$ = this.store.select(getErrorSelector);
     this.success$ = this.store.select(getSuccessSelector);
-    this.user =
-      sessionStorage.getItem('SessionUser') || sessionStorage.getItem('SessionAdmin') || '';
+    this.user$ = this.store.select(getUser);
   }
 
   checkOutForm = new FormGroup({
@@ -119,10 +121,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
       })
     );
+    this.subscriptions.push(
+      this.user$.subscribe((user) => {
+        this.user = user;
+      })
+    );
   }
 
   onSubmit(formValues: FormGroup) {
     const order: Order = {
+      userId: this.user._id,
       order: [...this.cart],
       shipping: {
         address: formValues.controls['address'].value,
@@ -137,7 +145,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         year: formValues.controls['year'].value,
         cvv: formValues.controls['cvv'].value,
       },
-      email: this.user ? this.user : '',
+      email: this.user.email,
       total: +(this.subtotal + this.subtotal * this.tax).toFixed(2),
     };
     this.checkoutService.checkout(order);
