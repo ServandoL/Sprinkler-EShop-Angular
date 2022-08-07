@@ -6,10 +6,7 @@ import { AppState } from '../../../models/AppState';
 import { IProduct, UpdateProductRequest } from '../../../models/product.model';
 import { IUser } from '../../../models/user.model';
 import {
-  resetUpdateResponse,
-  updateProduct,
-} from '../../../services/state/product/product.actions';
-import {
+  getError,
   getProductLoading,
   getUpdateResponse,
 } from '../../../services/state/product/product.selectors';
@@ -21,10 +18,6 @@ import { ProductAppService } from '../../../services/state/services/product.serv
   styleUrls: ['./update-item.component.css'],
 })
 export class UpdateItemComponent implements OnInit {
-  constructor(private store: Store<AppState>, private productService: ProductAppService) {
-    this.isLoading$ = this.store.select(getProductLoading);
-    this.updateSuccess$ = this.store.select(getUpdateResponse);
-  }
 
   @Input() product!: IProduct;
   @Input() user!: IUser | null;
@@ -32,6 +25,13 @@ export class UpdateItemComponent implements OnInit {
   isLoading$!: Observable<boolean>;
   updateSuccess$!: Observable<boolean>;
   subscriptions!: Subscription[];
+  error$!: Observable<string>;
+
+  constructor(private store: Store<AppState>, private productService: ProductAppService) {
+    this.isLoading$ = this.store.select(getProductLoading);
+    this.updateSuccess$ = this.store.select(getUpdateResponse);
+    this.error$ = this.store.select(getError);
+  }
 
   ngOnInit(): void {
     this.updateItemForm = new FormGroup({
