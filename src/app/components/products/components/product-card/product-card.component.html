@@ -1,4 +1,4 @@
-<div class="card w-100 h-100">
+<div class="card w-100 h-100" [id]="product._id">
   <img class="card-img-top mx-auto" src="/assets/{{ product.imageUrl }}" alt="product image" />
   <div class="card-body">
     <h3 class="card-title">{{ product.productName }}</h3>
@@ -23,6 +23,7 @@
       (submitted)="submit($event)"
       [stock]="product.stock"
       [title]="title"
+      [id]="product._id"
     ></app-qty-form>
   </div>
 </div>

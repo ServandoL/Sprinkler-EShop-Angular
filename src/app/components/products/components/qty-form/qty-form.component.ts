@@ -15,6 +15,7 @@ export class QtyFormComponent implements OnInit {
   @Input() stock!: number;
   @Input() title!: string | undefined;
   @Input() inputQuantity!: number;
+  @Input() id!: string;
   @Output() quantity = new EventEmitter<number>();
   @Output() submitted = new EventEmitter();
 

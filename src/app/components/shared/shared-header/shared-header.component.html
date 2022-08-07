@@ -17,7 +17,7 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" [routerLink]="['/home']">Home</a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" id="ProductDropdownBtn">
           <a
             class="nav-link dropdown-toggle"
             href="#"
@@ -30,23 +30,23 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li>
-              <a class="dropdown-item" [routerLink]="['/products/controllers']">Controllers</a>
+              <a class="dropdown-item" id="Controllers" [routerLink]="['/products/controllers']">Controllers</a>
             </li>
             <li>
-              <a class="dropdown-item" [routerLink]="['/products/rotors']">Rotors</a>
+              <a class="dropdown-item" id="Rotors" [routerLink]="['/products/rotors']">Rotors</a>
             </li>
             <li>
-              <a class="dropdown-item" [routerLink]="['/products/sprinkler-bodies']"
+              <a class="dropdown-item" id="Bodies" [routerLink]="['/products/sprinkler-bodies']"
                 >Sprinkler bodies</a
               >
             </li>
             <li>
-              <a class="dropdown-item" [routerLink]="['/products/sprinkler-nozzles']"
+              <a class="dropdown-item" id="Nozzles" [routerLink]="['/products/sprinkler-nozzles']"
                 >Sprinkler nozzles</a
               >
             </li>
             <li>
-              <a class="dropdown-item" [routerLink]="['/products/valves']">Valves</a>
+              <a class="dropdown-item" id="Valves" [routerLink]="['/products/valves']">Valves</a>
             </li>
           </ul>
         </li>
