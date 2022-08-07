@@ -5,7 +5,7 @@ import { IProduct } from '../../models/product.model';
 export function addToCartFunction(product: IProduct, qty: number, validated: boolean) {
   const cartItem: ICartItem = {
     _id: product._id,
-    email: sessionStorage.getItem('SessionUser') || sessionStorage.getItem('SessionAdmin'),
+    userId: sessionStorage.getItem('SessionUser') || sessionStorage.getItem('SessionAdmin'),
     productName: product.productName,
     stock: product.stock,
     quantity: qty,

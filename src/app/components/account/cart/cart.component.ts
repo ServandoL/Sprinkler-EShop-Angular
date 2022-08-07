@@ -3,12 +3,11 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../models/AppState';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import {
+  apiError,
+  apiResponse,
+  apiSuccess,
   emptyOnLogin,
   getCart,
-  saveCart,
-  saveCartError,
-  saveCartResponse,
-  saveCartSuccess,
 } from '../../../services/state/cart/cart.selectors';
 import { ICartItem } from '../../../models/cart.model';
 import { Observable, Subscription } from 'rxjs';
@@ -16,6 +15,8 @@ import { CartState } from '../../../services/state/cart/cart.state';
 import { Router } from '@angular/router';
 import { SALES_TAX } from '../../../utils/common/constants';
 import { CartAppService } from '../../../services/state/services/cart.service';
+import { IUser } from '../../../models/user.model';
+import { getUser } from '../../../services/state/users/users.selectors';
 
 @Component({
   selector: 'app-cart',
@@ -31,10 +32,11 @@ export class CartComponent implements OnInit, OnDestroy {
   cart$!: Observable<ICartItem[]>;
   cart: ICartItem[] = [];
   emptyOnLogin$!: Observable<boolean>;
-  user!: string | null;
-  saveCartResponse$: Observable<string>;
-  saveCartSuccess$: Observable<boolean>;
-  saveCartError$: Observable<string>;
+  apiResponse$: Observable<string>;
+  apiSuccess$: Observable<boolean>;
+  apiError$: Observable<string>;
+  user$: Observable<IUser>;
+  user!: IUser;
 
   constructor(
     private store: Store<AppState>,
@@ -43,18 +45,21 @@ export class CartComponent implements OnInit, OnDestroy {
   ) {
     this.cartLoading$ = this.store.select(getCartFeatureState);
     this.cart$ = this.store.select(getCart);
-    this.saveCartResponse$ = this.store.select(saveCart);
     this.emptyOnLogin$ = this.store.select(emptyOnLogin);
-    this.saveCartResponse$ = this.store.select(saveCartResponse);
-    this.saveCartSuccess$ = this.store.select(saveCartSuccess);
-    this.saveCartError$ = this.store.select(saveCartError);
-    this.user =
-      sessionStorage.getItem('SessionUser') || sessionStorage.getItem('SessionAdmin') || '';
+    this.apiResponse$ = this.store.select(apiResponse);
+    this.apiSuccess$ = this.store.select(apiSuccess);
+    this.apiError$ = this.store.select(apiError);
+    this.user$ = this.store.select(getUser);
   }
 
   ngOnInit(): void {
     this.cartService.resetCartMessage();
     this.cartService.clearSuccess();
+    this.subscriptions.push(
+      this.user$.subscribe(user => {
+        this.user = user;
+      })
+    )
     this.subscriptions.push(
       this.cart$.subscribe((state) => {
         this.length = state.length;
@@ -97,7 +102,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
   saveCart() {
     if (this.user) {
-      this.cartService.saveCart([...this.cart], this.user);
+      this.cartService.saveCart([...this.cart], this.user._id);
     }
   }
 
@@ -107,7 +112,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
   deleteCart() {
     if (this.user) {
-      this.cartService.deleteCart(this.user);
+      this.cartService.deleteCart(this.user._id);
     }
   }
 

@@ -5,7 +5,7 @@ import * as CartActions from './cart.actions';
 import { state } from '@angular/animations';
 
 const initialState: CartState = {
-  email: '',
+  userId: '',
   products: [],
   currentProduct: undefined,
   cartQuantity: 0,
@@ -30,21 +30,20 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.clearCart, (state, action): CartState => {
     return {
       ...initialState,
-      email: state.email,
+      userId: state.userId,
     };
   }),
   on(CartActions.clearCartApi, (state, action): CartState => {
     return {
       ...state,
-      email: state.email,
       isLoading: true,
     };
   }),
   on(CartActions.clearCartSuccess, (state, action): CartState => {
     return {
       ...initialState,
-      email: state.email,
       response: action.response.message,
+      success: action.response.success,
       isLoading: false,
     };
   }),
@@ -52,6 +51,7 @@ export const cartReducer = createReducer<CartState>(
     return {
       ...state,
       error: action.error as any,
+      success: false,
       isLoading: false,
     };
   }),
@@ -73,7 +73,7 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.loadCart, (state, action): CartState => {
     return {
       ...state,
-      email: action.user_id,
+      userId: action.user_id,
       isLoading: true,
     };
   }),
@@ -86,7 +86,7 @@ export const cartReducer = createReducer<CartState>(
       ...state,
       products: [...cart],
       cartQuantity: cart.length || 0,
-      email: state.email,
+      userId: state.userId,
       isLoading: false,
       emptyOnLogin: cart.length === 0,
     };
@@ -130,7 +130,7 @@ export const cartReducer = createReducer<CartState>(
     }
     return {
       ...state,
-      email: action.product.email,
+      userId: action.product.userId,
       products: [...products],
       cartQuantity: products.length,
       currentProduct: action.product,

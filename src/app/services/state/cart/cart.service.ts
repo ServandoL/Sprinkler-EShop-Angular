@@ -50,7 +50,7 @@ export class CartService {
       mutation: AddToCartMutation,
       variables: {
         _id: product._id,
-        email: product.email,
+        userId: product.userId,
         quantity: product.quantity,
         productName: product.productName,
         price: product.price,
@@ -62,22 +62,22 @@ export class CartService {
     });
   }
 
-  clearCart$(user_id: string): Observable<any> {
+  clearCart$(userId: string): Observable<any> {
     return this.apollo.mutate({
       mutation: ClearCartMutation,
       variables: {
-        email: user_id,
+        userId: userId,
       },
     });
   }
 
-  saveCart$(cart: ICartItem[], email: string): Observable<any> {
+  saveCart$(cart: ICartItem[], userId: string): Observable<any> {
     return this.apollo.mutate({
       mutation: SaveCartMutation,
       variables: {
         request: {
           cart: cart,
-          email: email,
+          userId: userId,
         },
       },
     });
@@ -88,7 +88,7 @@ export class CartService {
       mutation: UpdateCartQuantityMutation,
       variables: {
         _id: _id,
-        email: user_id,
+        userId: user_id,
         quantity: quantity,
       },
     });

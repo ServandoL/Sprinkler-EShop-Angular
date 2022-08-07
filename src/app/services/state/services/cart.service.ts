@@ -19,8 +19,8 @@ export class CartAppService {
     this.store.dispatch(CartActions.addToCart({ product: product }));
   }
 
-  loadCart(email: string) {
-    this.store.dispatch(CartActions.loadCart({ user_id: email }));
+  loadCart(userId: string) {
+    this.store.dispatch(CartActions.loadCart({ user_id: userId }));
   }
 
   resetCartMessage() {
@@ -57,16 +57,16 @@ export class CartAppService {
     );
   }
 
-  saveCart(cart: ICartItem[], email: string) {
+  saveCart(cart: ICartItem[], userId: string) {
     this.store.dispatch(
       CartActions.saveCart({
         products: [...cart],
-        email: email,
+        userId: userId,
       })
     );
   }
 
-  deleteCart(email: string) {
-    this.store.dispatch(CartActions.clearCartApi({ email: email }));
+  deleteCart(userId: string) {
+    this.store.dispatch(CartActions.clearCartApi({ userId: userId }));
   }
 }

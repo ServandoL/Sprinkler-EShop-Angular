@@ -6,6 +6,7 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { GetCartResponse } from '../../../models/cart.model';
 import { CartGqlResponse } from '../../../models/cart.model';
+import { GenericResponse } from '../../../models/AppState';
 
 @Injectable({
   providedIn: 'root',
@@ -31,10 +32,10 @@ export class CartEffects {
     return this.actions$.pipe(
       ofType(CartActions.clearCartApi),
       mergeMap((action) =>
-        this.cartService.clearCart$(action.email).pipe(
+        this.cartService.clearCart$(action.userId).pipe(
           map((response: any) => {
             return CartActions.clearCartSuccess({
-              response: response?.data?.clearCart,
+              response: response?.data?.clearCart as GenericResponse,
             });
           }),
           catchError((error: any) => of(CartActions.clearCartFailure({ error: error.message })))
@@ -47,7 +48,7 @@ export class CartEffects {
     return this.actions$.pipe(
       ofType(CartActions.saveCart),
       mergeMap((action) =>
-        this.cartService.saveCart$(action.products, action.email).pipe(
+        this.cartService.saveCart$(action.products, action.userId).pipe(
           map((result: any) => {
             const response = result?.data?.saveCart;
             return CartActions.saveCartSuccess({
@@ -60,22 +61,4 @@ export class CartEffects {
       )
     );
   });
-
-  // addToCart$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(CartActions.addToCart),
-  //     mergeMap((action) =>
-  //       this.cartService.addToCart$(action.product).pipe(
-  //         map((result: any) => {
-  //           const response: CartGqlResponse = result?.data?.addToCart;
-  //           return CartActions.addToCartSuccess({
-  //             response: response,
-  //             product: action.product,
-  //           });
-  //         }),
-  //         catchError((error) => of(CartActions.addToCartFailure({ error })))
-  //       )
-  //     )
-  //   );
-  // });
 }

@@ -3,11 +3,9 @@ import { getCartFeatureState } from './cart.reducers';
 
 export const getCart = createSelector(getCartFeatureState, (state) => state.products);
 
-export const deleteCart = createSelector(getCartFeatureState, (state) => state.response);
+export const apiResponse = createSelector(getCartFeatureState, (state) => state.response);
 
-export const saveCartResponse = createSelector(getCartFeatureState, (state) => state.response);
-
-export const saveCartSuccess = createSelector(getCartFeatureState, (state) => state.success);
+export const apiSuccess = createSelector(getCartFeatureState, (state) => state.success);
 
 export const addToCart = createSelector(getCartFeatureState, (state) => state.response);
 
@@ -15,4 +13,4 @@ export const saveCart = createSelector(getCartFeatureState, (state) => state.res
 
 export const emptyOnLogin = createSelector(getCartFeatureState, (state) => state.emptyOnLogin);
 
-export const saveCartError = createSelector(getCartFeatureState, (state) => state.error);
+export const apiError = createSelector(getCartFeatureState, (state) => state.error);

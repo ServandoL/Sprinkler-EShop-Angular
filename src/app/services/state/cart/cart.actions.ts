@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { GenericResponse } from '../../../models/AppState';
 import { CartGqlResponse, GetCartResponse, ICartItem } from '../../../models/cart.model';
 
 const LoadCartAction = '[Cart] Load Cart';
@@ -27,11 +28,11 @@ const ClearSuccess = '[Cart] Clear Success Status';
 export const clearCartState = createAction(ClearCartState);
 export const clearCart = createAction(ClearCartAction);
 
-export const clearCartApi = createAction(ClearCartApiAction, props<{ email: string }>());
+export const clearCartApi = createAction(ClearCartApiAction, props<{ userId: string }>());
 
 export const clearCartSuccess = createAction(
   ClearCartActionSuccess,
-  props<{ response: CartGqlResponse }>()
+  props<{ response: GenericResponse }>()
 );
 
 export const clearCartFailure = createAction(ClearCartActionFailure, props<{ error: string }>());
@@ -42,7 +43,7 @@ export const clearSuccess = createAction(ClearSuccess);
 
 export const saveCart = createAction(
   SaveCartAction,
-  props<{ products: ICartItem[]; email: string }>()
+  props<{ products: ICartItem[]; userId: string }>()
 );
 
 export const saveCartSuccess = createAction(

@@ -8,19 +8,19 @@
       <div class="bottom-border my-4"></div>
       <div
         class="col"
-        *ngIf="(saveCartSuccess$ | async) === true"
+        *ngIf="(apiSuccess$| async) === true"
         class="alert alert-primary"
         role="alert"
       >
-        {{ saveCartResponse$ | async }}
+        {{ apiResponse$ | async }}
       </div>
       <div
         class="col"
-        *ngIf="(saveCartSuccess$ | async) === false && (saveCartError$ | async)?.length"
+        *ngIf="(apiSuccess$ | async) === false && (apiError$ | async)?.length"
         class="alert alert-danger"
         role="alert"
       >
-        {{ saveCartError$ | async }}
+        {{ apiError$ | async }}
       </div>
       <div class="table-responsive">
         <table class="table">

@@ -29,15 +29,15 @@ export class UserEffects {
         this.authService.getUser$(action.email, action.password).pipe(
           map((response: UserResponse) => {
             if (response.user.isAdmin) {
-              sessionStorage.setItem('SessionAdmin', response.user.email);
+              sessionStorage.setItem('SessionAdmin', response.user._id);
               this.router.navigateByUrl('/admin/dashboard');
-              this.cartService.loadCart(response.user.email);
+              this.cartService.loadCart(response.user._id);
               const result = UserActions.loadUserSuccess({ response });
               return result;
             } else {
-              sessionStorage.setItem('SessionUser', response.user.email);
+              sessionStorage.setItem('SessionUser', response.user._id);
               this.router.navigateByUrl('account/profile');
-              this.cartService.loadCart(response.user.email);
+              this.cartService.loadCart(response.user._id);
               const result = UserActions.loadUserSuccess({ response });
               return result;
             }

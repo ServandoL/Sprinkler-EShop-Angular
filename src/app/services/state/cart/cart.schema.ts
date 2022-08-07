@@ -37,8 +37,8 @@ export const AddToCartMutation = gql`
 `;
 
 export const ClearCartMutation = gql`
-  mutation clearCart($email: String) {
-    clearCart(email: $email) {
+  mutation clearCart($userId: String) {
+    clearCart(userId: $userId) {
       message
       success
     }

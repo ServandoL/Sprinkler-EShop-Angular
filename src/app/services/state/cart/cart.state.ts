@@ -1,7 +1,7 @@
 import { ICartItem } from '../../../models/cart.model';
 
 export interface CartState {
-  email: string | undefined | null;
+  userId: string | undefined | null;
   products: ICartItem[];
   currentProduct: ICartItem | undefined;
   error: string;

@@ -1,6 +1,6 @@
 export interface ICartItem {
   _id: string;
-  email: string | undefined | null;
+  userId: string | undefined | null;
   productName: string;
   price: number;
   category: string;
