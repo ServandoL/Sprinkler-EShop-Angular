@@ -5,8 +5,8 @@ import { LogoutComponent } from './components/home/logout/logout.component';
 import { SignUpComponent } from './components/home/sign-up/sign-up.component';
 import { PathNotFoundComponent } from './components/path-not-found/path-not-found.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
-import { AdminGuard } from './utils/auth/admin.guard';
-import { AuthGuard } from './utils/auth/auth.guard';
+import { AdminGuard } from './services/auth/admin.guard';
+import { AuthGuard } from './services/auth/auth.guard';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },

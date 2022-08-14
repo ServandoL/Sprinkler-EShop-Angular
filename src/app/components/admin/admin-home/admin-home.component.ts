@@ -4,7 +4,6 @@ import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../../../models/AppState';
 import { DeleteProductRequest, IProduct, ProductRequest } from '../../../models/product.model';
 import { Pagination } from '../../../models/pagination.model';
-import { AuthService } from '../../../utils/auth/auth-service.service';
 import { IUser } from '../../../models/user.model';
 import { getUser } from '../../../services/state/users/users.selectors';
 import {
@@ -14,6 +13,7 @@ import {
   getDeleteResponse,
 } from '../../../services/state/product/product.selectors';
 import { ProductAppService } from '../../../services/state/services/product.service';
+import { AuthService } from '../../../services/auth/auth-service.service';
 
 @Component({
   selector: 'app-admin-home',

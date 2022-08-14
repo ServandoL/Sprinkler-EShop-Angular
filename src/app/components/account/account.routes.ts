@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from '../../utils/auth/auth.guard';
 import { AccountComponent } from './account.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './cart/checkout/checkout.component';

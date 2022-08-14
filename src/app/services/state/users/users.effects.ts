@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { AppState, GenericResponse } from '../../../models/AppState';
-import { AuthService } from '../../../utils/auth/auth-service.service';
 import { UserService } from './user.service';
 import * as UserActions from './users.actions';
 import { UserResponse } from '../../../models/user.model';
 import { CartAppService } from '../services/cart.service';
+import { AuthService } from '../../auth/auth-service.service';
 
 @Injectable()
 export class UserEffects {

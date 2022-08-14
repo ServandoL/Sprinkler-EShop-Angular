@@ -2,8 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { AuthService } from '../../../utils/auth/auth-service.service';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { getUserFeatureState } from '../../../services/state/users/users.selectors';
 import { clearCurrentUser, getCurrentUser } from '../../../services/state/users/users.actions';
@@ -11,6 +9,7 @@ import { getCartFeatureState } from '../../../services/state/cart/cart.reducers'
 import { UserState } from '../../../services/state/users/users.state';
 import { CartState } from '../../../services/state/cart/cart.state';
 import { UserAppService } from '../../../services/state/services/user.service';
+import { AuthService } from '../../../services/auth/auth-service.service';
 
 @Component({
   selector: 'app-shared-header',

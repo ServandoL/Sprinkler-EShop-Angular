@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from '../../utils/auth/auth.guard';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { UpdateItemComponent } from './update-item/update-item.component';

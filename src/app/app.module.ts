@@ -17,7 +17,6 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedAppModule } from './components/shared/shared.module';
 import { userReducer } from './services/state/users/users.reducers';
-import { AuthService } from './utils/auth/auth-service.service';
 import { UserEffects } from './services/state/users/users.effects';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { cartReducer } from './services/state/cart/cart.reducers';
@@ -33,6 +32,7 @@ import { filterReducer } from './services/state/product-filters/filter.reducers'
 import { ProductAppService } from './services/state/services/product.service';
 import { CartAppService } from './services/state/services/cart.service';
 import { CheckoutAppService } from './services/state/services/checkout.service';
+import { AuthService } from './services/auth/auth-service.service';
 
 export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 

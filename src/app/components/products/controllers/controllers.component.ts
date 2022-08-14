@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { AuthService } from '../../../utils/auth/auth-service.service';
 import { AppState } from '../../../models/AppState';
 
 import { IProduct, ProductRequest } from '../../../models/product.model';
@@ -17,6 +16,7 @@ import {
 } from '../../../services/state/product/product.selectors';
 import { CartAppService } from '../../../services/state/services/cart.service';
 import { ProductAppService } from '../../../services/state/services/product.service';
+import { AuthService } from '../../../services/auth/auth-service.service';
 
 @Component({
   selector: 'app-controllers',
