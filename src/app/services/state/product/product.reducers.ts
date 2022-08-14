@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { ProductState } from './product.state';
 import * as ProductActions from './product.actions';
+import { logout } from '../users/users.actions';
 
 const initialState: ProductState = {
   products: [],
@@ -128,6 +129,11 @@ export const productReducer = createReducer<ProductState>(
     };
   }),
   on(ProductActions.clearProductState, (): ProductState => {
+    return {
+      ...initialState,
+    };
+  }),
+  on(logout, (): ProductState => {
     return {
       ...initialState,
     };

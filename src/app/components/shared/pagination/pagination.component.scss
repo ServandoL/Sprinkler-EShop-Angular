@@ -8,3 +8,7 @@ li.page-item {
 a {
   cursor: pointer;
 }
+a.disabled {
+  pointer-events: none;
+  color: #ccc;
+}

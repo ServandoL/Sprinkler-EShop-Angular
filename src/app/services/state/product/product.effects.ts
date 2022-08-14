@@ -63,9 +63,11 @@ export class ProductEffects {
             (response) =>
               ProductActions.updateProductSuccess({
                 response: response.data.updateProduct,
-              }),
-            catchError((error) => of(ProductActions.updateProductFailure({ error })))
-          )
+              })
+          ),
+          catchError((error) => {
+            return of(ProductActions.updateProductFailure({ error: JSON.stringify(error) }))
+          })
         )
       )
     );

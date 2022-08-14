@@ -9,6 +9,7 @@
   aria-labelledby="deleteModal"
   aria-hidden="true"
   id="deleteModal"
+
 >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -64,7 +65,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              [disabled]="productToDelete?.isDeleted"
+              [disabled]="(deleteSuccess$ | async) === true || productToDelete?.isDeleted"
               (click)="onConfirmDelete(productToDelete)"
             >
               Confirm

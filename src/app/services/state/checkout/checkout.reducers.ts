@@ -1,4 +1,5 @@
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import { logout } from '../users/users.actions';
 import {
   checkOutAction,
   checkOutFailure,
@@ -75,6 +76,11 @@ export const checkoutReducer = createReducer<CheckoutState>(
     return {
       ...state,
       success: false,
+    };
+  }),
+  on(logout, (): CheckoutState => {
+    return {
+      ...initialState,
     };
   })
 );

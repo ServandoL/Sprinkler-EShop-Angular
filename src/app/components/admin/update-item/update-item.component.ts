@@ -18,7 +18,6 @@ import { ProductAppService } from '../../../services/state/services/product.serv
   styleUrls: ['./update-item.component.css'],
 })
 export class UpdateItemComponent implements OnInit {
-
   @Input() product!: IProduct;
   @Input() user!: IUser | null;
   updateItemForm!: FormGroup;
@@ -68,8 +67,8 @@ export class UpdateItemComponent implements OnInit {
       productName: this.productName?.value || this.product.productName,
       modifiedDate: new Date().toISOString(),
       modifiedBy: this.user ? this.user.email : '',
-      price: this.price?.value || this.product.price,
-      stock: this.stock?.value || this.product.stock,
+      price: +this.price?.value || +this.product.price,
+      stock: +this.stock?.value || +this.product.stock,
       imageUrl: this.imageUrl?.value || this.product.imageUrl,
     };
     this.productService.updateProduct(request);

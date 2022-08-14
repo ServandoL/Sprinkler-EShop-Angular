@@ -56,10 +56,10 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartService.resetCartMessage();
     this.cartService.clearSuccess();
     this.subscriptions.push(
-      this.user$.subscribe(user => {
+      this.user$.subscribe((user) => {
         this.user = user;
       })
-    )
+    );
     this.subscriptions.push(
       this.cart$.subscribe((state) => {
         this.length = state.length;

@@ -1,24 +1,29 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from './auth-service.service';
-import { getUserFeatureState } from '../../services/state/users/users.selectors';
+import { getUser } from '../../services/state/users/users.selectors';
 import { UserState } from '../../services/state/users/users.state';
+import { IUser } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router, private store: Store) {
-    this.currentUser$.subscribe((user) => (this.currentUser = user));
-  }
-
-  currentUser!: UserState;
+  currentUser!: IUser;
   isAuthenticated = false;
 
-  currentUser$ = this.store.select(getUserFeatureState);
-  authenticated$ = this.authService.getToken$().subscribe((data) => (this.isAuthenticated = data));
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private store: Store<UserState>
+  ) {
+    this.store.select(getUser).subscribe((user) => (this.currentUser = user));
+    this.authService
+      .getToken$()
+      .subscribe((authenticated) => (this.isAuthenticated = authenticated));
+  }
 
   canActivate(): boolean {
     if (this.isAuthenticated) {

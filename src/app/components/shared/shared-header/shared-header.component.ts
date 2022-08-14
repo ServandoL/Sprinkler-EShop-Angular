@@ -4,7 +4,6 @@ import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { getUserFeatureState } from '../../../services/state/users/users.selectors';
-import { clearCurrentUser, getCurrentUser } from '../../../services/state/users/users.actions';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import { UserState } from '../../../services/state/users/users.state';
 import { CartState } from '../../../services/state/cart/cart.state';

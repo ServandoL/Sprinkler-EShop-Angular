@@ -20,7 +20,11 @@ const UpdateUserAction = '[User] Update User';
 const UpdateUserActionSuccess = '[User] Update User Success';
 const UpdateUserActionFailure = '[User] Update User Failure';
 const ResetErrorMessage = '[User] Reset Error Message';
+const LogOut = '[User] Logout';
+const LogoutSuccess = '[User] Logout Success';
 
+export const logout = createAction(LogOut);
+export const logoutSuccess = createAction(LogoutSuccess);
 export const resetError = createAction(ResetErrorMessage);
 export const updateUser = createAction(UpdateUserAction, props<{ request: UpdateUserRequest }>());
 

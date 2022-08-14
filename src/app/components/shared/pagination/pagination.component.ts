@@ -47,6 +47,7 @@ export class PaginationComponent implements OnChanges {
           -1,
           numberOfPages - 5,
           numberOfPages - 4,
+          numberOfPages - 3,
           numberOfPages - 2,
           numberOfPages - 1,
           numberOfPages,
@@ -67,5 +68,18 @@ export class PaginationComponent implements OnChanges {
 
   onPrevious(): void {
     this.previous.next(this.current);
+  }
+
+  displayPageButton(page: number) {
+    if (page === 1) {
+      return 'First';
+    }
+    if (page === this.numberOfPages) {
+      return 'Last';
+    }
+    if (page === -1) {
+      return '...';
+    }
+    return page;
   }
 }

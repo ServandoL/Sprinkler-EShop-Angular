@@ -2,10 +2,10 @@
   <ul class="pagination">
     <li class="page-item" [ngClass]="{ disabled: current === 1 }">
       <a class="page-link" aria-label="Previous" (click)="onPrevious()">
-        <span aria-hidden="true">&laquo;</span>
+        <span aria-hidden="true">Prev</span>
       </a>
     </li>
-    <li class="page-item" [ngClass]="page === current ? 'active': ''" *ngFor="let page of pages">
+    <li class="page-item" [ngClass]="page === current ? 'active' : ''" *ngFor="let page of pages">
       <a
         [attr.aria-current]="page === current ? 'page' : null"
         [attr.aria-label]="page === current ? 'Current Page, Page ' + page : 'Go to Page ' + page"
@@ -13,12 +13,14 @@
         (click)="onGoTo(page)"
         (keyup.enter)="onGoTo(page)"
         class="page-link"
-        >{{ page }}</a
+        [ngClass]="page === -1 ? 'disabled' : ''"
+        [text]="displayPageButton(page)"
+        ></a
       >
     </li>
     <li class="page-item" [ngClass]="{ disabled: current === numberOfPages }">
       <a class="page-link" aria-label="Next" (click)="onNext()">
-        <span aria-hidden="true">&raquo;</span>
+        <span aria-hidden="true">Next</span>
       </a>
     </li>
   </ul>

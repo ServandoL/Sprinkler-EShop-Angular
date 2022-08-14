@@ -5,27 +5,26 @@ import { Store } from '@ngrx/store';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserResponse } from '../../models/user.model';
+import { IUser, UserResponse } from '../../models/user.model';
 import { AppState } from '../../models/AppState';
 import { Router } from '@angular/router';
 import { GetUserQuery } from '../../services/state/users/user.schema';
-import { clearCartState } from '../../services/state/cart/cart.actions';
-import { clearProductState } from '../../services/state/product/product.actions';
-import { clearUserState } from '../../services/state/users/users.actions';
-import { clearOrderHistory } from '../../services/state/orderHistory/orderHistory.actions';
-import { clearCheckoutState } from '../../services/state/checkout/checkout.actions';
+import { logout, logoutSuccess } from '../../services/state/users/users.actions';
+import { getUser } from '../state/users/users.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apollo: ApolloBase;
+  user: IUser | undefined;
   constructor(
     private apolloProvider: Apollo,
     private store: Store<AppState>,
     private router: Router
   ) {
     this.apollo = this.apolloProvider.use('SprinklerShop');
+    this.store.select(getUser).subscribe((user) => (this.user = user));
   }
 
   getUser$(email: string, password: string): Observable<UserResponse> {
@@ -48,18 +47,15 @@ export class AuthService {
   }
 
   getToken$(): Observable<boolean> {
-    return of(!!sessionStorage.getItem('SessionUser') || !!sessionStorage.getItem('SessionAdmin'));
+    return of(!!this.user?._id);
   }
 
   logout(): void {
-    sessionStorage.clear();
-    this.store.dispatch(clearCartState());
-    this.store.dispatch(clearProductState());
-    this.store.dispatch(clearUserState());
-    this.store.dispatch(clearOrderHistory());
-    this.store.dispatch(clearCheckoutState());
+    localStorage.removeItem('state');
+    this.store.dispatch(logout());
     setTimeout(() => {
+      this.store.dispatch(logoutSuccess());
       this.router.navigateByUrl('/home');
-    }, 500);
+    }, 1000);
   }
 }

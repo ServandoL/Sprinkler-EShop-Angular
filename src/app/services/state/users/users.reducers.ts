@@ -122,5 +122,16 @@ export const userReducer = createReducer<UserState>(
     return {
       ...initialState,
     };
+  }),
+  on(UserActions.logout, (state): UserState => {
+    return {
+      ...initialState,
+      isLoading: true,
+    };
+  }),
+  on(UserActions.logoutSuccess, (state): UserState => {
+    return {
+      ...initialState,
+    };
   })
 );

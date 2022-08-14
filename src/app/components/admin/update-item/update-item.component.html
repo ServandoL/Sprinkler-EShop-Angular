@@ -75,8 +75,8 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12" *ngIf="(error$ |async)?.length">
-            <p class="alert alert-success">{{ (error$ | async ) }}</p>
+          <div class="col-md-12" *ngIf="(error$ | async)?.length">
+            <p class="alert alert-danger">An error occurred while trying to update this product. Please try again. If the problem persists, please contact support.</p>
           </div>
           <div class="col-md-12" *ngIf="(updateSuccess$ | async) === true">
             <p class="alert alert-success">The product was updated successfully.</p>

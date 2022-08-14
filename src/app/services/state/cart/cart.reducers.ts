@@ -3,6 +3,7 @@ import { ICartItem } from '../../../models/cart.model';
 import { CartState } from './cart.state';
 import * as CartActions from './cart.actions';
 import { state } from '@angular/animations';
+import { logout } from '../users/users.actions';
 
 const initialState: CartState = {
   userId: '',
@@ -194,6 +195,11 @@ export const cartReducer = createReducer<CartState>(
     return {
       ...state,
       success: false,
+    };
+  }),
+  on(logout, (): CartState => {
+    return {
+      ...initialState,
     };
   })
 );

@@ -100,3 +100,4 @@
     </div>
   </div>
 </nav>
+<app-shared-loader *ngIf="(currentUser$ | async)?.isLoading === true"></app-shared-loader>

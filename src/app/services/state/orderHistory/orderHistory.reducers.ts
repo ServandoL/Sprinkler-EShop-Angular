@@ -1,4 +1,5 @@
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import { logout } from '../users/users.actions';
 import {
   clearOrderHistory,
   loadOrders,
@@ -54,6 +55,11 @@ export const orderHistoryReducer = createReducer<OrderHistoryState>(
     };
   }),
   on(clearOrderHistory, (state, action): OrderHistoryState => {
+    return {
+      ...initialState,
+    };
+  }),
+  on(logout, (): OrderHistoryState => {
     return {
       ...initialState,
     };

@@ -27,7 +27,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   productsLoading$!: Observable<boolean>;
   deleteSuccess$!: Observable<boolean>;
   productToUpdate!: IProduct;
-  productToDelete!: IProduct;
+  productToDelete!: IProduct | undefined;
   showDeleteModal = false;
   deleted = false;
   confirmDelete = false;
@@ -102,7 +102,10 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.productService.resetDeleteResponse();
   }
 
-  onConfirmDelete(request: IProduct) {
+  onConfirmDelete(request: IProduct | undefined) {
+    if (!request) {
+      return;
+    }
     const toDelete: DeleteProductRequest = {
       product: {
         _id: request._id,
