@@ -38,7 +38,7 @@
       </div>
 
       <div class="row row-cols-1 row-cols-lg-4 g-4" *ngIf="products$ | async">
-        <div class="col" *ngFor="let product of products$ | async">
+        <div class="col" *ngFor="let product of products$ | async; index as i" [id]="'part-' + i">
           <app-product-card
             [product]="product"
             [title]="'Add to cart'"
