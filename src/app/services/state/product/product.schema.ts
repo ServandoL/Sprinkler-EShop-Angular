@@ -45,6 +45,13 @@ export const GetProductsQuery = gql`
         isDeleted
         deleted_by
         deleted_date
+        rating
+        ratings {
+          name
+          review
+          rate
+        }
+        __typename
       }
       pagination {
         totalDocs
@@ -57,7 +64,9 @@ export const GetProductsQuery = gql`
         prevPage
         nextPage
         pagingCounter
+        __typename
       }
+      __typename
     }
   }
 `;
