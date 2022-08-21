@@ -108,6 +108,30 @@ export class StarRating {
     this._labelText = value;
   }
 
+  /**
+   * Whether or not the Labelext has a link
+   */
+  protected _labelHasLink!: boolean;
+  get labelHasLink(): boolean {
+    return this._labelHasLink;
+  }
+
+  @Input() set labelhasLink(value: boolean) {
+    this._labelHasLink = !!value;
+  }
+
+  /**
+   * The Link if label has a link
+   */
+  protected _labelLink!: string;
+  get labelLink(): string {
+    return this._labelLink;
+  }
+
+  @Input() set labelLink(value: string) {
+    this._labelLink = value;
+  }
+
   /////////////////////////////////////////////
 
   /**

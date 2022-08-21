@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ReviewsComponent } from './components/reviews/reviews.component';
 import { ControllersComponent } from './controllers/controllers.component';
 import { RotorsComponent } from './rotors/rotors.component';
 import { SprinklerBodyComponent } from './sprinkler-body/sprinkler-body.component';
@@ -11,4 +12,5 @@ export const productsRoutes: Routes = [
   { path: 'sprinkler-bodies', component: SprinklerBodyComponent },
   { path: 'sprinkler-nozzles', component: SprinklerNozzlesComponent },
   { path: 'valves', component: ValvesComponent },
+  { path: 'review', component: ReviewsComponent },
 ];
