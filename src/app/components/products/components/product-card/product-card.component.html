@@ -5,8 +5,9 @@
     <star-rating
       [starType]="'svg'"
       [readOnly]="true"
-      [rating]="5"
-      [labelText]="'1'"
+      [rating]="product.rating"
+      [labelText]="product.ratings.length.toString()"
+      [showHalfStars]="true"
       labelPosition="right"
       class="rating"
       size="small"
