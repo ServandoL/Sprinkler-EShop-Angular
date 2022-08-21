@@ -18,6 +18,7 @@ import { productReducer } from '../../services/state/product/product.reducers';
 import { ProductService } from '../../services/state/product/product.service';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { StarRatingModule } from '../../../../projects/star-rating/src/public-api';
+import { DescriptionComponent } from './components/description/description.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { StarRatingModule } from '../../../../projects/star-rating/src/public-ap
     QtyFormComponent,
     ProductCardComponent,
     ReviewsComponent,
+    DescriptionComponent,
   ],
   providers: [ProductService],
 })
