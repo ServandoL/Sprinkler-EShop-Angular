@@ -17,6 +17,7 @@ import { ProductEffects } from '../../services/state/product/product.effects';
 import { productReducer } from '../../services/state/product/product.reducers';
 import { ProductService } from '../../services/state/product/product.service';
 import { ReviewsComponent } from './components/reviews/reviews.component';
+import { StarRatingModule } from '../../../../projects/star-rating/src/public-api';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { ReviewsComponent } from './components/reviews/reviews.component';
     FormsModule,
     ReactiveFormsModule,
     SharedAppModule,
+    StarRatingModule.forRoot(),
   ],
   exports: [QtyFormComponent],
   declarations: [

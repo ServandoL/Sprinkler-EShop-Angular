@@ -2,6 +2,15 @@
   <img class="card-img-top mx-auto" src="/assets/{{ product.imageUrl }}" alt="product image" />
   <div class="card-body">
     <h3 class="card-title">{{ product.productName }}</h3>
+    <star-rating
+      [starType]="'svg'"
+      [readOnly]="true"
+      [rating]="5"
+      [labelText]="'1'"
+      labelPosition="right"
+      class="rating"
+      size="small"
+    ></star-rating>
     <p class="card-text product-price">${{ product.price }}</p>
     <p class="card-text product-price" *ngIf="product.stock > 0">
       Inventory: <span class="in-stock">{{ product.stock }}</span>

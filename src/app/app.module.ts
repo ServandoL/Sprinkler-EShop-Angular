@@ -33,7 +33,6 @@ import { ProductAppService } from './services/state/services/product.service';
 import { CartAppService } from './services/state/services/cart.service';
 import { CheckoutAppService } from './services/state/services/checkout.service';
 import { AuthService } from './services/auth/auth-service.service';
-import { StarRatingModule } from '../../projects/star-rating/src/public-api';
 
 export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
@@ -77,7 +76,6 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
     }),
     GraphQLModule,
     SharedAppModule,
-    StarRatingModule.forRoot(),
   ],
   providers: [AuthService, ProductAppService, CartAppService, CheckoutAppService],
   bootstrap: [AppComponent],
