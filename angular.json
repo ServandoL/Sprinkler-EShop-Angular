@@ -116,6 +116,46 @@
           }
         }
       }
+    },
+    "star-rating": {
+      "projectType": "library",
+      "root": "projects/star-rating",
+      "sourceRoot": "projects/star-rating/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/star-rating/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/star-rating/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/star-rating/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/star-rating/src/test.ts",
+            "tsConfig": "projects/star-rating/tsconfig.spec.json",
+            "karmaConfig": "projects/star-rating/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/star-rating/**/*.ts",
+              "projects/star-rating/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "Sprinkler-EShop-Angular",
