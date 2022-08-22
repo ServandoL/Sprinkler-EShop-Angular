@@ -18,6 +18,11 @@ export class ProductCardComponent {
   };
   @Output() quantityUpdated = new EventEmitter();
   @Output() submitClicked = new EventEmitter();
+  @Output() reviewClicked = new EventEmitter<boolean>();
+
+  onReviewClicked($event: boolean) {
+    this.reviewClicked.emit($event);
+  }
 
   updateQuantity(value: number) {
     this.quantityUpdated.emit(value);

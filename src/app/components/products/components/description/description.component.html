@@ -20,61 +20,19 @@
     <div class="col-md-10">
       <h3>Product Description</h3>
       <div class="bottom-border my-2"></div>
-      <!-- {% with message = get_flashed_messages() %}
-                {% if message %}
-                {% for item in message %}
-                {% if item == "ERROR: Unable to update cart. Your quantity is higher than the available stock amount." %}
-                <div class="alert alert-danger" role="alert">
-                    {{item}}
-                </div>
-                {% elif item == "You need to logged in to submit a review."%}
-                <div class="alert alert-danger" role="alert">
-                    {{item}}
-                </div>
-                {% else %}
-                <div class="alert alert-success" role="alert">
-                    {{item}}
-                </div>
-                {% endif %}
-                {% endfor %}
-                {% endif %}
-                {% endwith %} -->
+      <div *ngIf="addToCartError" class="alert alert-danger">
+        {{ addToCartError }}
+      </div>
       <div class="row">
         <div class="col">
           <div class="card" style="width: 25rem">
-            <div class="card-header">PRODUCT NAME</div>
-            <img src="IMAGEURL" class="center" style="width: 10rem" alt="Image of Controller" />
-            <div class="card-body">
-              <p class="card-text">$PRODUCT PRICE</p>
-              <!-- <p class="card-text"></p>
-                                {% if product['stock'] > 0 %}
-                                <p class="card-text" style="color: green;">In stock: {{ product['stock'] }}</p>
-                                {% else %}
-                                <p class="card-text" style="color: red;">Out of stock</p>
-                                {% endif %} -->
-            </div>
-            <div class="card-footer">
-              <form method="POST">
-                <div class="input-group mb-3">
-                  <button type="button" class="btn btn-outline-secondary qty-change-minus">
-                    -
-                  </button>
-
-                  <input type="text" name="item-qty" class="form-control qty-number" value="1" />
-
-                  <button type="button" class="btn btn-outline-secondary qty-change-plus">+</button>
-                </div>
-                <div class="row mx-0">
-                  <!-- {% if product['stock'] > 0 %}
-                                        <button type="submit" name="add-to-cart" class="btn btn-primary">Add to
-                                            Cart</button>
-                                        {% else %}
-                                        <button type="submit" name="add-to-cart" class="btn btn-primary" disabled>Add to
-                                            Cart</button>
-                                        {% endif %} -->
-                </div>
-              </form>
-            </div>
+            <app-product-card
+              [product]="product"
+              [title]="'Add to cart'"
+              (quantityUpdated)="updateQuantity($event)"
+              (submitClicked)="submit(product, $event)"
+              [message]="{ message: message, id: submitted }"
+            ></app-product-card>
           </div>
         </div>
 
@@ -87,23 +45,49 @@
         <h3>Customer Reviews</h3>
         <div class="bottom-border my-2"></div>
         <ol class="list-group">
-          <!-- {% for review in reviews %} -->
-          <li class="list-group-item d-flex justify-content-between align-items-start">
+          <li
+            *ngFor="let review of paginate"
+            class="list-group-item d-flex justify-content-between align-items-start"
+          >
             <div class="ms-2 me-auto">
-              <p>Reviewed by: NAME</p>
-              <div class="fw-bold">REVIEW HEADLINE</div>
-              <p class="text-muted small">Reviewed on DATE</p>
-              <p>REVIEW</p>
+              <star-rating
+                [starType]="'svg'"
+                [readOnly]="true"
+                [rating]="review.rate"
+                [labelText]="review.rate.toFixed(2)"
+                [showHalfStars]="true"
+                [labelHasLink]="false"
+                labelPosition="right"
+                class="rating"
+                [size]="'small'"
+              ></star-rating>
+              <p>Reviewed by: {{ review.name }}</p>
+              <div class="fw-bold">{{ review.headline ? review.headline : 'No headline.' }}</div>
+              <p class="text-muted small">
+                Reviewed on {{ review.reviewDate ? review.reviewDate : 'No Date.' }}
+              </p>
+              <p>{{ review.review }}</p>
             </div>
           </li>
-          <!-- {% else %} -->
-          <li class="list-group-item d-flex justify-content-between align-items-start">
+          <li
+            *ngIf="!this.ratings.length"
+            class="list-group-item d-flex justify-content-between align-items-start"
+          >
             <div class="ms-2 me-auto">
               <p>No one has reviewed this item. Be the first to review it!</p>
             </div>
           </li>
-          <!-- {% endfor%}   -->
         </ol>
+        <div class="row my-md-2">
+          <app-pagination
+            [current]="ratingPagination.current ? ratingPagination.current : 1"
+            [total]="ratingPagination.total ? ratingPagination.total : 1"
+            [numberOfPages]="ratingPagination.numberOfPages ? ratingPagination.numberOfPages : 1"
+            (goTo)="onGoTo($event)"
+            (next)="onNext($event)"
+            (previous)="onPrevious($event)"
+          ></app-pagination>
+        </div>
       </div>
     </div>
   </div>

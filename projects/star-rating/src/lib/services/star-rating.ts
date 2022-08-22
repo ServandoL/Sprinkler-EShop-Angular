@@ -116,7 +116,7 @@ export class StarRating {
     return this._labelHasLink;
   }
 
-  @Input() set labelhasLink(value: boolean) {
+  @Input() set labelHasLink(value: boolean) {
     this._labelHasLink = !!value;
   }
 

@@ -17,6 +17,8 @@ export interface IProduct {
 }
 export interface Rating {
   name: string;
+  headline?: string;
+  reviewDate?: Date;
   review: string;
   rate: number;
 }

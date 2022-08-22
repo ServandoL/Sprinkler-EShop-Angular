@@ -6,13 +6,17 @@
   (mouseleave)="onStopHover()"
 >
   <div *ngIf="labelText" class="label-value">
-    <a
-      *ngIf="labelHasLink; else noLink"
-      [routerLink]="labelLink"
-      routerLinkActive="router-link-active"
-    >
-      {{ labelText }}
-    </a>
+    <div *ngIf="!!labelHasLink; else noLink">
+      <a [routerLink]="labelLink" routerLinkActive="router-link-active">
+        <button
+          type="button"
+          class="btn btn-sm btn-link small-text"
+          (click)="onReviewClicked(true)"
+        >
+          {{ labelText }}
+        </button>
+      </a>
+    </div>
     <ng-template #noLink> {{ labelText }}</ng-template>
   </div>
   <div class="star-container">

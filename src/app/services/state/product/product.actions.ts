@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import {
   AddProductRequest,
   DeleteProductRequest,
+  IProduct,
   ProductRequest,
   ProductResponse,
   UpdateProductRequest,
@@ -29,6 +30,9 @@ const DeleteProductActionFailure = '[Product] Delete Product Failure';
 const ResetDeleteResponse = '[Product] Reset Delete Response';
 const ResetAddSuccess = '[Product] Reset Add Success';
 const ClearProductState = '[Produt] Clear Product State';
+const ReviewClicked = '[Product] Review Clicked';
+
+export const reviewClicked = createAction(ReviewClicked, props<{ product: IProduct }>());
 
 export const clearProductState = createAction(ClearProductState);
 export const resetAddSuccess = createAction(ResetAddSuccess);

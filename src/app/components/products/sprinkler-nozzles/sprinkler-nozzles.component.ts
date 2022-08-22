@@ -40,6 +40,8 @@ export class SprinklerNozzlesComponent implements OnInit, OnDestroy {
   paging!: Pagination;
   pagination$!: Observable<Pagination>;
   submitted!: string;
+  addToCartError!: string;
+
   constructor(
     private store: Store<AppState>,
     public authService: AuthService,
@@ -123,9 +125,11 @@ export class SprinklerNozzlesComponent implements OnInit, OnDestroy {
 
   submit(product: IProduct, qty: number) {
     const cartItem = addToCartFunction(product, qty, this.validated);
-    if (cartItem) {
+    if (typeof cartItem !== 'string') {
       this.cartService.addToCart(cartItem);
       this.submitted = cartItem._id;
+    } else {
+      this.addToCartError = cartItem;
     }
   }
 }

@@ -11,6 +11,7 @@ import { StarRatingUtils } from '../../services/star-rating.utils';
 @Component({
   selector: 'star-rating',
   templateUrl: 'star-rating.component.html',
+  styleUrls: ['star-rating.component.scss'],
 })
 export class StarRatingComponent extends StarRating {
   @Input()
@@ -30,6 +31,13 @@ export class StarRatingComponent extends StarRating {
 
   @Output()
   hoverRatingChange: EventEmitter<HoverRatingChangeEvent> = new EventEmitter<HoverRatingChangeEvent>();
+
+  @Output()
+  reviewClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  onReviewClicked($event: boolean) {
+    this.reviewClicked.emit($event);
+  }
 
   saveOnClick($event: ClickEvent) {
     if (this.starClickChange) {

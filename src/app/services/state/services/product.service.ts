@@ -4,6 +4,7 @@ import { AppState } from '../../../models/AppState';
 import {
   AddProductRequest,
   DeleteProductRequest,
+  IProduct,
   ProductRequest,
   UpdateProductRequest,
 } from '../../../models/product.model';
@@ -54,5 +55,9 @@ export class ProductAppService {
 
   resetAddSuccess() {
     this.store.dispatch(ProductActions.resetAddSuccess());
+  }
+
+  reviewProduct(product: IProduct) {
+    this.store.dispatch(ProductActions.reviewClicked({ product }));
   }
 }

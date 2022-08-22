@@ -1,10 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
-import { ProductState } from './product.state';
+import { ProductState, reviewProductInit } from './product.state';
 import * as ProductActions from './product.actions';
 import { logout } from '../users/users.actions';
 
 const initialState: ProductState = {
   products: [],
+  reviewProduct: reviewProductInit,
   error: '',
   updateSuccess: false,
   isLoading: false,
@@ -136,6 +137,12 @@ export const productReducer = createReducer<ProductState>(
   on(logout, (): ProductState => {
     return {
       ...initialState,
+    };
+  }),
+  on(ProductActions.reviewClicked, (state, action): ProductState => {
+    return {
+      ...state,
+      reviewProduct: action.product,
     };
   })
 );
