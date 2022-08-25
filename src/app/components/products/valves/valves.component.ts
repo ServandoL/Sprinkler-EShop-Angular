@@ -85,6 +85,10 @@ export class ValvesComponent implements OnInit, OnDestroy {
     this.cartService.resetCartMessage();
   }
 
+  onReviewClicked($event: IProduct) {
+    this.productService.reviewProduct($event);
+  }
+
   onGoTo(page: number): void {
     this.request = {
       category: this.pageTitle,

@@ -46,6 +46,7 @@
               (quantityUpdated)="updateQuantity($event)"
               (submitClicked)="submit(product, $event)"
               [message]="{ message: message, id: submitted }"
+              (reviewClicked)="onReviewClicked(product)"
             ></app-product-card>
           </span>
         </div>

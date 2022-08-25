@@ -86,6 +86,11 @@ export class RotorsComponent implements OnInit, OnDestroy {
     this.subscription.forEach((sub) => sub.unsubscribe());
     this.cartService.resetCartMessage();
   }
+
+  onReviewClicked($event: IProduct) {
+    this.productService.reviewProduct($event);
+  }
+
   onGoTo(page: number): void {
     this.request = {
       category: this.pageTitle,
