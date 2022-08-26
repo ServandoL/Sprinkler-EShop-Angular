@@ -19,39 +19,58 @@
 
     <div class="col-md-10">
       <h3>Create a Review</h3>
-      <div class="bottom-border my-4"></div>
-      <!-- {% with message = get_flashed_messages() %} {% if message %} {% for item in message %} {% if
-      item == "Your review has been submitted." %}
-      <div class="alert alert-success" role="alert">
-        {{ item }}
+      <div class="bottom-border my-2"></div>
+      <div class="alert alert-warning" role="alert" *ngIf="!validated">
+        You must be logged in to review a product.
       </div>
-      {% else %}
-      <div class="alert alert-danger" role="alert">
-        {{ item }}
+      <div class="alert alert-danger" role="alert" *ngIf="(error$ | async)?.length > 0">
+        An error occurred while trying to submit your review. Please try again.
       </div>
-      {% endif %} {% endfor %} {% endif %} {% endwith %} -->
+      <div class="alert alert-success" role="alert" *ngIf="(success$ | async) === true">
+        Your review has been successfully submitted.
+      </div>
       <div style="text-align: center">
-        <img src="imageurl" alt="Product image" /><span>PRODUCT NAME</span>
+        <img src="/assets/{{ (reviewProduct$ | async)?.imageUrl }}" alt="Product image" />
+        <div class="rating">{{ (reviewProduct$ | async)?.productName }}</div>
       </div>
       <hr />
-      <form method="POST">
+      <form [formGroup]="reviewForm" (ngSubmit)="submit()">
         <div class="mb-3">
-          <label for="headline" class="form-label">Add a headline</label>
+          <star-rating
+            [starType]="'svg'"
+            [rating]="0"
+            [showHalfStars]="true"
+            labelPosition="right"
+            class="rating"
+            [hoverEnabled]="true"
+            (starClickChange)="onRatingClicked($event)"
+          ></star-rating>
+          <label for="headLine" class="form-label">Add a headline</label>
           <input
             type="text"
             class="form-control"
             id="headline"
             name="headline"
             placeholder="What's more important to know?"
+            formControlName="headLine"
             required
           />
         </div>
         <div class="mb-3">
           <label for="review" class="form-label">Add a written review.</label>
-          <textarea class="form-control" id="review" name="review" rows="5" required></textarea>
+          <textarea
+            formControlName="review"
+            class="form-control"
+            id="review"
+            name="review"
+            rows="5"
+            required
+          ></textarea>
         </div>
         <div class="mb-3">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" [ngClass]="!validated ? 'disabled' : ''" class="btn btn-primary">
+            Submit
+          </button>
         </div>
       </form>
     </div>

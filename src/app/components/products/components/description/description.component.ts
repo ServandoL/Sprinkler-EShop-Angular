@@ -9,7 +9,6 @@ import { CartState } from '../../../../services/state/cart/cart.state';
 import { getProductDescription } from '../../../../services/state/product/product.selectors';
 import { CartAppService } from '../../../../services/state/services/cart.service';
 import { addToCartFunction } from '../../../../utils/common/functions';
-import { ICartItem } from '../../../../models/cart.model';
 
 @Component({
   selector: 'app-description',

@@ -62,9 +62,9 @@
                 [size]="'small'"
               ></star-rating>
               <p>Reviewed by: {{ review.name }}</p>
-              <div class="fw-bold">{{ review.headline ? review.headline : 'No headline.' }}</div>
+              <div class="fw-bold">{{ review.headLine ? review.headLine : 'No headline.' }}</div>
               <p class="text-muted small">
-                Reviewed on {{ review.reviewDate ? review.reviewDate : 'No Date.' }}
+                Reviewed on {{ review.createdDate ? (review.createdDate | date) : 'No Date.' }}
               </p>
               <p>{{ review.review }}</p>
             </div>

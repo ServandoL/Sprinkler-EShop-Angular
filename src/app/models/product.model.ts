@@ -15,13 +15,6 @@ export interface IProduct {
   deleted_by?: string;
   deleted_date?: string;
 }
-export interface Rating {
-  name: string;
-  headline?: string;
-  reviewDate?: Date;
-  review: string;
-  rate: number;
-}
 export interface ICategory {
   category: string;
 }
@@ -79,4 +72,20 @@ export interface FilterResponse {
   brands: string[];
   categories: string[];
   success: boolean;
+}
+export interface Rating {
+  name: string;
+  review: string;
+  rate: number;
+  createdDate: string;
+  headLine: string;
+}
+
+export interface ReviewRequest {
+  productId: string;
+  name: string;
+  review: string;
+  headLine: string;
+  rate: number;
+  createdDate: string;
 }

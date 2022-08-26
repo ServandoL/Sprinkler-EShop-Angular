@@ -50,6 +50,8 @@ export const GetProductsQuery = gql`
           name
           review
           rate
+          headLine
+          createdDate
         }
         __typename
       }
@@ -103,6 +105,15 @@ export const GetProductFiltersQuery = gql`
     getFilters(filterRequest: $filterRequest) {
       brands
       categories
+    }
+  }
+`;
+
+export const ReviewProductMutation = gql`
+  mutation Mutation($reviewRequest: ReviewRequest) {
+    reviewProduct(reviewRequest: $reviewRequest) {
+      message
+      success
     }
   }
 `;

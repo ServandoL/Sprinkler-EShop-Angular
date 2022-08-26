@@ -59,15 +59,30 @@ export class ProductEffects {
       ofType(ProductActions.updateProduct),
       mergeMap((action) =>
         this.productService.updateProduct$(action.request).pipe(
-          map(
-            (response) =>
-              ProductActions.updateProductSuccess({
-                response: response.data.updateProduct,
-              })
+          map((response) =>
+            ProductActions.updateProductSuccess({
+              response: response.data.updateProduct,
+            })
           ),
           catchError((error) => {
-            return of(ProductActions.updateProductFailure({ error: JSON.stringify(error) }))
+            return of(ProductActions.updateProductFailure({ error: JSON.stringify(error) }));
           })
+        )
+      )
+    );
+  });
+
+  reviewProduct$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.submitReview),
+      mergeMap((action) =>
+        this.productService.reviewProduct$(action.review).pipe(
+          map((response) =>
+            ProductActions.submitReviewSuccess({ response: response.data.reviewProduct })
+          ),
+          catchError((error) =>
+            of(ProductActions.submitReviewFailure({ error: JSON.stringify(error) }))
+          )
         )
       )
     );

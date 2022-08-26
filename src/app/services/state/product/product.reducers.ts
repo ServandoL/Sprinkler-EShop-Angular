@@ -144,5 +144,27 @@ export const productReducer = createReducer<ProductState>(
       ...state,
       reviewProduct: action.product,
     };
+  }),
+  on(ProductActions.submitReview, (state, action): ProductState => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(ProductActions.submitReviewSuccess, (state, action): ProductState => {
+    return {
+      ...state,
+      updateSuccess: action.response.success,
+      error: '',
+      isLoading: false,
+    };
+  }),
+  on(ProductActions.submitReviewFailure, (state, action): ProductState => {
+    return {
+      ...state,
+      isLoading: false,
+      updateSuccess: false,
+      error: action.error,
+    };
   })
 );

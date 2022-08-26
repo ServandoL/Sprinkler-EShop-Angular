@@ -6,6 +6,7 @@ import {
   DeleteProductRequest,
   IProduct,
   ProductRequest,
+  ReviewRequest,
   UpdateProductRequest,
 } from '../../../models/product.model';
 import * as ProductActions from '../product/product.actions';
@@ -59,5 +60,9 @@ export class ProductAppService {
 
   reviewProduct(product: IProduct) {
     this.store.dispatch(ProductActions.reviewClicked({ product }));
+  }
+
+  submitReview(request: ReviewRequest) {
+    this.store.dispatch(ProductActions.submitReview({ review: request }));
   }
 }
