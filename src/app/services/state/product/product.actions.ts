@@ -2,9 +2,12 @@ import { createAction, props } from '@ngrx/store';
 import {
   AddProductRequest,
   DeleteProductRequest,
+  IProduct,
   ProductRequest,
   ProductResponse,
   UpdateProductRequest,
+  Rating,
+  ReviewRequest,
 } from '../../../models/product.model';
 import { ObjectId } from 'mongodb';
 import { GenericResponse } from '../../../models/AppState';
@@ -29,6 +32,19 @@ const DeleteProductActionFailure = '[Product] Delete Product Failure';
 const ResetDeleteResponse = '[Product] Reset Delete Response';
 const ResetAddSuccess = '[Product] Reset Add Success';
 const ClearProductState = '[Produt] Clear Product State';
+const ReviewClicked = '[Product] Review Clicked';
+const SubmitReview = '[Product] Submit Review';
+const SubmitReviewSuccess = '[Product] Submit Review Success';
+const SubmitReviewFailure = '[Product] Submit Review Failure';
+
+export const submitReview = createAction(SubmitReview, props<{ review: ReviewRequest }>());
+export const submitReviewSuccess = createAction(
+  SubmitReviewSuccess,
+  props<{ response: GenericResponse }>()
+);
+export const submitReviewFailure = createAction(SubmitReviewFailure, props<{ error: any }>());
+
+export const reviewClicked = createAction(ReviewClicked, props<{ product: IProduct }>());
 
 export const clearProductState = createAction(ClearProductState);
 export const resetAddSuccess = createAction(ResetAddSuccess);

@@ -9,6 +9,7 @@ import {
   DeleteProductMutation,
   GetProductFiltersQuery,
   GetProductsQuery,
+  ReviewProductMutation,
   UpdateProductMutation,
 } from './product.schema';
 import {
@@ -16,6 +17,7 @@ import {
   DeleteProductRequest,
   ProductRequest,
   ProductResponse,
+  ReviewRequest,
   UpdateProductRequest,
 } from '../../../models/product.model';
 
@@ -82,6 +84,15 @@ export class ProductService {
         filterRequest: {
           filters: request,
         },
+      },
+    });
+  }
+
+  reviewProduct$(request: ReviewRequest): Observable<any> {
+    return this.apollo.mutate({
+      mutation: ReviewProductMutation,
+      variables: {
+        reviewRequest: request,
       },
     });
   }

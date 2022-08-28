@@ -16,6 +16,9 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ProductEffects } from '../../services/state/product/product.effects';
 import { productReducer } from '../../services/state/product/product.reducers';
 import { ProductService } from '../../services/state/product/product.service';
+import { ReviewsComponent } from './components/reviews/reviews.component';
+import { StarRatingModule } from '../../../../projects/star-rating/src/public-api';
+import { DescriptionComponent } from './components/description/description.component';
 
 @NgModule({
   imports: [
@@ -26,6 +29,7 @@ import { ProductService } from '../../services/state/product/product.service';
     FormsModule,
     ReactiveFormsModule,
     SharedAppModule,
+    StarRatingModule.forRoot(),
   ],
   exports: [QtyFormComponent],
   declarations: [
@@ -36,6 +40,8 @@ import { ProductService } from '../../services/state/product/product.service';
     ValvesComponent,
     QtyFormComponent,
     ProductCardComponent,
+    ReviewsComponent,
+    DescriptionComponent,
   ],
   providers: [ProductService],
 })

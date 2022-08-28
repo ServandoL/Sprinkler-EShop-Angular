@@ -39,6 +39,9 @@ export class ControllersComponent implements OnInit, OnDestroy {
   paging!: Pagination;
   pagination$!: Observable<Pagination>;
   submitted!: string;
+  reviewClicked!: boolean;
+  viewProduct!: IProduct;
+  addToCartError!: string;
 
   constructor(
     private store: Store<AppState>,
@@ -62,7 +65,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productService.loadProducts(this.request);
-
+    this.reviewClicked = false;
     this.quantity = 1;
     this.subscription.push(
       this.authService.getToken$().subscribe((result) => (this.validated = result))
@@ -79,7 +82,14 @@ export class ControllersComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
     this.cartService.resetCartMessage();
+    this.reviewClicked = false;
   }
+
+  onReviewClicked($event: IProduct) {
+    this.reviewClicked = true;
+    this.productService.reviewProduct($event);
+  }
+
   onGoTo(page: number): void {
     this.request = {
       category: this.pageTitle,
@@ -119,9 +129,11 @@ export class ControllersComponent implements OnInit, OnDestroy {
 
   submit(product: IProduct, qty: number) {
     const cartItem = addToCartFunction(product, qty, this.validated);
-    if (cartItem) {
+    if (typeof cartItem !== 'string') {
       this.cartService.addToCart(cartItem);
       this.submitted = cartItem._id;
+    } else {
+      this.addToCartError = cartItem;
     }
   }
 }

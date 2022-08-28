@@ -2,6 +2,19 @@
   <img class="card-img-top mx-auto" src="/assets/{{ product.imageUrl }}" alt="product image" />
   <div class="card-body">
     <h3 class="card-title">{{ product.productName }}</h3>
+    <star-rating
+      [starType]="'svg'"
+      [readOnly]="true"
+      [rating]="product.rating"
+      [labelText]="product.ratings.length.toString()"
+      [showHalfStars]="true"
+      [labelHasLink]="true"
+      labelLink="/products/description/"
+      labelPosition="right"
+      class="rating"
+      size="small"
+      (reviewClicked)="onReviewClicked($event)"
+    ></star-rating>
     <p class="card-text product-price">${{ product.price }}</p>
     <p class="card-text product-price" *ngIf="product.stock > 0">
       Inventory: <span class="in-stock">{{ product.stock }}</span>

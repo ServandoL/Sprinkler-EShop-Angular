@@ -45,6 +45,15 @@ export const GetProductsQuery = gql`
         isDeleted
         deleted_by
         deleted_date
+        rating
+        ratings {
+          name
+          review
+          rate
+          headLine
+          createdDate
+        }
+        __typename
       }
       pagination {
         totalDocs
@@ -57,7 +66,9 @@ export const GetProductsQuery = gql`
         prevPage
         nextPage
         pagingCounter
+        __typename
       }
+      __typename
     }
   }
 `;
@@ -94,6 +105,15 @@ export const GetProductFiltersQuery = gql`
     getFilters(filterRequest: $filterRequest) {
       brands
       categories
+    }
+  }
+`;
+
+export const ReviewProductMutation = gql`
+  mutation Mutation($reviewRequest: ReviewRequest) {
+    reviewProduct(reviewRequest: $reviewRequest) {
+      message
+      success
     }
   }
 `;
