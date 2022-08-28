@@ -5,8 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './shared-footer.component.html',
   styleUrls: ['./shared-footer.component.css'],
 })
-export class SharedFooterComponent implements OnInit {
+export class SharedFooterComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }

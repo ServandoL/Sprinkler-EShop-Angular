@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "npx eslint src",
     "gql-gen": "graphql-codegen --config codegen.yml",
     "format": "npx prettier --write src"
   },
@@ -63,6 +63,7 @@
     "@typescript-eslint/eslint-plugin": "4.28.2",
     "@typescript-eslint/parser": "4.28.2",
     "eslint": "^7.26.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-prettier-config": "^1.0.1",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",

@@ -5,8 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css'],
 })
-export class LogoutComponent implements OnInit {
+export class LogoutComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }
