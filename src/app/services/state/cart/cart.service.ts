@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { GetCartResponse, ICartItem } from '../../../models/cart.model';
 import { Order } from '../../../models/checkout.model';
 import { CreateOrderMutation } from '../orderHistory/schema';
@@ -26,13 +26,13 @@ export class CartService {
 
   getCart$(user_id: string | null): Observable<GetCartResponse> {
     return this.apollo
-      .watchQuery({
+      .query({
         query: GetCartQuery,
         variables: {
-          email: user_id,
+          userId: user_id,
         },
       })
-      .valueChanges.pipe(
+      .pipe(
         map((result: ApolloQueryResult<any>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({
@@ -95,11 +95,23 @@ export class CartService {
   }
 
   checkout$(order: Order): Observable<any> {
-    return this.apollo.mutate({
-      mutation: CreateOrderMutation,
-      variables: {
-        request: { ...order },
-      },
-    });
+    return this.apollo
+      .mutate({
+        mutation: CreateOrderMutation,
+        variables: {
+          request: { ...order },
+        },
+      })
+      .pipe(
+        map((response: any) => {
+          if (response.errors) {
+            throw new HttpErrorResponse({
+              error: response.errors.map((error: { message: any }) => error.message).join(', '),
+            });
+          } else {
+            return response;
+          }
+        })
+      );
   }
 }

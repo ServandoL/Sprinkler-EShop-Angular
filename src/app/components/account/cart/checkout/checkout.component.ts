@@ -37,7 +37,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   states = STATES;
   isLoading$!: Observable<boolean>;
   response$!: Observable<string>;
-  error$!: Observable<string>;
+  error$!: Observable<string | undefined>;
   success$!: Observable<boolean | undefined>;
   user$!: Observable<IUser>;
 

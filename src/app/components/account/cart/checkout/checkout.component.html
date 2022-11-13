@@ -9,13 +9,8 @@
       <div class="col" *ngIf="(success$ | async) === true" class="alert alert-primary" role="alert">
         {{ response$ | async }}
       </div>
-      <div
-        class="col"
-        *ngIf="(error$ | async)?.length && (success$ | async) !== true"
-        class="alert alert-danger"
-        role="alert"
-      >
-        {{ error$ | async }}
+      <div class="col" *ngIf="error$ | async" class="alert alert-danger" role="alert">
+        <strong>Oh snap!</strong> Something went wrong!
       </div>
       <div>
         <fieldset>
@@ -111,7 +106,11 @@
               />
             </div>
             <div class="col-md-12">
-              <button type="submit" class="btn btn-primary" [disabled]="!cart.length">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!cart.length || (success$ | async) === true"
+              >
                 Submit Payment
               </button>
             </div>

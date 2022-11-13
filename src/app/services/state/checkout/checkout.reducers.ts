@@ -13,7 +13,7 @@ import { CheckoutState } from './checkout.state';
 const initialState: CheckoutState = {
   user_id: null,
   order: undefined,
-  error: '',
+  error: undefined,
   response: '',
   isLoading: false,
   success: undefined,
@@ -62,6 +62,7 @@ export const checkoutReducer = createReducer<CheckoutState>(
       isLoading: false,
       response: action.response,
       success: true,
+      error: undefined,
     };
   }),
   on(checkOutFailure, (state, action): CheckoutState => {
@@ -75,6 +76,7 @@ export const checkoutReducer = createReducer<CheckoutState>(
   on(resetSuccess, (state: CheckoutState): CheckoutState => {
     return {
       ...state,
+      isLoading: false,
       success: false,
     };
   }),

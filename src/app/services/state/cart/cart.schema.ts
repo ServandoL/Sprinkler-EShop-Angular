@@ -1,10 +1,11 @@
 import { gql } from 'apollo-angular';
 
 export const GetCartQuery = gql`
-  query getCart($email: String) {
-    getCart(email: $email) {
+  query Query($userId: String) {
+    getCart(userId: $userId) {
       cart {
         _id
+        email
         productName
         price
         category

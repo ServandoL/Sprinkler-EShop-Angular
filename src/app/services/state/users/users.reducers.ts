@@ -30,6 +30,7 @@ export const userReducer = createReducer<UserState>(
       ...state,
       isLoading: false,
       genericResponse: action.response,
+      error: '',
     };
   }),
   on(UserActions.updateUserFailure, (state, action): UserState => {
