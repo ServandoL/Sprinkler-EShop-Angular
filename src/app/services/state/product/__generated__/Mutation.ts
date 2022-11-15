@@ -3,14 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ReviewRequest } from '../../__generated__/globalTypes';
+import { ReviewRequest } from "./../../../../../../__generated__/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: Mutation
 // ====================================================
 
 export interface Mutation_reviewProduct {
-  __typename: 'genericResponse';
+  __typename: "genericResponse";
   message: string | null;
   success: boolean | null;
 }

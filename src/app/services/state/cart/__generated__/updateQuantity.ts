@@ -3,14 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CartInput } from '../../__generated__/globalTypes';
+import { CartInput } from "./../../../../../../__generated__/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: updateQuantity
 // ====================================================
 
 export interface updateQuantity_updateCart {
-  __typename: 'genericResponse';
+  __typename: "genericResponse";
   message: string | null;
   success: boolean | null;
 }

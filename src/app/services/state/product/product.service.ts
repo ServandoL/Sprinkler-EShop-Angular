@@ -30,14 +30,14 @@ export class ProductService {
 
   getProductsByCategory$(request: ProductRequest): Observable<ProductResponse> {
     return this.apollo
-      .watchQuery({
+      .query({
         query: GetProductsQuery,
         variables: {
           productRequest: { category: request.category, page: request.page },
         },
         fetchPolicy: 'no-cache',
       })
-      .valueChanges.pipe(
+      .pipe(
         map((result: ApolloQueryResult<any>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({

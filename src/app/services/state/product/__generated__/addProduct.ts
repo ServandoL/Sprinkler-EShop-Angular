@@ -3,14 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AddProductRequest } from '../../__generated__/globalTypes';
+import { AddProductRequest } from "./../../../../../../__generated__/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: addProduct
 // ====================================================
 
 export interface addProduct_addProduct {
-  __typename: 'addProductResponse';
+  __typename: "addProductResponse";
   message: string | null;
   success: boolean | null;
 }

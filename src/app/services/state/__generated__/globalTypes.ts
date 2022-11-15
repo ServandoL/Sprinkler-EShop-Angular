@@ -84,8 +84,8 @@ export interface OrderInput {
 }
 
 export interface Page {
-  pageSize?: number | null;
-  pageNumber?: number | null;
+  pageSize: number;
+  pageNumber: number;
 }
 
 export interface PaymentInput {
@@ -104,7 +104,7 @@ export interface ProductInput {
   isDeleted?: boolean | null;
   deleted_by?: string | null;
   deleted_date?: string | null;
-  page?: Page | null;
+  page: Page;
 }
 
 export interface ReviewRequest {

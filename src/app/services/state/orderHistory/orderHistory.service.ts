@@ -19,7 +19,7 @@ export class OrderHistoryService {
 
   getOrders$(request: OrderHistoryRequest): Observable<OrderHistoryResponse> {
     return this.apollo
-      .watchQuery({
+      .query({
         query: GetOrderHistoryQuery,
         variables: {
           orderHistoryRequest: {
@@ -29,7 +29,7 @@ export class OrderHistoryService {
           fetchPolicy: 'no-cache',
         },
       })
-      .valueChanges.pipe(
+      .pipe(
         map((result: ApolloQueryResult<any>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({

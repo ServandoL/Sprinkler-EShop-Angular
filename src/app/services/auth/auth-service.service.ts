@@ -29,11 +29,11 @@ export class AuthService {
 
   getUser$(email: string, password: string): Observable<UserResponse> {
     return this.apollo
-      .watchQuery({
+      .query({
         query: GetUserQuery,
         variables: { email: email, password: password },
       })
-      .valueChanges.pipe(
+      .pipe(
         map((result: ApolloQueryResult<any>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({

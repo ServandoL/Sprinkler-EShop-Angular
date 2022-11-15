@@ -3,14 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { SaveCartRequest } from '../../__generated__/globalTypes';
+import { SaveCartRequest } from "./../../../../../../__generated__/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: saveCart
 // ====================================================
 
 export interface saveCart_saveCart {
-  __typename: 'genericResponse';
+  __typename: "genericResponse";
   message: string | null;
   success: boolean | null;
 }

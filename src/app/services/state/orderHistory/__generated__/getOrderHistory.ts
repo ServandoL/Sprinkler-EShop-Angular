@@ -3,14 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderHistoryRequest } from '../../__generated__/globalTypes';
+import { OrderHistoryRequest } from "./../../../../../../__generated__/globalTypes";
 
 // ====================================================
 // GraphQL query operation: getOrderHistory
 // ====================================================
 
 export interface getOrderHistory_orders_data_order {
-  __typename: 'Cart';
+  __typename: "Cart";
   _id: string | null;
   productName: string | null;
   price: number | null;
@@ -23,7 +23,7 @@ export interface getOrderHistory_orders_data_order {
 }
 
 export interface getOrderHistory_orders_data_shipping {
-  __typename: 'ShippingType';
+  __typename: "ShippingType";
   address: string | null;
   address2: string | null;
   city: string | null;
@@ -32,7 +32,7 @@ export interface getOrderHistory_orders_data_shipping {
 }
 
 export interface getOrderHistory_orders_data_payment {
-  __typename: 'PaymentType';
+  __typename: "PaymentType";
   cardNumber: string | null;
   month: string | null;
   year: string | null;
@@ -40,7 +40,7 @@ export interface getOrderHistory_orders_data_payment {
 }
 
 export interface getOrderHistory_orders_data {
-  __typename: 'OrderType';
+  __typename: "OrderType";
   _id: string | null;
   order: (getOrderHistory_orders_data_order | null)[] | null;
   shipping: getOrderHistory_orders_data_shipping | null;
@@ -52,7 +52,7 @@ export interface getOrderHistory_orders_data {
 }
 
 export interface getOrderHistory_orders_pagination {
-  __typename: 'Pagination';
+  __typename: "Pagination";
   totalDocs: number | null;
   limit: number | null;
   hasPrevPage: boolean | null;
@@ -66,7 +66,7 @@ export interface getOrderHistory_orders_pagination {
 }
 
 export interface getOrderHistory_orders {
-  __typename: 'getOrderResponse';
+  __typename: "getOrderResponse";
   data: (getOrderHistory_orders_data | null)[] | null;
   pagination: getOrderHistory_orders_pagination | null;
 }

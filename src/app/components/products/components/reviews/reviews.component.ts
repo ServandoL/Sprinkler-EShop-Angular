@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ClickEvent } from '../../../../../../projects/star-rating/src/public-api';
@@ -20,7 +20,7 @@ import { getUser } from '../../../../services/state/users/users.selectors';
   templateUrl: './reviews.component.html',
   styleUrls: ['./reviews.component.scss'],
 })
-export class ReviewsComponent implements OnInit {
+export class ReviewsComponent implements OnInit, OnDestroy {
   reviewProduct$: Observable<IProduct>;
   success$: Observable<boolean>;
   error$: Observable<any>;
@@ -50,8 +50,8 @@ export class ReviewsComponent implements OnInit {
   }
 
   reviewForm = new FormGroup({
-    headLine: new FormControl(''),
-    review: new FormControl(''),
+    headLine: new FormControl('', Validators.required),
+    review: new FormControl('', Validators.required),
   });
 
   get headLine() {
@@ -70,6 +70,10 @@ export class ReviewsComponent implements OnInit {
       this.reviewProduct$.subscribe((product) => (this.product = product)),
       this.user$.subscribe((user) => (this.user = user))
     );
+  }
+
+  ngOnDestroy(): void {
+    this.productService.resetUpdateResponse();
   }
 
   onRatingClicked(rating: ClickEvent) {
