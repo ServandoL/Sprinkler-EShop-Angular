@@ -3,14 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductInput } from "./../../../../../../__generated__/globalTypes";
+import { ProductInput } from '../../__generated__/globalTypes';
 
 // ====================================================
 // GraphQL query operation: getAllProducts
 // ====================================================
 
 export interface getAllProducts_allProducts_data {
-  __typename: "Product";
+  __typename: 'Product';
   _id: string | null;
   productName: string;
   price: number;
@@ -24,7 +24,7 @@ export interface getAllProducts_allProducts_data {
 }
 
 export interface getAllProducts_allProducts_pagination {
-  __typename: "Pagination";
+  __typename: 'Pagination';
   totalDocs: number | null;
   limit: number | null;
   hasPrevPage: boolean | null;
@@ -38,7 +38,7 @@ export interface getAllProducts_allProducts_pagination {
 }
 
 export interface getAllProducts_allProducts {
-  __typename: "getProductResponse";
+  __typename: 'getProductResponse';
   data: (getAllProducts_allProducts_data | null)[] | null;
   pagination: getAllProducts_allProducts_pagination | null;
 }

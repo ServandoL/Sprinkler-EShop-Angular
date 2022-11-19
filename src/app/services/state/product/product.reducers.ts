@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { ProductState, reviewProductInit } from './product.state';
 import * as ProductActions from './product.actions';
 import { logout } from '../users/users.actions';
+import { IProduct, Rating } from '../../../models/product.model';
 
 const initialState: ProductState = {
   products: [],
@@ -152,9 +153,27 @@ export const productReducer = createReducer<ProductState>(
     };
   }),
   on(ProductActions.submitReviewSuccess, (state, action): ProductState => {
+    const ratings: Rating[] = action.response.product!.ratings!.map((rating) => ({
+      name: rating!.name,
+      review: rating!.review,
+      rate: rating!.rate,
+      headLine: rating!.headLine,
+      createdDate: rating!.createdDate,
+    }));
+    const reviewProduct: IProduct = {
+      _id: action.response.product!._id!,
+      productName: action.response.product!.productName,
+      price: action.response.product!.price,
+      category: action.response.product!.category,
+      brand: action.response.product!.brand,
+      stock: action.response.product!.stock,
+      rating: action.response.product!.rating!,
+      ratings,
+    };
     return {
       ...state,
       updateSuccess: action.response.success,
+      reviewProduct,
       error: '',
       isLoading: false,
     };

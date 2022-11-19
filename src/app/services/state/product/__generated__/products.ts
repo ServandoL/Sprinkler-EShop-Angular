@@ -3,14 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductInput } from "./../../../../../../__generated__/globalTypes";
+import { ProductInput } from '../../__generated__/globalTypes';
 
 // ====================================================
 // GraphQL query operation: products
 // ====================================================
 
 export interface products_products_data_ratings {
-  __typename: "Rating";
+  __typename: 'Rating';
   name: string | null;
   review: string | null;
   rate: number | null;
@@ -19,7 +19,7 @@ export interface products_products_data_ratings {
 }
 
 export interface products_products_data {
-  __typename: "Product";
+  __typename: 'Product';
   _id: string | null;
   productName: string;
   price: number;
@@ -35,7 +35,7 @@ export interface products_products_data {
 }
 
 export interface products_products_pagination {
-  __typename: "Pagination";
+  __typename: 'Pagination';
   totalDocs: number | null;
   limit: number | null;
   hasPrevPage: boolean | null;
@@ -49,7 +49,7 @@ export interface products_products_pagination {
 }
 
 export interface products_products {
-  __typename: "getProductResponse";
+  __typename: 'getProductResponse';
   data: (products_products_data | null)[] | null;
   pagination: products_products_pagination | null;
 }

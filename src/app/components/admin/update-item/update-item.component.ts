@@ -22,7 +22,7 @@ export class UpdateItemComponent implements OnInit {
   @Input() user!: IUser | null;
   updateItemForm!: FormGroup;
   isLoading$!: Observable<boolean>;
-  updateSuccess$!: Observable<boolean>;
+  updateSuccess$!: Observable<boolean | null>;
   subscriptions!: Subscription[];
   error$!: Observable<string>;
 

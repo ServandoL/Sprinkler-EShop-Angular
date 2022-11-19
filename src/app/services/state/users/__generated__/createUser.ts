@@ -3,14 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AddUserInput } from "./../../../../../../__generated__/globalTypes";
+import { AddUserInput } from '../../__generated__/globalTypes';
 
 // ====================================================
 // GraphQL mutation operation: createUser
 // ====================================================
 
 export interface createUser_addUser {
-  __typename: "genericResponse";
+  __typename: 'genericResponse';
   message: string | null;
   success: boolean | null;
 }

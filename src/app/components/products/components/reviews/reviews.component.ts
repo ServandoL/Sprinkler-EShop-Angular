@@ -21,12 +21,12 @@ import { getUser } from '../../../../services/state/users/users.selectors';
   styleUrls: ['./reviews.component.scss'],
 })
 export class ReviewsComponent implements OnInit, OnDestroy {
-  reviewProduct$: Observable<IProduct>;
-  success$: Observable<boolean>;
+  reviewProduct$: Observable<IProduct | null>;
+  success$: Observable<boolean | null>;
   error$: Observable<any>;
   user$: Observable<IUser>;
   user!: IUser;
-  product!: IProduct;
+  product!: IProduct | null;
   validated!: boolean;
   subscriptions: Subscription[] = [];
   reviewRequest: ReviewRequest = {
@@ -83,7 +83,7 @@ export class ReviewsComponent implements OnInit, OnDestroy {
   submit() {
     this.reviewRequest = {
       ...this.reviewRequest,
-      productId: this.product._id,
+      productId: this.product!._id,
       name: `${this.user.fname} ${this.user.lname}`,
       createdDate: new Date().toISOString(),
       headLine: this.headLine?.value,

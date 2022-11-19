@@ -16,7 +16,7 @@ import { addToCartFunction } from '../../../../utils/common/functions';
   styleUrls: ['./description.component.css'],
 })
 export class DescriptionComponent implements OnInit, OnDestroy {
-  product$!: Observable<IProduct>;
+  product$!: Observable<IProduct | null>;
   addToCartLoading$: Observable<CartState>;
   ratings: Rating[] = [];
   paginate: Rating[] = [];
@@ -59,8 +59,8 @@ export class DescriptionComponent implements OnInit, OnDestroy {
     );
     this.product$
       .subscribe((product) => {
-        this.product = product;
-        this.ratings = [...product.ratings];
+        this.product = product!;
+        this.ratings = [...product!.ratings];
         this.ratingPagination.current = 1;
         this.ratingPagination.total = this.ratings.length;
         this.ratingPagination.size = 4;

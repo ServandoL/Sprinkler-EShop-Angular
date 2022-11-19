@@ -1,4 +1,5 @@
 import { Document, WithId } from 'mongodb';
+import { Mutation_reviewProduct_product_ratings } from '../services/state/product/__generated__/Mutation';
 import { Pagination } from './pagination.model';
 
 export interface IProduct {
@@ -74,11 +75,11 @@ export interface FilterResponse {
   success: boolean;
 }
 export interface Rating {
-  name: string;
-  review: string;
-  rate: number;
-  createdDate: string;
-  headLine: string;
+  name: string | null | undefined;
+  review: string | null | undefined;
+  rate: number | null | undefined;
+  createdDate: string | null | undefined;
+  headLine: string | null | undefined;
 }
 
 export interface ReviewRequest {
