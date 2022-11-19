@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { GetUserQuery } from '../../services/state/users/user.schema';
 import { logout, logoutSuccess } from '../../services/state/users/users.actions';
 import { getUser } from '../state/users/users.selectors';
+import * as Interface from '../state/users/__generated__/getUser';
 
 @Injectable({
   providedIn: 'root',
@@ -29,18 +30,29 @@ export class AuthService {
 
   getUser$(email: string, password: string): Observable<UserResponse> {
     return this.apollo
-      .query({
+      .query<Interface.getUser>({
         query: GetUserQuery,
         variables: { email: email, password: password },
       })
       .pipe(
-        map((result: ApolloQueryResult<any>) => {
+        map((result: ApolloQueryResult<Interface.getUser>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({
               error: result.errors.map((error) => error.message).join(', '),
             });
           } else {
-            return result.data.getUser;
+            const res: UserResponse = {
+              message: result.data.getUser?.message || '',
+              success: result.data.getUser?.success || false,
+              user: {
+                _id: result.data.getUser?.user?._id || '',
+                fname: result.data.getUser?.user?.fname || '',
+                lname: result.data.getUser?.user?.lname || '',
+                email: result.data.getUser?.user?.email || '',
+                isAdmin: result.data.getUser?.user?.isAdmin || false,
+              },
+            };
+            return res;
           }
         })
       );

@@ -14,6 +14,7 @@ import {
   SaveCartMutation,
   UpdateCartQuantityMutation,
 } from './cart.schema';
+import { getCart, getCart_getCart } from './__generated__/getCart';
 
 @Injectable({
   providedIn: 'root',
@@ -24,22 +25,22 @@ export class CartService {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
-  getCart$(user_id: string | null): Observable<GetCartResponse> {
+  getCart$(user_id: string | null): Observable<getCart_getCart | null> {
     return this.apollo
-      .query({
+      .query<getCart>({
         query: GetCartQuery,
         variables: {
           userId: user_id,
         },
       })
       .pipe(
-        map((result: ApolloQueryResult<any>) => {
+        map((result: ApolloQueryResult<getCart>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({
               error: result.errors.map((error) => error.message).join(', '),
             });
           } else {
-            return result?.data?.getCart as GetCartResponse;
+            return result.data.getCart;
           }
         })
       );

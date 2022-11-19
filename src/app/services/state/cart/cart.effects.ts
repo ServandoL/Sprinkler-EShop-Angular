@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { GetCartResponse } from '../../../models/cart.model';
 import { CartGqlResponse } from '../../../models/cart.model';
 import { GenericResponse } from '../../../models/AppState';
+import { getCart_getCart } from './__generated__/getCart';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +20,12 @@ export class CartEffects {
       ofType(CartActions.loadCart),
       mergeMap((action) =>
         this.cartService.getCart$(action.user_id).pipe(
-          map((response: GetCartResponse) => {
-            return CartActions.loadCartSuccess({ response: response });
+          map((response: getCart_getCart | null) => {
+            if (response) {
+              return CartActions.loadCartSuccess({ response: response });
+            } else {
+              return CartActions.loadCartFailure({ error: 'ERROR: Nothing returned.' });
+            }
           }),
           catchError((error) => of(CartActions.loadCartFailure({ error })))
         )
