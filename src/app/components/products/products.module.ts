@@ -19,6 +19,7 @@ import { ProductService } from '../../services/state/product/product.service';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { StarRatingModule } from '../../../../projects/star-rating/src/public-api';
 import { DescriptionComponent } from './components/description/description.component';
+import { FilterComponent } from './components/filter/filter.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { DescriptionComponent } from './components/description/description.compo
     ProductCardComponent,
     ReviewsComponent,
     DescriptionComponent,
+    FilterComponent,
   ],
   providers: [ProductService],
 })
