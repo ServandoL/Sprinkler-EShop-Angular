@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface clearCart_clearCart {
-  __typename: "genericResponse";
+  __typename: 'genericResponse';
   message: string | null;
   success: boolean | null;
 }

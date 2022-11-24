@@ -1,5 +1,18 @@
 import { ICartItem } from './cart.model';
 
+export const InitShipping: Shipping = {
+  address: '',
+  city: '',
+  state: '',
+  zipCode: '',
+};
+export const InitCreditCard: CreditCard = {
+  cardNumber: '',
+  month: '',
+  year: '',
+  cvv: '',
+};
+
 export interface Shipping {
   address: string;
   address2?: string;
