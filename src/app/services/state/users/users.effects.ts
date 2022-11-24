@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, concatMap, map, mergeMap } from 'rxjs/operators';
 import { AppState, GenericResponse } from '../../../models/AppState';
 import { UserService } from './user.service';
 import * as UserActions from './users.actions';
@@ -25,7 +25,7 @@ export class UserEffects {
   login$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(UserActions.setCurrentUser),
-      mergeMap((action) =>
+      concatMap((action) =>
         this.authService.getUser$(action.email, action.password).pipe(
           map((response: UserResponse) => {
             if (response.user.isAdmin) {

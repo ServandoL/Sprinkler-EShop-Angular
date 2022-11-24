@@ -11,6 +11,7 @@ import {
 } from '../../../models/product.model';
 import { ObjectId } from 'mongodb';
 import { GenericResponse } from '../../../models/AppState';
+import { Mutation_reviewProduct } from './__generated__/Mutation';
 
 const CurrentProductAction = '[Product] Set Current Product';
 const ClearProductAction = '[Product] Clear Current Product';
@@ -40,7 +41,7 @@ const SubmitReviewFailure = '[Product] Submit Review Failure';
 export const submitReview = createAction(SubmitReview, props<{ review: ReviewRequest }>());
 export const submitReviewSuccess = createAction(
   SubmitReviewSuccess,
-  props<{ response: GenericResponse }>()
+  props<{ response: Mutation_reviewProduct }>()
 );
 export const submitReviewFailure = createAction(SubmitReviewFailure, props<{ error: any }>());
 

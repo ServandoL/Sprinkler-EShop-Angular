@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ApolloQueryResult } from '@apollo/client/core';
+import { ApolloQueryResult, FetchResult } from '@apollo/client/core';
 import {
   AddProductMutation,
   DeleteProductMutation,
@@ -20,6 +20,7 @@ import {
   ReviewRequest,
   UpdateProductRequest,
 } from '../../../models/product.model';
+import { Mutation } from './__generated__/Mutation';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -30,14 +31,14 @@ export class ProductService {
 
   getProductsByCategory$(request: ProductRequest): Observable<ProductResponse> {
     return this.apollo
-      .watchQuery({
+      .query({
         query: GetProductsQuery,
         variables: {
           productRequest: { category: request.category, page: request.page },
         },
         fetchPolicy: 'no-cache',
       })
-      .valueChanges.pipe(
+      .pipe(
         map((result: ApolloQueryResult<any>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({
@@ -88,7 +89,7 @@ export class ProductService {
     });
   }
 
-  reviewProduct$(request: ReviewRequest): Observable<any> {
+  reviewProduct$(request: ReviewRequest): Observable<FetchResult<Mutation>> {
     return this.apollo.mutate({
       mutation: ReviewProductMutation,
       variables: {

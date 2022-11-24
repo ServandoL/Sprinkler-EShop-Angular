@@ -16,7 +16,7 @@ export class FilterService {
 
   getFilters$(request: string[]): Observable<FilterResponse> {
     return this.apollo
-      .watchQuery({
+      .query({
         query: GetProductFiltersQuery,
         variables: {
           filterRequest: {
@@ -25,7 +25,7 @@ export class FilterService {
         },
         fetchPolicy: 'no-cache',
       })
-      .valueChanges.pipe(
+      .pipe(
         map((result: ApolloQueryResult<any>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({

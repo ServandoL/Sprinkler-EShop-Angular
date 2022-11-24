@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ClickEvent } from '../../../../../../projects/star-rating/src/public-api';
@@ -20,13 +20,13 @@ import { getUser } from '../../../../services/state/users/users.selectors';
   templateUrl: './reviews.component.html',
   styleUrls: ['./reviews.component.scss'],
 })
-export class ReviewsComponent implements OnInit {
-  reviewProduct$: Observable<IProduct>;
-  success$: Observable<boolean>;
+export class ReviewsComponent implements OnInit, OnDestroy {
+  reviewProduct$: Observable<IProduct | null>;
+  success$: Observable<boolean | null>;
   error$: Observable<any>;
   user$: Observable<IUser>;
   user!: IUser;
-  product!: IProduct;
+  product!: IProduct | null;
   validated!: boolean;
   subscriptions: Subscription[] = [];
   reviewRequest: ReviewRequest = {
@@ -50,8 +50,8 @@ export class ReviewsComponent implements OnInit {
   }
 
   reviewForm = new FormGroup({
-    headLine: new FormControl(''),
-    review: new FormControl(''),
+    headLine: new FormControl('', Validators.required),
+    review: new FormControl('', Validators.required),
   });
 
   get headLine() {
@@ -72,6 +72,10 @@ export class ReviewsComponent implements OnInit {
     );
   }
 
+  ngOnDestroy(): void {
+    this.productService.resetUpdateResponse();
+  }
+
   onRatingClicked(rating: ClickEvent) {
     this.reviewRequest.rate = rating.rating;
   }
@@ -79,7 +83,7 @@ export class ReviewsComponent implements OnInit {
   submit() {
     this.reviewRequest = {
       ...this.reviewRequest,
-      productId: this.product._id,
+      productId: this.product!._id,
       name: `${this.user.fname} ${this.user.lname}`,
       createdDate: new Date().toISOString(),
       headLine: this.headLine?.value,

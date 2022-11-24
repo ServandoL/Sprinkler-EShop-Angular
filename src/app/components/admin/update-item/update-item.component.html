@@ -26,7 +26,7 @@
         <div class="row my-2">
           <div class="col">
             <img
-              src="/assets/{{ product?.imageUrl }}"
+              src="/assets/{{ product.imageUrl }}"
               alt="product-image"
               class="rounded mx-auto d-block img-thumbnail img-size"
             />
@@ -38,7 +38,7 @@
                   rows="3"
                   id="product-name"
                   formControlName="productName"
-                  [value]="product?.productName"
+                  [value]="product.productName"
                 ></textarea>
               </div>
               <div class="form-group my-2">
@@ -48,7 +48,7 @@
                   class="form-control"
                   id="product-price"
                   formControlName="price"
-                  [value]="product?.price"
+                  [value]="product.price"
                 />
               </div>
               <div class="form-group my-2">
@@ -58,7 +58,7 @@
                   class="form-control"
                   id="product-stock"
                   formControlName="stock"
-                  [value]="product?.stock"
+                  [value]="product.stock"
                 />
               </div>
               <div class="form-group my-2">
@@ -76,7 +76,10 @@
         </div>
         <div class="row">
           <div class="col-md-12" *ngIf="(error$ | async)?.length">
-            <p class="alert alert-danger">An error occurred while trying to update this product. Please try again. If the problem persists, please contact support.</p>
+            <p class="alert alert-danger">
+              An error occurred while trying to update this product. Please try again. If the
+              problem persists, please contact support.
+            </p>
           </div>
           <div class="col-md-12" *ngIf="(updateSuccess$ | async) === true">
             <p class="alert alert-success">The product was updated successfully.</p>

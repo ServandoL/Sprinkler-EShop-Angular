@@ -15,10 +15,12 @@
         class="page-link"
         [ngClass]="page === -1 ? 'disabled' : ''"
         [text]="displayPageButton(page)"
-        ></a
-      >
+      ></a>
     </li>
-    <li class="page-item" [ngClass]="{ disabled: current === numberOfPages }">
+    <li
+      class="page-item"
+      [ngClass]="{ disabled: current === numberOfPages || numberOfPages === 0 }"
+    >
       <a class="page-link" aria-label="Next" (click)="onNext()">
         <span aria-hidden="true">Next</span>
       </a>

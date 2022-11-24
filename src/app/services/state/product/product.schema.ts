@@ -114,6 +114,53 @@ export const ReviewProductMutation = gql`
     reviewProduct(reviewRequest: $reviewRequest) {
       message
       success
+      product {
+        _id
+        productName
+        price
+        category
+        brand
+        stock
+        imageUrl
+        rating
+        ratings {
+          name
+          review
+          rate
+          headLine
+          createdDate
+        }
+        isDeleted
+        deleted_by
+        deleted_date
+      }
+    }
+  }
+`;
+
+export const GetCurrentProductQuery = gql`
+  query GetCurrentProduct($productId: String!) {
+    getCurrentProduct(productId: $productId) {
+      product {
+        _id
+        productName
+        price
+        category
+        brand
+        stock
+        imageUrl
+        rating
+        ratings {
+          name
+          review
+          rate
+          headLine
+          createdDate
+        }
+        isDeleted
+        deleted_by
+        deleted_date
+      }
     }
   }
 `;

@@ -77,9 +77,13 @@ export class ProductEffects {
       ofType(ProductActions.submitReview),
       mergeMap((action) =>
         this.productService.reviewProduct$(action.review).pipe(
-          map((response) =>
-            ProductActions.submitReviewSuccess({ response: response.data.reviewProduct })
-          ),
+          map((response) => {
+            if (response.data?.reviewProduct) {
+              return ProductActions.submitReviewSuccess({ response: response.data.reviewProduct });
+            } else {
+              return ProductActions.submitReviewFailure({ error: response.errors });
+            }
+          }),
           catchError((error) =>
             of(ProductActions.submitReviewFailure({ error: JSON.stringify(error) }))
           )

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { GetCartResponse, ICartItem } from '../../../models/cart.model';
 import { Order } from '../../../models/checkout.model';
 import { CreateOrderMutation } from '../orderHistory/schema';
@@ -14,6 +14,7 @@ import {
   SaveCartMutation,
   UpdateCartQuantityMutation,
 } from './cart.schema';
+import { getCart, getCart_getCart } from './__generated__/getCart';
 
 @Injectable({
   providedIn: 'root',
@@ -24,22 +25,22 @@ export class CartService {
     this.apollo = this.apolloProvider.use('SprinklerShop');
   }
 
-  getCart$(user_id: string | null): Observable<GetCartResponse> {
+  getCart$(user_id: string | null): Observable<getCart_getCart | null> {
     return this.apollo
-      .watchQuery({
+      .query<getCart>({
         query: GetCartQuery,
         variables: {
-          email: user_id,
+          userId: user_id,
         },
       })
-      .valueChanges.pipe(
-        map((result: ApolloQueryResult<any>) => {
+      .pipe(
+        map((result: ApolloQueryResult<getCart>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({
               error: result.errors.map((error) => error.message).join(', '),
             });
           } else {
-            return result?.data?.getCart as GetCartResponse;
+            return result.data.getCart;
           }
         })
       );
@@ -95,11 +96,23 @@ export class CartService {
   }
 
   checkout$(order: Order): Observable<any> {
-    return this.apollo.mutate({
-      mutation: CreateOrderMutation,
-      variables: {
-        request: { ...order },
-      },
-    });
+    return this.apollo
+      .mutate({
+        mutation: CreateOrderMutation,
+        variables: {
+          request: { ...order },
+        },
+      })
+      .pipe(
+        map((response: any) => {
+          if (response.errors) {
+            throw new HttpErrorResponse({
+              error: response.errors.map((error: { message: any }) => error.message).join(', '),
+            });
+          } else {
+            return response;
+          }
+        })
+      );
   }
 }

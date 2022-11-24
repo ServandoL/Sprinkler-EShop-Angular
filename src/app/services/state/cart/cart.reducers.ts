@@ -81,7 +81,17 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.loadCartSuccess, (state, action): CartState => {
     let cart: ICartItem[] = [];
     if (action.response) {
-      cart = action.response.cart;
+      cart = action.response.cart!.map((item) => ({
+        _id: item!._id!,
+        userId: '',
+        productName: item!.productName!,
+        price: item!.price!,
+        category: item!.category!,
+        brand: item!.brand!,
+        stock: item!.stock!,
+        imageUrl: item!.imageUrl!,
+        quantity: item!.quantity!,
+      }));
     }
     return {
       ...state,

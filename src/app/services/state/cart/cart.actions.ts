@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { GenericResponse } from '../../../models/AppState';
 import { CartGqlResponse, GetCartResponse, ICartItem } from '../../../models/cart.model';
+import { getCart_getCart } from './__generated__/getCart';
 
 const LoadCartAction = '[Cart] Load Cart';
 const LoadCartSuccess = '[Cart] Load Cart Success';
@@ -61,7 +62,7 @@ export const updateProductQuantity = createAction(
 export const loadCart = createAction(LoadCartAction, props<{ user_id: string | null }>());
 export const loadCartSuccess = createAction(
   LoadCartSuccess,
-  props<{ response: GetCartResponse }>()
+  props<{ response: getCart_getCart }>()
 );
 export const loadCartFailure = createAction(LoadCartFailure, props<{ error: any }>());
 

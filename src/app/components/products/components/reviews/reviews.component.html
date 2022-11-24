@@ -68,7 +68,13 @@
           ></textarea>
         </div>
         <div class="mb-3">
-          <button type="submit" [ngClass]="!validated ? 'disabled' : ''" class="btn btn-primary">
+          <button
+            type="submit"
+            [ngClass]="
+              !validated || !reviewForm.valid || (success$ | async) === true ? 'disabled' : ''
+            "
+            class="btn btn-primary"
+          >
             Submit
           </button>
         </div>

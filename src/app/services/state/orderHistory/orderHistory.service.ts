@@ -4,7 +4,6 @@ import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Order } from '../../../models/checkout.model';
 import { OrderHistoryRequest, OrderHistoryResponse } from '../../../models/orderHistory.model';
 import { GetOrderHistoryQuery } from './schema';
 
@@ -19,7 +18,7 @@ export class OrderHistoryService {
 
   getOrders$(request: OrderHistoryRequest): Observable<OrderHistoryResponse> {
     return this.apollo
-      .watchQuery({
+      .query({
         query: GetOrderHistoryQuery,
         variables: {
           orderHistoryRequest: {
@@ -29,7 +28,7 @@ export class OrderHistoryService {
           fetchPolicy: 'no-cache',
         },
       })
-      .valueChanges.pipe(
+      .pipe(
         map((result: ApolloQueryResult<any>) => {
           if (result?.errors) {
             throw new HttpErrorResponse({

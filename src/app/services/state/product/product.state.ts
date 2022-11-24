@@ -3,9 +3,9 @@ import { IProduct } from '../../../models/product.model';
 
 export interface ProductState {
   products: IProduct[];
-  reviewProduct: IProduct;
+  reviewProduct: IProduct | null;
   page: Pagination;
-  updateSuccess: boolean;
+  updateSuccess: boolean | null;
   deleteSuccess: boolean;
   addSuccess: boolean;
   error: string;
