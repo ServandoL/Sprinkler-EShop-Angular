@@ -11,6 +11,7 @@ import {
 } from '../../../models/product.model';
 import * as ProductActions from '../product/product.actions';
 import * as FilterActions from '../product-filters/filter.actions';
+import { FindProductInput } from '../product/product.state';
 
 @Injectable({
   providedIn: 'root',
@@ -64,5 +65,9 @@ export class ProductAppService {
 
   submitReview(request: ReviewRequest) {
     this.store.dispatch(ProductActions.submitReview({ review: request }));
+  }
+
+  filteredSearch(request: FindProductInput) {
+    this.store.dispatch(ProductActions.loadProducts({ request }));
   }
 }

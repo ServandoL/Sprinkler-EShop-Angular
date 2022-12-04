@@ -4,6 +4,7 @@ import * as ProductActions from './product.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ProductService } from './product.service';
+import { FindProductInput } from '../__generated__/globalTypes';
 
 @Injectable()
 export class ProductEffects {
@@ -12,12 +13,21 @@ export class ProductEffects {
   loadProducts$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductActions.loadProducts),
-      mergeMap((action) =>
-        this.productService.getProductsByCategory$(action.request).pipe(
-          map((response) => ProductActions.loadProductsSuccess({ response })),
-          catchError((error) => of(ProductActions.loadProductsFailure({ error })))
-        )
-      )
+      mergeMap((action) => {
+        if (action.request.__typename === 'ProductRequest') {
+          return this.productService.getProductsByCategory$(action.request).pipe(
+            map((response) => ProductActions.loadProductsSuccess({ response })),
+            catchError((error) => of(ProductActions.loadProductsFailure({ error })))
+          );
+        } else {
+          const { __typename, ...filters } = action.request;
+          const request: FindProductInput = { ...filters };
+          return this.productService.getFilteredProduct$({ filterRequest: request }).pipe(
+            map((response) => ProductActions.loadProductsSuccess({ response })),
+            catchError((error) => of(ProductActions.loadProductsFailure({ error })))
+          );
+        }
+      })
     );
   });
 

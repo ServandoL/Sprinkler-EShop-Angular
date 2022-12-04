@@ -7,6 +7,7 @@ import { ApolloQueryResult, FetchResult } from '@apollo/client/core';
 import {
   AddProductMutation,
   DeleteProductMutation,
+  FilteredProductsQuery,
   GetProductFiltersQuery,
   GetProductsQuery,
   ReviewProductMutation,
@@ -21,6 +22,12 @@ import {
   UpdateProductRequest,
 } from '../../../models/product.model';
 import { Mutation } from './__generated__/Mutation';
+import { FindProductInput } from '../__generated__/globalTypes';
+import {
+  GetFilteredProductQuery,
+  GetFilteredProductQueryVariables,
+} from './__generated__/GetFilteredProductQuery';
+import { FilteredProductUIMapper } from './product.mapper';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -46,6 +53,25 @@ export class ProductService {
             });
           } else {
             return result?.data?.products;
+          }
+        })
+      );
+  }
+
+  getFilteredProduct$(request: GetFilteredProductQueryVariables): Observable<ProductResponse> {
+    return this.apollo
+      .query<GetFilteredProductQuery>({
+        query: FilteredProductsQuery,
+        variables: request,
+      })
+      .pipe(
+        map((result: ApolloQueryResult<GetFilteredProductQuery>) => {
+          if (result.errors) {
+            throw new HttpErrorResponse({
+              error: result.errors.map((error) => error.message).join(', '),
+            });
+          } else {
+            return FilteredProductUIMapper(result.data.findProducts);
           }
         })
       );

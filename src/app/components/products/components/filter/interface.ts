@@ -1,3 +1,5 @@
+import { Page } from '../../../../models/pagination.model';
+
 export interface OptionsModel {
   value: string;
   selected: boolean;
@@ -14,4 +16,5 @@ export interface SearchFilter {
   minPrice?: number;
   maxPrice?: number;
   rating?: number;
+  page: Page;
 }

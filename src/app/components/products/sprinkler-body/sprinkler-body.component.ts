@@ -53,6 +53,7 @@ export class SprinklerBodyComponent implements OnInit, OnDestroy {
     this.addToCartLoading$ = this.store.select(getCartFeatureState);
     this.addToCartResponse$ = this.store.select(addToCart);
     this.request = {
+      __typename: 'ProductRequest',
       category: this.pageTitle,
       page: {
         pageNumber: 1,
@@ -91,6 +92,7 @@ export class SprinklerBodyComponent implements OnInit, OnDestroy {
 
   onGoTo(page: number): void {
     this.request = {
+      __typename: 'ProductRequest',
       category: this.pageTitle,
       page: {
         pageNumber: page,
@@ -102,6 +104,7 @@ export class SprinklerBodyComponent implements OnInit, OnDestroy {
 
   onNext(page: number): void {
     this.request = {
+      __typename: 'ProductRequest',
       category: this.pageTitle,
       page: {
         pageNumber: page + 1,
@@ -113,6 +116,7 @@ export class SprinklerBodyComponent implements OnInit, OnDestroy {
 
   onPrevious(page: number): void {
     this.request = {
+      __typename: 'ProductRequest',
       category: this.pageTitle,
       page: {
         pageNumber: page - 1,

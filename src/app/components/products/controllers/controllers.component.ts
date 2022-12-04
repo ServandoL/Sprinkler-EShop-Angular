@@ -18,7 +18,7 @@ import { CartAppService } from '../../../services/state/services/cart.service';
 import { ProductAppService } from '../../../services/state/services/product.service';
 import { AuthService } from '../../../services/auth/auth-service.service';
 import { getBrands, getCategories } from '../../../services/state/product-filters/filter.selector';
-import { SearchFilter } from '../components/filter/interface';
+import { FindProductInput } from '../../../services/state/product/product.state';
 
 @Component({
   selector: 'app-controllers',
@@ -61,6 +61,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
     this.addToCartLoading$ = this.store.select(getCartFeatureState);
     this.addToCartResponse$ = this.store.select(addToCart);
     this.request = {
+      __typename: 'ProductRequest',
       category: this.pageTitle,
       page: {
         pageNumber: 1,
@@ -98,6 +99,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
 
   onGoTo(page: number): void {
     this.request = {
+      __typename: 'ProductRequest',
       category: this.pageTitle,
       page: {
         pageNumber: page,
@@ -109,6 +111,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
 
   onNext(page: number): void {
     this.request = {
+      __typename: 'ProductRequest',
       category: this.pageTitle,
       page: {
         pageNumber: page + 1,
@@ -120,6 +123,7 @@ export class ControllersComponent implements OnInit, OnDestroy {
 
   onPrevious(page: number): void {
     this.request = {
+      __typename: 'ProductRequest',
       category: this.pageTitle,
       page: {
         pageNumber: page - 1,
@@ -133,8 +137,9 @@ export class ControllersComponent implements OnInit, OnDestroy {
     this.quantity = value;
   }
 
-  onFilterSubmit(searchFilter: SearchFilter) {
-    console.log(searchFilter);
+  onFilterSubmit(searchFilter: FindProductInput) {
+    this.pageTitle = 'Custom Search';
+    this.productService.filteredSearch(searchFilter);
   }
 
   submit(product: IProduct, qty: number) {

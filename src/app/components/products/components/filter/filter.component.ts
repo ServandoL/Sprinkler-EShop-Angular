@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { BRANDS, OptionsModel, SearchFilter } from './interface';
+import { FindProductInput } from '../../../../services/state/product/product.state';
+import { BRANDS, OptionsModel } from './interface';
 
 @Component({
   selector: 'app-filter',
@@ -12,7 +13,7 @@ export class FilterComponent implements OnInit {
 
   @Input() brands!: string[] | null;
   @Input() categories!: string[] | null;
-  @Output() searchFilter: EventEmitter<SearchFilter> = new EventEmitter();
+  @Output() searchFilter: EventEmitter<FindProductInput> = new EventEmitter();
   filterForm!: FormGroup;
   brandsOptions: OptionsModel[] = [];
   categoryOptions: OptionsModel[] = [];
@@ -97,13 +98,21 @@ export class FilterComponent implements OnInit {
   onSubmit() {
     const validPriceRange = this.validatePriceRange(this.minPrice?.value, this.maxPrice?.value);
     if (validPriceRange) {
-      const output: SearchFilter = {
-        selectedBrands: this.selectedBrands.value || [],
-        selectedCategories: this.selectedCategories.value || [],
-        search: this.search.value || '',
-        minPrice: this.minPrice.value || 0,
-        maxPrice: this.maxPrice.value || 0,
-        rating: +this.rating.value || 0,
+      const brands: string[] = this.selectedBrands.value;
+      const categories: string[] = this.selectedCategories.value;
+      const minPrice = (this.minPrice.value as number) || 0;
+      const maxPrice = (this.maxPrice.value as number) || 0;
+      const output: FindProductInput = {
+        __typename: 'FindProductInput',
+        brand: brands || [],
+        categories: categories || [],
+        search: (this.search.value as string) || '',
+        priceRange: [minPrice, maxPrice],
+        rating: (+this.rating.value as number) || 0,
+        page: {
+          pageNumber: 1,
+          pageSize: 8,
+        },
       };
       this.searchFilter.emit(output);
     } else {

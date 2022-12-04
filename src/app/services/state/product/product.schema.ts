@@ -165,7 +165,7 @@ export const GetCurrentProductQuery = gql`
   }
 `;
 
-export const GetFilteredProductQuery = gql`
+export const FilteredProductsQuery = gql`
   query GetFilteredProductQuery($filterRequest: FindProductInput) {
     findProducts(filterRequest: $filterRequest) {
       data {

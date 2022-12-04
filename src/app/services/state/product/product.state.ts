@@ -1,4 +1,4 @@
-import { Pagination } from '../../../models/pagination.model';
+import { Page, Pagination } from '../../../models/pagination.model';
 import { IProduct } from '../../../models/product.model';
 
 export interface ProductState {
@@ -22,3 +22,13 @@ export const reviewProductInit: IProduct = {
   rating: 0,
   ratings: [],
 };
+
+export interface FindProductInput {
+  brand?: (string | null)[] | null;
+  categories?: (string | null)[] | null;
+  priceRange?: (number | null)[] | null;
+  rating?: number | null;
+  search?: string | null;
+  page: Page;
+  __typename: 'FindProductInput';
+}

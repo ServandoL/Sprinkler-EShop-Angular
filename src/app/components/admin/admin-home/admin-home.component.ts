@@ -53,6 +53,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.user$ = this.store.select(getUser);
     this.deleteSuccess$ = this.store.select(getDeleteResponse);
     this.request = {
+      __typename: 'ProductRequest',
       category: undefined,
       page: {
         pageSize: 8,
@@ -121,6 +122,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
 
   onGoTo(page: number): void {
     this.request = {
+      __typename: 'ProductRequest',
       category: undefined,
       page: {
         pageNumber: page,
@@ -132,6 +134,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
 
   onNext(page: number): void {
     this.request = {
+      __typename: 'ProductRequest',
       category: undefined,
       page: {
         pageNumber: page + 1,
@@ -143,6 +146,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
 
   onPrevious(page: number): void {
     this.request = {
+      __typename: 'ProductRequest',
       category: undefined,
       page: {
         pageNumber: page - 1,
