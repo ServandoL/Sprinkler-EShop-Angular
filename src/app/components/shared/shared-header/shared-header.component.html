@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark header-zindex">
   <div class="container-fluid">
-    <a class="navbar-brand" [routerLink]="['/home']">Navbar</a>
+    <a class="navbar-brand" [routerLink]="['/home']">NAVBAR</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -30,25 +30,32 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li>
-              <a class="dropdown-item" id="Controllers" [routerLink]="['/products/controllers']"
+              <a
+                class="dropdown-item"
+                id="Controllers"
+                [routerLink]="['/products/product/controllers']"
                 >Controllers</a
               >
             </li>
             <li>
-              <a class="dropdown-item" id="Rotors" [routerLink]="['/products/rotors']">Rotors</a>
+              <a class="dropdown-item" id="Rotors" [routerLink]="['/products/product/rotors']"
+                >Rotors</a
+              >
             </li>
             <li>
-              <a class="dropdown-item" id="Bodies" [routerLink]="['/products/sprinkler-bodies']"
+              <a class="dropdown-item" id="Bodies" [routerLink]="['/products/product/sprinklers']"
                 >Sprinkler bodies</a
               >
             </li>
             <li>
-              <a class="dropdown-item" id="Nozzles" [routerLink]="['/products/sprinkler-nozzles']"
+              <a class="dropdown-item" id="Nozzles" [routerLink]="['/products/product/nozzles']"
                 >Sprinkler nozzles</a
               >
             </li>
             <li>
-              <a class="dropdown-item" id="Valves" [routerLink]="['/products/valves']">Valves</a>
+              <a class="dropdown-item" id="Valves" [routerLink]="['/products/product/valves']"
+                >Valves</a
+              >
             </li>
           </ul>
         </li>

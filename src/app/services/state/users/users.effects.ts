@@ -4,12 +4,13 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, concatMap, map, mergeMap } from 'rxjs/operators';
-import { AppState, GenericResponse } from '../../../models/AppState';
+import { GenericResponse } from '../../../models/AppState';
 import { UserService } from './user.service';
 import * as UserActions from './users.actions';
 import { UserResponse } from '../../../models/user.model';
 import { CartAppService } from '../services/cart.service';
 import { AuthService } from '../../auth/auth-service.service';
+import { AppState } from '../state';
 
 @Injectable()
 export class UserEffects {
@@ -28,18 +29,22 @@ export class UserEffects {
       concatMap((action) =>
         this.authService.getUser$(action.email, action.password).pipe(
           map((response: UserResponse) => {
-            if (response.user.isAdmin) {
-              sessionStorage.setItem('SessionAdmin', response.user._id);
-              this.router.navigateByUrl('/admin/dashboard');
-              this.cartService.loadCart(response.user._id);
-              const result = UserActions.loadUserSuccess({ response });
-              return result;
+            if (response.success) {
+              if (response.user.isAdmin) {
+                sessionStorage.setItem('SessionAdmin', response.user._id);
+                this.router.navigateByUrl('/admin/dashboard');
+                this.cartService.loadCart(response.user._id);
+                const result = UserActions.loadUserSuccess({ response });
+                return result;
+              } else {
+                sessionStorage.setItem('SessionUser', response.user._id);
+                this.router.navigateByUrl('account/profile');
+                this.cartService.loadCart(response.user._id);
+                const result = UserActions.loadUserSuccess({ response });
+                return result;
+              }
             } else {
-              sessionStorage.setItem('SessionUser', response.user._id);
-              this.router.navigateByUrl('account/profile');
-              this.cartService.loadCart(response.user._id);
-              const result = UserActions.loadUserSuccess({ response });
-              return result;
+              return UserActions.loadUserFailure({ error: response.message });
             }
           }),
           catchError((error) => of(UserActions.loadUserFailure({ error })))

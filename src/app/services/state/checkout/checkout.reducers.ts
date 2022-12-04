@@ -10,7 +10,7 @@ import {
 } from './checkout.actions';
 import { CheckoutState } from './checkout.state';
 
-const initialState: CheckoutState = {
+export const InitialCheckoutState: CheckoutState = {
   user_id: null,
   order: undefined,
   error: undefined,
@@ -36,10 +36,10 @@ export const getLoadingSelector = createSelector(
 export const getSuccessSelector = createSelector(getCheckoutFeatureState, (state) => state.success);
 
 export const checkoutReducer = createReducer<CheckoutState>(
-  initialState,
+  InitialCheckoutState,
   on(clearCheckoutState, (state): CheckoutState => {
     return {
-      ...initialState,
+      ...InitialCheckoutState,
     };
   }),
   on(resetMessage, (state, action): CheckoutState => {
@@ -82,7 +82,7 @@ export const checkoutReducer = createReducer<CheckoutState>(
   }),
   on(logout, (): CheckoutState => {
     return {
-      ...initialState,
+      ...InitialCheckoutState,
     };
   })
 );

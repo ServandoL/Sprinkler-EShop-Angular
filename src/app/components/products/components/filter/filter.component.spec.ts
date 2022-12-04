@@ -1,19 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ValvesComponent } from './valves.component';
+import { FilterComponent } from './filter.component';
 
-describe('ValvesComponent', () => {
-  let component: ValvesComponent;
-  let fixture: ComponentFixture<ValvesComponent>;
+describe('FilterComponent', () => {
+  let component: FilterComponent;
+  let fixture: ComponentFixture<FilterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ValvesComponent],
-    }).compileComponents();
+      declarations: [ FilterComponent ]
+    })
+    .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ValvesComponent);
+    fixture = TestBed.createComponent(FilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { AppState } from '../../../../models/AppState';
 import { IProduct, Rating } from '../../../../models/product.model';
 import { AuthService } from '../../../../services/auth/auth-service.service';
 import { getCartFeatureState } from '../../../../services/state/cart/cart.reducers';
 import { CartState } from '../../../../services/state/cart/cart.state';
 import { getProductDescription } from '../../../../services/state/product/product.selectors';
 import { CartAppService } from '../../../../services/state/services/cart.service';
+import { AppState } from '../../../../services/state/state';
 import { addToCartFunction } from '../../../../utils/common/functions';
 
 @Component({

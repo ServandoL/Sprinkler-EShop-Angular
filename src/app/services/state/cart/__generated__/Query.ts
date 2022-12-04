@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface Query_getCart_cart {
-  __typename: 'Cart';
+  __typename: "Cart";
   _id: string | null;
   email: string | null;
   productName: string | null;
@@ -21,7 +21,7 @@ export interface Query_getCart_cart {
 }
 
 export interface Query_getCart {
-  __typename: 'getCartResponse';
+  __typename: "getCartResponse";
   cart: (Query_getCart_cart | null)[] | null;
   email: string | null;
 }

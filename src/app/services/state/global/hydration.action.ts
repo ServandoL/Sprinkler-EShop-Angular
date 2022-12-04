@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { AppState } from '../../../models/AppState';
+import { AppState } from '../state';
 
 const HydrateAction = '[Hydration] Hydrate';
 const HydrateActionSuccess = '[Hydration] Hydrate Success';

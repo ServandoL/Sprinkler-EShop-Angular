@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface getUser_getUser_user {
-  __typename: 'User';
+  __typename: "User";
   _id: string | null;
   fname: string | null;
   lname: string | null;
@@ -17,7 +17,7 @@ export interface getUser_getUser_user {
 }
 
 export interface getUser_getUser {
-  __typename: 'getUserResponse';
+  __typename: "getUserResponse";
   message: string | null;
   success: boolean | null;
   user: getUser_getUser_user | null;

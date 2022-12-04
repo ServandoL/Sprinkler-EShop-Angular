@@ -69,6 +69,15 @@ export interface FilterInput {
   filters?: (string | null)[] | null;
 }
 
+export interface FindProductInput {
+  brand?: (string | null)[] | null;
+  categories?: (string | null)[] | null;
+  priceRange?: (number | null)[] | null;
+  rating?: number | null;
+  search?: string | null;
+  page: Page;
+}
+
 export interface OrderHistoryRequest {
   userId?: string | null;
   page?: Page | null;

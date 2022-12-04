@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../models/AppState';
 import { OrderHistoryRequest } from '../../../models/orderHistory.model';
 import * as OrderHistoryActions from '../orderHistory/orderHistory.actions';
 import * as CheckoutActions from '../checkout/checkout.actions';
 import { Order } from '../../../models/checkout.model';
+import { AppState } from '../state';
 @Injectable({
   providedIn: 'root',
 })

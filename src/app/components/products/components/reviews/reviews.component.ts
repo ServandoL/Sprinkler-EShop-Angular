@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ClickEvent } from '../../../../../../projects/star-rating/src/public-api';
-import { AppState } from '../../../../models/AppState';
 import { IProduct, ReviewRequest } from '../../../../models/product.model';
 import { IUser } from '../../../../models/user.model';
 import { AuthService } from '../../../../services/auth/auth-service.service';
@@ -13,6 +12,7 @@ import {
   getUpdateResponse,
 } from '../../../../services/state/product/product.selectors';
 import { ProductAppService } from '../../../../services/state/services/product.service';
+import { AppState } from '../../../../services/state/state';
 import { getUser } from '../../../../services/state/users/users.selectors';
 
 @Component({

@@ -12,6 +12,7 @@ import {
 import { ObjectId } from 'mongodb';
 import { GenericResponse } from '../../../models/AppState';
 import { Mutation_reviewProduct } from './__generated__/Mutation';
+import { FindProductInput } from './product.state';
 
 const CurrentProductAction = '[Product] Set Current Product';
 const ClearProductAction = '[Product] Clear Current Product';
@@ -63,7 +64,10 @@ export const clearCurrentProduct = createAction(ClearProductAction);
 
 export const initializeCurrentProduct = createAction(InitCurrentProductAction);
 
-export const loadProducts = createAction(LoadProductsAction, props<{ request: ProductRequest }>());
+export const loadProducts = createAction(
+  LoadProductsAction,
+  props<{ request: FindProductInput }>()
+);
 
 export const loadAllProducts = createAction(
   LoadAllProductsAction,

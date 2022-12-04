@@ -5,7 +5,7 @@ import * as CartActions from './cart.actions';
 import { state } from '@angular/animations';
 import { logout } from '../users/users.actions';
 
-const initialState: CartState = {
+export const InitialCartState: CartState = {
   userId: '',
   products: [],
   currentProduct: undefined,
@@ -22,15 +22,15 @@ export const getCartFeatureState = createFeatureSelector<CartState>('cart');
 export const getError = createSelector(getCartFeatureState, (state) => state.error);
 
 export const cartReducer = createReducer<CartState>(
-  initialState,
+  InitialCartState,
   on(CartActions.clearCartState, (state, action): CartState => {
     return {
-      ...initialState,
+      ...InitialCartState,
     };
   }),
   on(CartActions.clearCart, (state, action): CartState => {
     return {
-      ...initialState,
+      ...InitialCartState,
       userId: state.userId,
     };
   }),
@@ -42,7 +42,7 @@ export const cartReducer = createReducer<CartState>(
   }),
   on(CartActions.clearCartSuccess, (state, action): CartState => {
     return {
-      ...initialState,
+      ...InitialCartState,
       response: action.response.message,
       success: action.response.success,
       isLoading: false,
@@ -209,7 +209,7 @@ export const cartReducer = createReducer<CartState>(
   }),
   on(logout, (): CartState => {
     return {
-      ...initialState,
+      ...InitialCartState,
     };
   })
 );

@@ -3,11 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { productsRoutes } from './product.routes';
-import { ControllersComponent } from './controllers/controllers.component';
-import { RotorsComponent } from './rotors/rotors.component';
-import { SprinklerBodyComponent } from './sprinkler-body/sprinkler-body.component';
-import { SprinklerNozzlesComponent } from './sprinkler-nozzles/sprinkler-nozzles.component';
-import { ValvesComponent } from './valves/valves.component';
+import { ProductComponent } from './product/product.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedAppModule } from '../shared/shared.module';
@@ -19,6 +15,7 @@ import { ProductService } from '../../services/state/product/product.service';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { StarRatingModule } from '../../../../projects/star-rating/src/public-api';
 import { DescriptionComponent } from './components/description/description.component';
+import { FilterComponent } from './components/filter/filter.component';
 
 @NgModule({
   imports: [
@@ -31,17 +28,14 @@ import { DescriptionComponent } from './components/description/description.compo
     SharedAppModule,
     StarRatingModule.forRoot(),
   ],
-  exports: [QtyFormComponent],
+  exports: [QtyFormComponent, FilterComponent],
   declarations: [
-    ControllersComponent,
-    RotorsComponent,
-    SprinklerBodyComponent,
-    SprinklerNozzlesComponent,
-    ValvesComponent,
+    ProductComponent,
     QtyFormComponent,
     ProductCardComponent,
     ReviewsComponent,
     DescriptionComponent,
+    FilterComponent,
   ],
   providers: [ProductService],
 })

@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { FilterState } from './filter.state';
 import * as FilterActions from './filter.actions';
 
-const initialFilterState: FilterState = {
+export const InitialFilterState: FilterState = {
   categories: [],
   brands: [],
   success: false,
@@ -11,7 +11,7 @@ const initialFilterState: FilterState = {
 };
 
 export const filterReducer = createReducer<FilterState>(
-  initialFilterState,
+  InitialFilterState,
   on(FilterActions.loadProductFilters, (state, action): FilterState => {
     return {
       ...state,

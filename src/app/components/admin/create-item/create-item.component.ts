@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../models/AppState';
 import { AddProductRequest, IProduct } from '../../../models/product.model';
 import { Observable, Subscription } from 'rxjs';
 import {
@@ -15,6 +14,7 @@ import { IUser } from '../../../models/user.model';
 import { getUser } from '../../../services/state/users/users.selectors';
 import { getAddSuccess } from '../../../services/state/product/product.selectors';
 import { ProductAppService } from '../../../services/state/services/product.service';
+import { AppState } from '../../../services/state/state';
 
 @Component({
   selector: 'app-create-item',
