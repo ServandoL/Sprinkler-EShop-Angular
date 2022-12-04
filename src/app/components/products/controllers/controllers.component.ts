@@ -17,6 +17,7 @@ import {
 import { CartAppService } from '../../../services/state/services/cart.service';
 import { ProductAppService } from '../../../services/state/services/product.service';
 import { AuthService } from '../../../services/auth/auth-service.service';
+import { getBrands, getCategories } from '../../../services/state/product-filters/filter.selector';
 
 @Component({
   selector: 'app-controllers',
@@ -34,6 +35,8 @@ export class ControllersComponent implements OnInit, OnDestroy {
   productsLoading$: Observable<boolean>;
   addToCartLoading$: Observable<CartState>;
   addToCartResponse$: Observable<string>;
+  brands$: Observable<string[]>;
+  categories$: Observable<string[]>;
   message!: string;
   request!: ProductRequest;
   paging!: Pagination;
@@ -49,6 +52,8 @@ export class ControllersComponent implements OnInit, OnDestroy {
     private cartService: CartAppService,
     private productService: ProductAppService
   ) {
+    this.brands$ = this.store.select(getBrands);
+    this.categories$ = this.store.select(getCategories);
     this.products$ = this.store.select(getProducts);
     this.pagination$ = this.store.select(getProductPagination);
     this.productsLoading$ = this.store.select(getProductLoading);
