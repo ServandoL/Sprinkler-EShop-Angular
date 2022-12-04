@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
-import { IProduct, ProductRequest } from '../../../models/product.model';
+import { IProduct } from '../../../models/product.model';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import { addToCart } from '../../../services/state/cart/cart.selectors';
 import { addToCartFunction } from '../../../utils/common/functions';
@@ -20,8 +20,7 @@ import { AuthService } from '../../../services/auth/auth-service.service';
 import { getBrands, getCategories } from '../../../services/state/product-filters/filter.selector';
 import { FindProductInput } from '../../../services/state/product/product.state';
 import { AppState } from '../../../services/state/state';
-import { ActivatedRoute, ParamMap, Route } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -79,9 +78,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.route.paramMap.pipe(
-    //   switchMap((params: ParamMap) => (this.pageTitle = params.get('name')!))
-    // );
     this.subscription.push(
       this.route.paramMap.subscribe((params) => {
         const name = params.get('name')!;

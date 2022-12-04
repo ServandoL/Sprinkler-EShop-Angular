@@ -91,7 +91,6 @@ export class FilterComponent implements OnInit {
       selected.push(new FormControl(target.value));
     } else {
       const index = selected.controls.findIndex((x) => x.value === target.value);
-      toChange[index].selected = target.checked;
       selected.removeAt(index);
     }
   }
@@ -125,6 +124,20 @@ export class FilterComponent implements OnInit {
     this.resetCheckboxes();
     this.filterForm.reset();
     this.resetClicked.emit(true);
+  }
+
+  isEmptyForm() {
+    if (
+      !this.selectedBrands.value.length &&
+      !this.selectedCategories.value.length &&
+      !this.search.value &&
+      !this.minPrice.value &&
+      !this.maxPrice.value &&
+      !this.rating.value
+    ) {
+      return true;
+    }
+    return false;
   }
 
   validatePriceRange(a: string | undefined, b: string | undefined): boolean {
