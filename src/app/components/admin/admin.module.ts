@@ -13,6 +13,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { ProductEffects } from '../../services/state/product/product.effects';
 import { productReducer } from '../../services/state/product/product.reducers';
 import { FilterService } from '../../services/state/product-filters/filter.service';
+import { ProductsModule } from '../products/products.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,6 +23,7 @@ import { FilterService } from '../../services/state/product-filters/filter.servi
     FormsModule,
     ReactiveFormsModule,
     SharedAppModule,
+    ProductsModule,
   ],
   exports: [],
   declarations: [CreateItemComponent, UpdateItemComponent, AdminCardsComponent, AdminHomeComponent],

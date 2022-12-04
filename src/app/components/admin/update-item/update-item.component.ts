@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -20,6 +20,7 @@ import { AppState } from '../../../services/state/state';
 export class UpdateItemComponent implements OnInit {
   @Input() product!: IProduct;
   @Input() user!: IUser | null;
+  @Output() updateClicked: EventEmitter<UpdateProductRequest> = new EventEmitter();
   updateItemForm!: FormGroup;
   isLoading$!: Observable<boolean>;
   updateSuccess$!: Observable<boolean | null>;
@@ -71,7 +72,7 @@ export class UpdateItemComponent implements OnInit {
       stock: +this.stock?.value || +this.product.stock,
       imageUrl: this.imageUrl?.value || this.product.imageUrl,
     };
-    this.productService.updateProduct(request);
+    this.updateClicked.emit(request);
   }
 
   onClose() {

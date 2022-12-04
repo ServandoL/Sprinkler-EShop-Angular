@@ -33,6 +33,7 @@ export class AuthService {
       .query<Interface.getUser>({
         query: GetUserQuery,
         variables: { email: email, password: password },
+        fetchPolicy: 'no-cache',
       })
       .pipe(
         map((result: ApolloQueryResult<Interface.getUser>) => {

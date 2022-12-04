@@ -1,0 +1,10 @@
+.img {
+  height: 250px;
+  width: 250px;
+  margin-left: 100px;
+  /* margin-right: auto; */
+}
+
+.input-size {
+  width: 50%;
+}

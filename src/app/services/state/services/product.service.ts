@@ -30,7 +30,7 @@ export class ProductAppService {
       },
     };
     this.setSearchCriteria(request);
-    this.store.dispatch(ProductActions.loadProducts({ request }));
+    this.loadProducts(request);
   }
 
   loadProducts(request: FindProductInput) {
@@ -90,6 +90,6 @@ export class ProductAppService {
   }
 
   filteredSearch(request: FindProductInput) {
-    this.store.dispatch(ProductActions.loadProducts({ request }));
+    this.loadProducts(request);
   }
 }

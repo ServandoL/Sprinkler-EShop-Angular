@@ -4,18 +4,15 @@ import { Store } from '@ngrx/store';
 import { getError, getUserFeatureState } from '../../../services/state/users/users.selectors';
 import { UserAppService } from '../../../services/state/services/user.service';
 import { CartAppService } from '../../../services/state/services/cart.service';
+import { AppState } from '../../../services/state/state';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
-  constructor(
-    private userService: UserAppService,
-    private cartService: CartAppService,
-    private store: Store
-  ) {}
+export class LoginComponent {
+  constructor(private userService: UserAppService, private store: Store<AppState>) {}
 
   user$ = this.store.select(getUserFeatureState);
   errorMessage$ = this.store.select(getError);
@@ -33,11 +30,6 @@ export class LoginComponent implements OnInit {
   }
 
   mouseoverLogin!: boolean;
-
-  ngOnInit(): void {
-    this.userService.clearCurrentUser();
-    this.cartService.clearCart();
-  }
 
   login() {
     const email = this.userName?.value || '';

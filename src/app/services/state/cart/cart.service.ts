@@ -32,6 +32,7 @@ export class CartService {
         variables: {
           userId: user_id,
         },
+        fetchPolicy: 'no-cache',
       })
       .pipe(
         map((result: ApolloQueryResult<getCart>) => {

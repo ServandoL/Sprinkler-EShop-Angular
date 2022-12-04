@@ -26,9 +26,9 @@
         <div class="row my-2">
           <div class="col">
             <img
-              src="/assets/{{ product.imageUrl }}"
+              src="/assets/{{ product?.imageUrl }}"
               alt="product-image"
-              class="rounded mx-auto d-block img-thumbnail img-size"
+              class="card-img-top img"
             />
             <form [formGroup]="updateItemForm" (ngSubmit)="onUpdate()" #formDir="ngForm">
               <div class="form-group my-2">
@@ -38,7 +38,7 @@
                   rows="3"
                   id="product-name"
                   formControlName="productName"
-                  [value]="product.productName"
+                  [value]="product?.productName"
                 ></textarea>
               </div>
               <div class="form-group my-2">
@@ -48,7 +48,7 @@
                   class="form-control"
                   id="product-price"
                   formControlName="price"
-                  [value]="product.price"
+                  [value]="product?.price"
                 />
               </div>
               <div class="form-group my-2">
@@ -58,7 +58,7 @@
                   class="form-control"
                   id="product-stock"
                   formControlName="stock"
-                  [value]="product.stock"
+                  [value]="product?.stock"
                 />
               </div>
               <div class="form-group my-2">

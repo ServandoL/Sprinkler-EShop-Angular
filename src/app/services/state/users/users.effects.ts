@@ -29,18 +29,22 @@ export class UserEffects {
       concatMap((action) =>
         this.authService.getUser$(action.email, action.password).pipe(
           map((response: UserResponse) => {
-            if (response.user.isAdmin) {
-              sessionStorage.setItem('SessionAdmin', response.user._id);
-              this.router.navigateByUrl('/admin/dashboard');
-              this.cartService.loadCart(response.user._id);
-              const result = UserActions.loadUserSuccess({ response });
-              return result;
+            if (response.success) {
+              if (response.user.isAdmin) {
+                sessionStorage.setItem('SessionAdmin', response.user._id);
+                this.router.navigateByUrl('/admin/dashboard');
+                this.cartService.loadCart(response.user._id);
+                const result = UserActions.loadUserSuccess({ response });
+                return result;
+              } else {
+                sessionStorage.setItem('SessionUser', response.user._id);
+                this.router.navigateByUrl('account/profile');
+                this.cartService.loadCart(response.user._id);
+                const result = UserActions.loadUserSuccess({ response });
+                return result;
+              }
             } else {
-              sessionStorage.setItem('SessionUser', response.user._id);
-              this.router.navigateByUrl('account/profile');
-              this.cartService.loadCart(response.user._id);
-              const result = UserActions.loadUserSuccess({ response });
-              return result;
+              return UserActions.loadUserFailure({ error: response.message });
             }
           }),
           catchError((error) => of(UserActions.loadUserFailure({ error })))

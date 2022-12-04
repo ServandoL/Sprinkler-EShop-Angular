@@ -121,7 +121,11 @@
     </div>
   </div>
 </div>
-<app-update-item [product]="productToUpdate" [user]="user$ | async"></app-update-item>
+<app-update-item
+  [product]="productToUpdate"
+  [user]="user$ | async"
+  (updateClicked)="updateClicked($event)"
+></app-update-item>
 <div class="container">
   <div class="row py-2">
     <div class="col-md-2">
@@ -134,6 +138,12 @@
           </button>
         </li>
       </ul>
+      <app-filter
+        [brands]="brands$ | async"
+        [categories]="categories$ | async"
+        (searchFilter)="onFilterSubmit($event)"
+        (resetClicked)="onResetClicked($event)"
+      ></app-filter>
     </div>
     <div class="col-md-10">
       <h3>

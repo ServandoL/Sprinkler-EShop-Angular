@@ -63,6 +63,7 @@ export class ProductService {
       .query<GetFilteredProductQuery>({
         query: FilteredProductsQuery,
         variables: request,
+        fetchPolicy: 'no-cache',
       })
       .pipe(
         map((result: ApolloQueryResult<GetFilteredProductQuery>) => {

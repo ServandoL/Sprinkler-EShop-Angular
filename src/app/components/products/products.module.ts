@@ -28,7 +28,7 @@ import { FilterComponent } from './components/filter/filter.component';
     SharedAppModule,
     StarRatingModule.forRoot(),
   ],
-  exports: [QtyFormComponent],
+  exports: [QtyFormComponent, FilterComponent],
   declarations: [
     ProductComponent,
     QtyFormComponent,
