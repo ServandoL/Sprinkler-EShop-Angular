@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { BRANDS, OptionsModel } from './interface';
+import { BRANDS, OptionsModel, SearchFilter } from './interface';
 
 @Component({
   selector: 'app-filter',
@@ -12,6 +12,7 @@ export class FilterComponent implements OnInit {
 
   @Input() brands!: string[] | null;
   @Input() categories!: string[] | null;
+  @Output() searchFilter: EventEmitter<SearchFilter> = new EventEmitter();
   filterForm!: FormGroup;
   brandsOptions: OptionsModel[] = [];
   categoryOptions: OptionsModel[] = [];
@@ -56,16 +57,16 @@ export class FilterComponent implements OnInit {
     return this.filterForm.get('selectedCategories') as FormArray;
   }
   get search() {
-    return this.filterForm.get('search');
+    return this.filterForm.get('search') as FormControl;
   }
   get minPrice() {
-    return this.filterForm.get('minPrice');
+    return this.filterForm.get('minPrice') as FormControl;
   }
   get maxPrice() {
-    return this.filterForm.get('maxPrice');
+    return this.filterForm.get('maxPrice') as FormControl;
   }
   get rating() {
-    return this.filterForm.get('rating');
+    return this.filterForm.get('rating') as FormControl;
   }
 
   onCheckboxChange(event: Event, type: string) {
@@ -96,7 +97,15 @@ export class FilterComponent implements OnInit {
   onSubmit() {
     const validPriceRange = this.validatePriceRange(this.minPrice?.value, this.maxPrice?.value);
     if (validPriceRange) {
-      console.log(this.filterForm.value);
+      const output: SearchFilter = {
+        selectedBrands: this.selectedBrands.value || [],
+        selectedCategories: this.selectedCategories.value || [],
+        search: this.search.value || '',
+        minPrice: this.minPrice.value || 0,
+        maxPrice: this.maxPrice.value || 0,
+        rating: +this.rating.value || 0,
+      };
+      this.searchFilter.emit(output);
     } else {
       return;
     }
@@ -112,7 +121,7 @@ export class FilterComponent implements OnInit {
     const max: number = b !== undefined ? +b : 0;
 
     if (min > max) {
-      this.errorMessage = 'Invalid price range. Please verify your form.';
+      this.errorMessage = 'Invalid price range.';
       return false;
     } else {
       this.errorMessage = undefined;

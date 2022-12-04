@@ -13,19 +13,16 @@
           </button>
         </li>
       </ul>
-      <app-filter [brands]="brands$ | async" [categories]="categories$ | async"></app-filter>
+      <app-filter
+        [brands]="brands$ | async"
+        [categories]="categories$ | async"
+        (searchFilter)="onFilterSubmit($event)"
+      ></app-filter>
     </div>
     <div class="col-md-10">
       <p class="h4">Controllers</p>
 
       <div class="bottom-border my-2"></div>
-      <!-- <div
-        *ngIf="addToCartResponse$ | async"
-        class="alert alert-danger"
-        role="alert"
-      >
-        {{ addToCartResponse$ | async }}
-      </div> -->
       <div
         class="col"
         *ngIf="(products$ | async)?.length === 0"

@@ -18,6 +18,7 @@ import { CartAppService } from '../../../services/state/services/cart.service';
 import { ProductAppService } from '../../../services/state/services/product.service';
 import { AuthService } from '../../../services/auth/auth-service.service';
 import { getBrands, getCategories } from '../../../services/state/product-filters/filter.selector';
+import { SearchFilter } from '../components/filter/interface';
 
 @Component({
   selector: 'app-controllers',
@@ -130,6 +131,10 @@ export class ControllersComponent implements OnInit, OnDestroy {
 
   updateQuantity(value: number) {
     this.quantity = value;
+  }
+
+  onFilterSubmit(searchFilter: SearchFilter) {
+    console.log(searchFilter);
   }
 
   submit(product: IProduct, qty: number) {
