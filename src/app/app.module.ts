@@ -10,9 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MetaReducer, StoreModule } from '@ngrx/store';
 import { AdminComponent } from './components/admin/admin.component';
-import { HomeComponent } from './components/home/home.component';
 import { PathNotFoundComponent } from './components/path-not-found/path-not-found.component';
-import { ProductsComponent } from './components/products/products.component';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedAppModule } from './components/shared/shared.module';
@@ -33,14 +31,7 @@ import { reducers } from './services/state/state';
 export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    // HomeComponent,
-    // ProductsComponent,
-    PathNotFoundComponent,
-    AdminComponent,
-    UnauthorizedComponent,
-  ],
+  declarations: [AppComponent, PathNotFoundComponent, AdminComponent, UnauthorizedComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
