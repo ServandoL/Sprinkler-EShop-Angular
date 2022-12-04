@@ -16,31 +16,27 @@ import { ProductsComponent } from './components/products/products.component';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedAppModule } from './components/shared/shared.module';
-import { userReducer } from './services/state/users/users.reducers';
 import { UserEffects } from './services/state/users/users.effects';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
-import { cartReducer } from './services/state/cart/cart.reducers';
 import { CartEffects } from './services/state/cart/cart.effects';
 import { hydrationMetaReducer } from './services/state/global/hydration.reducer';
 import { HydrationEffects } from './services/state/global/hydration.effect';
 import { CheckoutEffects } from './services/state/checkout/checkout.effects';
-import { checkoutReducer } from './services/state/checkout/checkout.reducers';
-import { orderHistoryReducer } from './services/state/orderHistory/orderHistory.reducers';
 import { OrderHistoryEffects } from './services/state/orderHistory/orderHistory.effects';
 import { FilterEffects } from './services/state/product-filters/filter.effect';
-import { filterReducer } from './services/state/product-filters/filter.reducers';
 import { ProductAppService } from './services/state/services/product.service';
 import { CartAppService } from './services/state/services/cart.service';
 import { CheckoutAppService } from './services/state/services/checkout.service';
 import { AuthService } from './services/auth/auth-service.service';
+import { reducers } from './services/state/state';
 
 export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    ProductsComponent,
+    // HomeComponent,
+    // ProductsComponent,
     PathNotFoundComponent,
     AdminComponent,
     UnauthorizedComponent,
@@ -51,16 +47,7 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
     HttpClientModule,
     RouterModule.forRoot(routes),
     LayoutModule,
-    StoreModule.forRoot(
-      {
-        users: userReducer,
-        cart: cartReducer,
-        checkout: checkoutReducer,
-        orderHistory: orderHistoryReducer,
-        productFilters: filterReducer,
-      },
-      { metaReducers }
-    ),
+    StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([
       UserEffects,
       CartEffects,

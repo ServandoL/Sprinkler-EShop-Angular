@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { AppState } from '../../../../models/AppState';
 import { ICartItem } from '../../../../models/cart.model';
 import { IUser } from '../../../../models/user.model';
 import { getCart } from '../../../../services/state/cart/cart.selectors';
@@ -17,6 +16,7 @@ import {
   getSuccessSelector,
 } from '../../../../services/state/checkout/checkout.reducers';
 import { CheckoutAppService } from '../../../../services/state/services/checkout.service';
+import { AppState } from '../../../../services/state/state';
 
 @Component({
   selector: 'app-checkout',

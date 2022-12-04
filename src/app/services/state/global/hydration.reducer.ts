@@ -1,5 +1,5 @@
 import { Action, ActionReducer } from '@ngrx/store';
-import { AppState } from '../../../models/AppState';
+import { AppState } from '../state';
 import * as HydrationActions from './hydration.action';
 
 function isHydrateSuccess(

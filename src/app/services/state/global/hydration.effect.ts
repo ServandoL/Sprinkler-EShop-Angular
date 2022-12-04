@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
-import { AppState } from '../../../models/AppState';
+import { AppState } from '../state';
 import * as HydrationActions from './hydration.action';
 
 @Injectable()

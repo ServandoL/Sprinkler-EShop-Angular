@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { AppState } from '../../../models/AppState';
 import { DeleteProductRequest, IProduct, ProductRequest } from '../../../models/product.model';
 import { Pagination } from '../../../models/pagination.model';
 import { IUser } from '../../../models/user.model';
@@ -14,6 +13,8 @@ import {
 } from '../../../services/state/product/product.selectors';
 import { ProductAppService } from '../../../services/state/services/product.service';
 import { AuthService } from '../../../services/auth/auth-service.service';
+import { AppState } from '../../../services/state/state';
+import { FindProductInput } from '../../../services/state/product/product.state';
 
 @Component({
   selector: 'app-admin-home',
@@ -32,7 +33,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   deleted = false;
   confirmDelete = false;
   updated = false;
-  request!: ProductRequest;
+  request!: FindProductInput;
   paging!: Pagination;
   products: IProduct[] = [];
   pagination$!: Observable<Pagination>;
@@ -53,8 +54,8 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.user$ = this.store.select(getUser);
     this.deleteSuccess$ = this.store.select(getDeleteResponse);
     this.request = {
-      __typename: 'ProductRequest',
-      category: undefined,
+      __typename: 'FindProductInput',
+      categories: [],
       page: {
         pageSize: 8,
         pageNumber: 1,
@@ -122,8 +123,8 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
 
   onGoTo(page: number): void {
     this.request = {
-      __typename: 'ProductRequest',
-      category: undefined,
+      __typename: 'FindProductInput',
+      categories: [],
       page: {
         pageNumber: page,
         pageSize: 8,
@@ -134,8 +135,8 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
 
   onNext(page: number): void {
     this.request = {
-      __typename: 'ProductRequest',
-      category: undefined,
+      __typename: 'FindProductInput',
+      categories: [],
       page: {
         pageNumber: page + 1,
         pageSize: 8,
@@ -146,8 +147,8 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
 
   onPrevious(page: number): void {
     this.request = {
-      __typename: 'ProductRequest',
-      category: undefined,
+      __typename: 'FindProductInput',
+      categories: [],
       page: {
         pageNumber: page - 1,
         pageSize: 8,

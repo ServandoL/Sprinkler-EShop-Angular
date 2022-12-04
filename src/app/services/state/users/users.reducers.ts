@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { UserState } from './users.state';
 import * as UserActions from './users.actions';
 
-const initialState: UserState = {
+export const InitialUserState: UserState = {
   user: {
     _id: '',
     fname: '',
@@ -18,7 +18,7 @@ const initialState: UserState = {
 };
 
 export const userReducer = createReducer<UserState>(
-  initialState,
+  InitialUserState,
   on(UserActions.updateUser, (state): UserState => {
     return {
       ...state,
@@ -42,7 +42,7 @@ export const userReducer = createReducer<UserState>(
   }),
   on(UserActions.clearUserState, (): UserState => {
     return {
-      ...initialState,
+      ...InitialUserState,
     };
   }),
   on(UserActions.resetUserResponse, (state): UserState => {
@@ -121,18 +121,18 @@ export const userReducer = createReducer<UserState>(
   }),
   on(UserActions.clearCurrentUser, (state): UserState => {
     return {
-      ...initialState,
+      ...InitialUserState,
     };
   }),
   on(UserActions.logout, (state): UserState => {
     return {
-      ...initialState,
+      ...InitialUserState,
       isLoading: true,
     };
   }),
   on(UserActions.logoutSuccess, (state): UserState => {
     return {
-      ...initialState,
+      ...InitialUserState,
     };
   })
 );

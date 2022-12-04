@@ -6,12 +6,12 @@ import { Apollo, ApolloBase } from 'apollo-angular';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IUser, UserResponse } from '../../models/user.model';
-import { AppState } from '../../models/AppState';
 import { Router } from '@angular/router';
 import { GetUserQuery } from '../../services/state/users/user.schema';
 import { logout, logoutSuccess } from '../../services/state/users/users.actions';
 import { getUser } from '../state/users/users.selectors';
 import * as Interface from '../state/users/__generated__/getUser';
+import { AppState } from '../state/state';
 
 @Injectable({
   providedIn: 'root',

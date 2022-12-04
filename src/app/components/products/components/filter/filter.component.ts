@@ -14,6 +14,7 @@ export class FilterComponent implements OnInit {
   @Input() brands!: string[] | null;
   @Input() categories!: string[] | null;
   @Output() searchFilter: EventEmitter<FindProductInput> = new EventEmitter();
+  @Output() resetClicked: EventEmitter<boolean> = new EventEmitter();
   filterForm!: FormGroup;
   brandsOptions: OptionsModel[] = [];
   categoryOptions: OptionsModel[] = [];
@@ -123,6 +124,7 @@ export class FilterComponent implements OnInit {
   onReset() {
     this.resetCheckboxes();
     this.filterForm.reset();
+    this.resetClicked.emit(true);
   }
 
   validatePriceRange(a: string | undefined, b: string | undefined): boolean {

@@ -8,7 +8,7 @@ import {
 } from './orderHistory.actions';
 import { OrderHistoryState } from './orderHistory.state';
 
-const initialState: OrderHistoryState = {
+export const InitialOrderHistoryState: OrderHistoryState = {
   user_id: undefined,
   orders: undefined,
   error: '',
@@ -29,7 +29,7 @@ const initialState: OrderHistoryState = {
 };
 
 export const orderHistoryReducer = createReducer<OrderHistoryState>(
-  initialState,
+  InitialOrderHistoryState,
   on(loadOrders, (state, action): OrderHistoryState => {
     return {
       ...state,
@@ -56,12 +56,12 @@ export const orderHistoryReducer = createReducer<OrderHistoryState>(
   }),
   on(clearOrderHistory, (state, action): OrderHistoryState => {
     return {
-      ...initialState,
+      ...InitialOrderHistoryState,
     };
   }),
   on(logout, (): OrderHistoryState => {
     return {
-      ...initialState,
+      ...InitialOrderHistoryState,
     };
   })
 );

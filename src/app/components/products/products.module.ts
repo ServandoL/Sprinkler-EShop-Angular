@@ -3,11 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { productsRoutes } from './product.routes';
-import { ControllersComponent } from './controllers/controllers.component';
-import { RotorsComponent } from './rotors/rotors.component';
-import { SprinklerBodyComponent } from './sprinkler-body/sprinkler-body.component';
-import { SprinklerNozzlesComponent } from './sprinkler-nozzles/sprinkler-nozzles.component';
-import { ValvesComponent } from './valves/valves.component';
+import { ProductComponent } from './product/product.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedAppModule } from '../shared/shared.module';
@@ -34,11 +30,7 @@ import { FilterComponent } from './components/filter/filter.component';
   ],
   exports: [QtyFormComponent],
   declarations: [
-    ControllersComponent,
-    RotorsComponent,
-    SprinklerBodyComponent,
-    SprinklerNozzlesComponent,
-    ValvesComponent,
+    ProductComponent,
     QtyFormComponent,
     ProductCardComponent,
     ReviewsComponent,

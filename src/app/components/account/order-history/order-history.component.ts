@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { AppState } from '../../../models/AppState';
 import { Order } from '../../../models/checkout.model';
 import { OrderHistoryRequest } from '../../../models/orderHistory.model';
 import { Pagination } from '../../../models/pagination.model';
@@ -14,6 +13,7 @@ import {
   getOrderPagination,
 } from '../../../services/state/orderHistory/orderHistory.selectors';
 import { CheckoutAppService } from '../../../services/state/services/checkout.service';
+import { AppState } from '../../../services/state/state';
 import { getUser } from '../../../services/state/users/users.selectors';
 import { SALES_TAX } from '../../../utils/common/constants';
 

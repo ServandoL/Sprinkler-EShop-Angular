@@ -9,9 +9,10 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { AppState, GenericResponse } from '../../../models/AppState';
+import { GenericResponse } from '../../../models/AppState';
 import { IUser, UpdateUserRequest } from '../../../models/user.model';
 import { UserAppService } from '../../../services/state/services/user.service';
+import { AppState } from '../../../services/state/state';
 import {
   getError,
   getGenericResponse,

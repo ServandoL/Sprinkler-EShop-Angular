@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getUser } from '../../services/state/users/users.selectors';
-import { AppState } from '../../models/AppState';
 import { IUser } from '../../models/user.model';
 import { Observable } from 'rxjs';
+import { AppState } from '../../services/state/state';
 
 @Component({
   selector: 'app-account',

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../models/AppState';
 import { ICartItem } from '../../../models/cart.model';
-import { IUser } from '../../../models/user.model';
 import * as CartActions from '../cart/cart.actions';
+import { AppState } from '../state';
 
 @Injectable({
   providedIn: 'root',

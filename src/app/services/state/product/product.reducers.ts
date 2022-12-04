@@ -4,7 +4,7 @@ import * as ProductActions from './product.actions';
 import { logout } from '../users/users.actions';
 import { IProduct, Rating } from '../../../models/product.model';
 
-const initialState: ProductState = {
+export const InitialProductState: ProductState = {
   products: [],
   reviewProduct: reviewProductInit,
   error: '',
@@ -27,7 +27,7 @@ const initialState: ProductState = {
 };
 
 export const productReducer = createReducer<ProductState>(
-  initialState,
+  InitialProductState,
   on(ProductActions.loadProducts, (state, action): ProductState => {
     return {
       ...state,
@@ -132,12 +132,12 @@ export const productReducer = createReducer<ProductState>(
   }),
   on(ProductActions.clearProductState, (): ProductState => {
     return {
-      ...initialState,
+      ...InitialProductState,
     };
   }),
   on(logout, (): ProductState => {
     return {
-      ...initialState,
+      ...InitialProductState,
     };
   }),
   on(ProductActions.reviewClicked, (state, action): ProductState => {

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../models/AppState';
 import {
   AddProductRequest,
   DeleteProductRequest,
@@ -11,7 +10,9 @@ import {
 } from '../../../models/product.model';
 import * as ProductActions from '../product/product.actions';
 import * as FilterActions from '../product-filters/filter.actions';
+import * as SearchCriteriaActions from '../product/searchCriteria/searchCriteria.actions';
 import { FindProductInput } from '../product/product.state';
+import { AppState } from '../state';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,20 @@ import { FindProductInput } from '../product/product.state';
 export class ProductAppService {
   constructor(private store: Store<AppState>) {}
 
-  loadProducts(request: ProductRequest) {
+  initializeProducts(categories: string[]) {
+    const request: FindProductInput = {
+      __typename: 'FindProductInput',
+      categories,
+      page: {
+        pageNumber: 1,
+        pageSize: 8,
+      },
+    };
+    this.setSearchCriteria(request);
+    this.store.dispatch(ProductActions.loadProducts({ request }));
+  }
+
+  loadProducts(request: FindProductInput) {
     this.store.dispatch(ProductActions.loadProducts({ request }));
   }
 
@@ -61,6 +75,14 @@ export class ProductAppService {
 
   reviewProduct(product: IProduct) {
     this.store.dispatch(ProductActions.reviewClicked({ product }));
+  }
+
+  setSearchCriteria(payload: FindProductInput) {
+    this.store.dispatch(SearchCriteriaActions.setSearchCriteria({ payload }));
+  }
+
+  resetSearchCriteria() {
+    this.store.dispatch(SearchCriteriaActions.resetSearchCriteria());
   }
 
   submitReview(request: ReviewRequest) {

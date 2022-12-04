@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../models/AppState';
 import { getCartFeatureState } from '../../../services/state/cart/cart.reducers';
 import {
   apiError,
@@ -17,6 +16,7 @@ import { SALES_TAX } from '../../../utils/common/constants';
 import { CartAppService } from '../../../services/state/services/cart.service';
 import { IUser } from '../../../models/user.model';
 import { getUser } from '../../../services/state/users/users.selectors';
+import { AppState } from '../../../services/state/state';
 
 @Component({
   selector: 'app-cart',
