@@ -164,3 +164,42 @@ export const GetCurrentProductQuery = gql`
     }
   }
 `;
+
+export const GetFilteredProductQuery = gql`
+  query GetFilteredProductQuery($filterRequest: FindProductInput) {
+    findProducts(filterRequest: $filterRequest) {
+      data {
+        _id
+        productName
+        price
+        category
+        brand
+        stock
+        imageUrl
+        rating
+        ratings {
+          name
+          review
+          rate
+          headLine
+          createdDate
+        }
+        isDeleted
+        deleted_by
+        deleted_date
+      }
+      pagination {
+        totalDocs
+        limit
+        hasPrevPage
+        hasNextPage
+        page
+        totalPages
+        offset
+        prevPage
+        nextPage
+        pagingCounter
+      }
+    }
+  }
+`;

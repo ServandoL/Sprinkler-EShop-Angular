@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface GetCurrentProduct_getCurrentProduct_product_ratings {
-  __typename: 'Rating';
+  __typename: "Rating";
   name: string | null;
   review: string | null;
   rate: number | null;
@@ -17,7 +17,7 @@ export interface GetCurrentProduct_getCurrentProduct_product_ratings {
 }
 
 export interface GetCurrentProduct_getCurrentProduct_product {
-  __typename: 'Product';
+  __typename: "Product";
   _id: string | null;
   productName: string;
   price: number;
@@ -33,7 +33,7 @@ export interface GetCurrentProduct_getCurrentProduct_product {
 }
 
 export interface GetCurrentProduct_getCurrentProduct {
-  __typename: 'getCurrentProductResponse';
+  __typename: "getCurrentProductResponse";
   product: GetCurrentProduct_getCurrentProduct_product | null;
 }
 

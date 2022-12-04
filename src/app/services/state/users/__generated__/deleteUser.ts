@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface deleteUser_deleteUser {
-  __typename: 'genericResponse';
+  __typename: "genericResponse";
   message: string | null;
   success: boolean | null;
 }
