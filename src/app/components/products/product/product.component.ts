@@ -161,6 +161,14 @@ export class ProductComponent implements OnInit, OnDestroy {
   onResetClicked(clicked: boolean) {
     if (clicked) {
       this.productService.resetSearchCriteria();
+      this.productService.loadProducts({
+        __typename: 'FindProductInput',
+        categories: [],
+        page: {
+          pageNumber: 1,
+          pageSize: 8,
+        },
+      });
     }
   }
 

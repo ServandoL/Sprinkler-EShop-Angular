@@ -10,6 +10,7 @@ export function createApollo(httpLink: HttpLink): NamedOptions {
       name: 'SprinklerShop',
       link: httpLink.create({ uri }),
       cache: new InMemoryCache(),
+
     },
   };
 }
